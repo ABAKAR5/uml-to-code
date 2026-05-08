@@ -1,12 +1,18 @@
-# uml-to-code
-🔄 Outil Python de conversion automatique de diagrammes de classes UML (XMI) en code source (Python, PHP) — Projet mini-soutenance GL3 INSTA 2026
+<div align="center">
+
+<img src="https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/Flask-3.0.0-000000?style=for-the-badge&logo=flask&logoColor=white"/>
+<img src="https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
+<img src="https://img.shields.io/badge/IA-Google%20Gemma-4285F4?style=for-the-badge&logo=google&logoColor=white"/>
+<img src="https://img.shields.io/badge/Formats-XMI%20%7C%20Image%20%7C%20PDF-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Statut-En%20développement-yellow?style=for-the-badge"/>
 
 # 🔄 UML-to-Code
 
-### Conversion automatique de diagrammes de classes UML en code source
+### Conversion automatique de schémas UML en code fonctionnel grâce à l'IA
 
-> Outil développé dans le cadre d'un mini-projet de fin de module —  
-> **Génie Logiciel 3ème année — INSTA Abéché, 2026**
+> Application web full-stack développée dans le cadre d'un mini-projet de soutenance  
+> **Génie Logiciel — 3ème année — INSTA Abéché, Tchad — 2026**
 
 </div>
 
@@ -14,84 +20,87 @@
 
 ## 📌 Description
 
-**UML-to-Code** est un outil desktop développé en Python qui permet de transformer automatiquement un diagramme de classes UML exporté au format **XMI (XML Metadata Interchange)** en code source fonctionnel dans les langages **Python** et **PHP**.
+**UML-to-Code** est une application web full-stack qui transforme automatiquement un diagramme de classes UML en code source fonctionnel grâce au modèle d'IA générative **Gemma** (via Google Gemini API).
 
-L'objectif est de réduire le temps de passage de la phase de conception (modélisation UML) à la phase d'implémentation (code), en automatisant la génération des structures de classes.
+L'utilisateur soumet un diagramme UML sous forme de fichier **XMI**, **image (PNG/JPG)** ou **PDF**. L'application analyse le diagramme, appelle l'IA Gemma, et génère :
+- Le code source **Python** ou **PHP** des classes
+- Un **serveur Flask complet** avec routes automatiques
 
 ---
 
 ## ✨ Fonctionnalités
 
-- ✅ Chargement d'un fichier **XMI** exporté depuis StarUML
-- ✅ Extraction automatique des **classes, attributs, méthodes et relations**
-- ✅ Génération de code **Python** (classes avec `__init__`, getters/setters)
-- ✅ Génération de code **PHP** (classes avec visibilité, constructeur)
-- ✅ Gestion des relations : **héritage, association, agrégation**
-- ✅ Interface graphique desktop avec **CustomTkinter**
-- ✅ Sauvegarde du code généré dans un fichier `.py` ou `.php`
+- ✅ Upload de fichiers **XMI** (export StarUML), **images** et **PDF**
+- ✅ Détection automatique du format du fichier
+- ✅ Parsing XMI — extraction classes, attributs, méthodes, relations
+- ✅ Analyse visuelle image/PDF via la vision de **Gemma**
+- ✅ Génération de code **Python** (classes, `__init__`, getters/setters, héritage)
+- ✅ Génération de code **PHP** (classes, constructeur, visibilité)
+- ✅ Génération automatique d'un **serveur Flask** avec routes CRUD
+- ✅ Interface web moderne en **React.js + Vite**
+- ✅ Coloration syntaxique du code généré
+- ✅ Copie du code en un clic
+- ✅ Téléchargement du fichier `.py` ou `.php`
 
 ---
 
-## 🖥️ Aperçu de l'interface
+## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────┐
-│  UML-to-Code                          [_][□][X] │
-├─────────────────────────────────────────────────┤
-│  📂 Charger un fichier XMI     [Parcourir...]   │
-│  🎯 Langage cible :  [Python ▼]  [PHP ▼]        │
-│  ──────────────────────────────────────────     │
-│  📄 Code généré :                               │
-│  ┌───────────────────────────────────────────┐  │
-│  │ class Etudiant:                           │  │
-│  │     def __init__(self):                   │  │
-│  │         self.nom = ""                     │  │
-│  │         self.age = 0                      │  │
-│  │     def getNom(self):                     │  │
-│  │         return self.nom                   │  │
-│  └───────────────────────────────────────────┘  │
-│  💾 [Sauvegarder le code]                       │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│         FRONTEND (React + Vite)         │
+│  Upload · Visualisation · Téléchargement│
+└──────────────────┬──────────────────────┘
+                   │ HTTP REST (axios)
+┌──────────────────▼──────────────────────┐
+│         BACKEND (Python Flask)          │
+│  Parser XMI · Orchestration · Routes    │
+└──────────────────┬──────────────────────┘
+                   │ API Call
+┌──────────────────▼──────────────────────┐
+│         IA — Google Gemma API           │
+│  Génération code Python · PHP · Flask   │
+└─────────────────────────────────────────┘
 ```
 
 ---
 
-## 🏗️ Architecture du projet
+## 🗂️ Structure du projet
 
 ```
 uml-to-code/
 │
-├── main.py                  # Point d'entrée de l'application
+├── backend/                        # Serveur Python Flask
+│   ├── app.py                      # Point d'entrée Flask
+│   ├── routes/
+│   │   └── upload.py               # Endpoint POST /api/upload
+│   ├── parser/
+│   │   ├── xmi_parser.py           # Parsing fichiers XMI
+│   │   └── image_parser.py         # Préparation image/PDF pour Gemma
+│   ├── ai/
+│   │   └── gemma_client.py         # Client API Google Gemma
+│   ├── generator/
+│   │   ├── base_generator.py       # Classe abstraite de base
+│   │   ├── python_generator.py     # Générateur code Python
+│   │   ├── php_generator.py        # Générateur code PHP
+│   │   └── server_generator.py     # Générateur serveur Flask auto
+│   ├── uploads/                    # Fichiers uploadés temporaires
+│   ├── requirements.txt
+│   └── .env                        # Clé API (non versionnée)
 │
-├── parser/
-│   ├── __init__.py
-│   └── xmi_parser.py        # Lecture et extraction du fichier XMI
+├── frontend/                       # Interface React + Vite
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── UploadZone.jsx      # Zone drag & drop
+│   │   │   ├── CodeViewer.jsx      # Affichage code généré
+│   │   │   └── Toolbar.jsx         # Boutons copier/télécharger
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── package.json
 │
-├── models/
-│   ├── __init__.py
-│   ├── uml_class.py         # Modèle : UMLClass
-│   ├── uml_attribute.py     # Modèle : UMLAttribute
-│   └── uml_method.py        # Modèle : UMLMethod
-│
-├── generator/
-│   ├── __init__.py
-│   ├── base_generator.py    # Classe abstraite de base
-│   ├── python_generator.py  # Générateur de code Python
-│   └── php_generator.py     # Générateur de code PHP
-│
-├── gui/
-│   ├── __init__.py
-│   └── app.py               # Interface graphique CustomTkinter
-│
-├── tests/
-│   ├── test_parser.py
-│   └── test_generators.py
-│
-├── examples/
-│   ├── etudiant.xmi         # Fichier XMI de test simple
-│   └── bibliotheque.xmi     # Fichier XMI de test avancé
-│
-├── requirements.txt
+├── examples/                       # Fichiers XMI de test
+├── docs/                           # Documentation
+├── .gitignore
 └── README.md
 ```
 
@@ -101,47 +110,90 @@ uml-to-code/
 
 ### Prérequis
 
-- Python 3.10 ou supérieur
-- StarUML (pour créer et exporter les diagrammes en XMI)
+- Python 3.10+
+- Node.js 18+ (LTS)
+- Git
+- Clé API Google AI Studio (gratuite)
+- StarUML (pour créer les diagrammes)
 
-### Étapes
+### 1. Cloner le projet
 
 ```bash
-# 1. Cloner le dépôt
 git clone https://github.com/ABAKAR5/uml-to-code.git
 cd uml-to-code
+```
 
-# 2. Installer les dépendances
+### 2. Configurer le backend
+
+```bash
+cd backend
+
+# Créer et activer l'environnement virtuel
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Linux / macOS
+source venv/bin/activate
+
+# Installer les dépendances
 pip install -r requirements.txt
-
-# 3. Lancer l'application
-python main.py
 ```
 
-### Dépendances (`requirements.txt`)
+### 3. Configurer la clé API Gemma
 
-```
-customtkinter==5.2.2
+```bash
+# Éditer le fichier .env
+GEMMA_API_KEY=ta_cle_api_ici
 ```
 
-> ℹ️ Le parsing XMI utilise `xml.etree.ElementTree` — inclus nativement dans Python, aucune installation supplémentaire requise.
+> Obtenir une clé gratuite sur : [aistudio.google.com](https://aistudio.google.com)
+
+### 4. Configurer le frontend
+
+```bash
+cd ../frontend
+npm install
+```
 
 ---
 
-## 🚀 Utilisation
+## 🚀 Lancement
 
-### Via l'interface graphique
+### Démarrer le backend Flask
 
-1. Lancer `python main.py`
-2. Cliquer sur **"Parcourir"** et sélectionner votre fichier `.xmi`
+```bash
+cd backend
+venv\Scripts\activate   # Windows
+python app.py
+# Serveur disponible sur http://localhost:5000
+```
+
+### Démarrer le frontend React
+
+```bash
+cd frontend
+npm run dev
+# Interface disponible sur http://localhost:5173
+```
+
+---
+
+## 🎯 Utilisation
+
+1. Ouvrir `http://localhost:5173` dans le navigateur
+2. Uploader un fichier **XMI**, **image PNG/JPG** ou **PDF**
 3. Choisir le langage cible : **Python** ou **PHP**
 4. Cliquer sur **"Générer le code"**
-5. Consulter le code généré dans la zone de texte
-6. Cliquer sur **"Sauvegarder"** pour exporter le fichier
+5. Visualiser le code avec coloration syntaxique
+6. **Copier** ou **Télécharger** le fichier généré
 
-### Exemple de résultat
+---
 
-**Entrée (XMI) :**
+## 💡 Exemple
+
+**Entrée XMI :**
 ```xml
 <packagedElement xmi:type="uml:Class" name="Etudiant">
   <ownedAttribute name="nom" visibility="private"/>
@@ -182,35 +234,38 @@ class Etudiant {
 
 ---
 
-## 🗓️ Planning de développement
+## 🛠️ Technologies utilisées
 
-| Semaine | Période | Objectif |
-|---------|---------|----------|
-| **S0** | 05 – 07 mai 2026 | Clarification + étude XMI |
-| **S1** | 08 – 14 mai 2026 | CDC + Conception + Architecture |
-| **S2** | 15 – 21 mai 2026 | Implémentation complète |
-| **S3** | 22 – 26 mai 2026 | Tests + Rapport + Soutenance |
+| Couche | Technologie | Version |
+|--------|------------|---------|
+| Frontend | React.js + Vite | 6.x |
+| Backend | Python Flask | 3.0.0 |
+| IA | Google Gemma (Gemini API) | Latest |
+| Parsing XMI | xml.etree.ElementTree | Natif Python |
+| Parsing Image/PDF | Gemma Vision + PyMuPDF | Latest |
+| Versioning | Git + GitHub | - |
 
 ---
 
-## 📦 Technologies utilisées
+## 🔄 Cycle de vie — Modèle Incrémental
 
-| Technologie | Rôle |
-|-------------|------|
-| **Python 3.10+** | Langage principal |
-| **xml.etree.ElementTree** | Parsing du format XMI |
-| **CustomTkinter** | Interface graphique desktop |
-| **StarUML** | Création et export des diagrammes UML |
+| Incrément | Période | Objectif | Version |
+|-----------|---------|----------|---------|
+| 0 | 05–07 mai | Préparation, CDC, recherche | v0.0 |
+| 1 | 08–14 mai | Architecture, parser XMI, API Gemma | v0.1 |
+| 2 | 15–21 mai | Générateurs, serveur Flask, React | v0.2 |
+| 3 | 22–26 mai | Tests, rapport, soutenance | v1.0 |
 
 ---
 
 ## 📄 Livrables académiques
 
 - 📋 Cahier des Charges (CDC)
-- 🗂️ Diagrammes UML de conception (StarUML)
-- 💻 Code source complet (ce dépôt)
-- 📝 Rapport de projet (Word/PDF)
+- 🗂️ Diagrammes UML — Use Case, Classes, Séquence, Activité
+- 💻 Code source complet (ce dépôt GitHub)
+- 📝 Rapport de projet (Word + PDF)
 - 🎤 Présentation slides (mini-soutenance)
+- 🎬 Démonstration live devant le jury
 
 ---
 
@@ -218,8 +273,8 @@ class Etudiant {
 
 **Abakar**  
 Étudiant en Génie Logiciel — 3ème année  
-Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA)  
-Abéché, Tchad — Promotion 2026  
+Institut National Supérieur des Sciences et Techniques d'Abéché **(INSTA)**  
+Abéché, Tchad — Promotion 2026
 
 🔗 GitHub : [@ABAKAR5](https://github.com/ABAKAR5)
 
@@ -227,13 +282,12 @@ Abéché, Tchad — Promotion 2026
 
 ## 📜 Licence
 
-Ce projet est développé dans un cadre académique.  
-Tous droits réservés © 2026 — INSTA Abéché.
+Projet académique — Tous droits réservés © 2026 INSTA Abéché
 
 ---
 
 <div align="center">
 
-*Projet réalisé avec rigueur dans le cadre de la formation en Génie Logiciel à l'INSTA Abéché.*
+*Projet réalisé avec rigueur dans le cadre de la formation en Génie Logiciel — INSTA Abéché 2026*
 
 </div>

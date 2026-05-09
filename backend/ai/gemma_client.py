@@ -1,10 +1,8 @@
 from groq import Groq
-from dotenv import load_dotenv
 import os
 
-# Charger la clé depuis .env
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
-API_KEY = os.getenv("GROQ_API_KEY")
+# Clé directement depuis variable d'environnement
+API_KEY = os.environ.get("GROQ_API_KEY", "")
 
 client = Groq(api_key=API_KEY)
 

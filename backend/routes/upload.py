@@ -5,6 +5,7 @@ from generator.python_generator import PythonGenerator
 from generator.php_generator import PHPGenerator
 from generator.server_generator import FlaskServerGenerator
 from ai.gemma_client import generate_code
+from parser.image_parser import parse_image
 
 upload_bp = Blueprint('upload', __name__)
 
@@ -60,27 +61,22 @@ def upload_file():
 
     try:
         if file_format == 'xmi':
-            # Parser le XMI
             parser = XMIParser(file_path)
             classes = parser.parse()
 
             if not classes:
                 return jsonify({'error': 'Aucune classe trouvée dans le fichier XMI'}), 400
 
-            # Générer le code
             if use_ai:
-                # Génération par IA
                 description = classes_to_description(classes)
                 code = generate_code(description, language)
             else:
-                # Génération algorithmique
                 if language == 'python':
                     generator = PythonGenerator(classes)
                 else:
                     generator = PHPGenerator(classes)
                 code = generator.generate()
 
-            # Générer le serveur Flask
             server_gen = FlaskServerGenerator(classes)
             server_code = server_gen.generate()
 
@@ -94,15 +90,29 @@ def upload_file():
                 'ai_used': use_ai
             })
 
-        elif file_format in ['image', 'pdf']:
+        elif file_format == 'image':
+            code = parse_image(file_path, language)
             return jsonify({
                 'success': True,
                 'format': file_format,
                 'language': language,
-                'message': 'Fichier reçu',
-                'code': '# Support image/PDF — bientôt disponible',
+                'classes_found': 0,
+                'code': code,
                 'server_code': '',
-                'ai_used': False
+                'ai_used': True
+            })
+
+        elif file_format == 'pdf':
+            from parser.image_parser import parse_pdf
+            code = parse_pdf(file_path, language)
+            return jsonify({
+                'success': True,
+                'format': file_format,
+                'language': language,
+                'classes_found': 0,
+                'code': code,
+                'server_code': '',
+                'ai_used': True
             })
 
     except Exception as e:

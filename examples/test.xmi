@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1"
+  xmlns:uml="http://www.omg.org/spec/UML/20110701"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20110701">
+  <uml:Model xmi:id="m1" name="TestProjet">
+
+    <packagedElement xmi:type="uml:Class" xmi:id="c1" name="Etudiant">
+      <ownedAttribute xmi:id="a1" name="nom" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="a2" name="age" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="int"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="op1" name="getNom" visibility="public"/>
+      <ownedOperation xmi:id="op2" name="setAge" visibility="public"/>
+    </packagedElement>
+
+    <packagedElement xmi:type="uml:Class" xmi:id="c2" name="Professeur">
+      <ownedAttribute xmi:id="a3" name="matricule" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="a4" name="specialite" visibility="private">
+        <type xmi:type="uml:PrimitiveType" href="String"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="op3" name="getMatricule" visibility="public"/>
+      <ownedOperation xmi:id="op4" name="enseigner" visibility="public"/>
+    </packagedElement>
+
+  </uml:Model>
+</xmi:XMI>

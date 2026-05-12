@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+*.egg-info/
+
+# Environnement — IMPORTANT
+.env
+backend/.env
+*.env
+
+# Node
+node_modules/
+dist/
+build/
+.env.local
+
+# VS Code
+.vscode/settings.json
+
+# Système
+.DS_Store
+Thumbs.db

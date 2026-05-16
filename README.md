@@ -1,199 +1,352 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-<img src="https://img.shields.io/badge/Flask-3.0.0-000000?style=for-the-badge&logo=flask&logoColor=white"/>
-<img src="https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
-<img src="https://img.shields.io/badge/IA-Google%20Gemma-4285F4?style=for-the-badge&logo=google&logoColor=white"/>
-<img src="https://img.shields.io/badge/Formats-XMI%20%7C%20Image%20%7C%20PDF-orange?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/Statut-En%20développement-yellow?style=for-the-badge"/>
-
 # 🔄 UML-to-Code
 
-### Conversion automatique de schémas UML en code fonctionnel grâce à l'IA
+### AI-Powered UML Diagram to Source Code Generator
 
-> Application web full-stack développée dans le cadre d'un mini-projet de soutenance  
-> **Génie Logiciel — 3ème année — INSTA Abéché, Tchad — 2026**
+<p align="center">
+Transformez automatiquement des diagrammes UML en code source fonctionnel grâce à l'intelligence artificielle.
+</p>
+
+<br/>
+
+<img src="https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/Flask-3.0-black?style=for-the-badge&logo=flask"/>
+<img src="https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
+<img src="https://img.shields.io/badge/Google-Gemma%20AI-4285F4?style=for-the-badge&logo=google&logoColor=white"/>
+<img src="https://img.shields.io/badge/UML-XMI%20%7C%20PNG%20%7C%20PDF-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
+<img src="https://img.shields.io/github/stars/ABAKAR5/uml-to-code?style=for-the-badge"/>
+<img src="https://img.shields.io/github/last-commit/ABAKAR5/uml-to-code?style=for-the-badge"/>
+
+<br/><br/>
+
+> 🎓 Mini-projet académique — Génie Logiciel 3ème année  
+> Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA) — Tchad
 
 </div>
 
 ---
 
-## 📌 Description
+# 📌 Description
 
-**UML-to-Code** est une application web full-stack qui transforme automatiquement un diagramme de classes UML en code source fonctionnel grâce au modèle d'IA générative **Gemma** (via Google Gemini API).
+**UML-to-Code** est une application web full-stack intelligente permettant de transformer automatiquement des diagrammes UML en code source fonctionnel grâce à l'intelligence artificielle générative.
 
-L'utilisateur soumet un diagramme UML sous forme de fichier **XMI**, **image (PNG/JPG)** ou **PDF**. L'application analyse le diagramme, appelle l'IA Gemma, et génère :
-- Le code source **Python** ou **PHP** des classes
-- Un **serveur Flask complet** avec routes automatiques
+L'utilisateur peut importer un diagramme UML sous forme de :
+
+- fichier **XMI**
+- image **PNG/JPG**
+- document **PDF**
+
+Le système analyse ensuite le diagramme et génère automatiquement :
+
+- du code **Python**
+- du code **PHP**
+- un serveur **Flask CRUD**
+- les classes, attributs, méthodes et relations
+
+Le projet combine :
+- Génie Logiciel
+- Intelligence Artificielle
+- Parsing UML
+- Développement Full-Stack moderne
 
 ---
 
-## ✨ Fonctionnalités
+# ✨ Fonctionnalités principales
 
-- ✅ Upload de fichiers **XMI** (export StarUML), **images** et **PDF**
-- ✅ Détection automatique du format du fichier
-- ✅ Parsing XMI — extraction classes, attributs, méthodes, relations
-- ✅ Analyse visuelle image/PDF via la vision de **Gemma**
-- ✅ Génération de code **Python** (classes, `__init__`, getters/setters, héritage)
-- ✅ Génération de code **PHP** (classes, constructeur, visibilité)
-- ✅ Génération automatique d'un **serveur Flask** avec routes CRUD
-- ✅ Interface web moderne en **React.js + Vite**
-- ✅ Coloration syntaxique du code généré
+- ✅ Upload de fichiers UML (XMI / PNG / JPG / PDF)
+- ✅ Détection automatique du format
+- ✅ Parsing XMI automatique
+- ✅ Analyse visuelle UML avec Gemma Vision
+- ✅ Génération de code Python orienté objet
+- ✅ Génération de code PHP orienté objet
+- ✅ Génération automatique de serveur Flask CRUD
+- ✅ Interface React moderne
+- ✅ Coloration syntaxique avancée
+- ✅ Téléchargement du code généré
 - ✅ Copie du code en un clic
-- ✅ Téléchargement du fichier `.py` ou `.php`
+- ✅ Architecture full-stack modulaire
+- ✅ Génération intelligente via IA
 
 ---
 
-## 🏗️ Architecture
+# 🆕 Fonctionnalités UI / UX avancées
 
-```
+- ✅ Dark Mode / Light Mode
+- ✅ Interface responsive mobile & desktop
+- ✅ Menu hamburger mobile
+- ✅ Barre de progression temps réel
+- ✅ Historique des générations
+- ✅ Notifications Toast système
+- ✅ Prévisualisation des diagrammes
+- ✅ Drag & Drop intelligent
+- ✅ Animations fluides modernes
+- ✅ Effets Glassmorphism
+- ✅ Hero section animée
+- ✅ Éditeur de code intégré
+- ✅ Export ZIP automatique
+- ✅ Navigation sticky animée
+- ✅ Expérience utilisateur temps réel
+
+---
+
+# 🧠 Intelligence Artificielle
+
+Le projet utilise les capacités multimodales de **Google Gemma AI** afin de :
+
+- analyser les diagrammes UML
+- détecter les classes
+- comprendre les relations
+- générer automatiquement le code
+- produire un backend Flask fonctionnel
+- générer des structures orientées objet cohérentes
+
+Le moteur IA repose sur :
+
+- Google Gemini API
+- Gemma Vision
+- Prompt Engineering personnalisé
+
+---
+
+# 🏗️ Architecture du système
+
+```text
 ┌─────────────────────────────────────────┐
 │         FRONTEND (React + Vite)         │
-│  Upload · Visualisation · Téléchargement│
+│ Upload · Visualisation · Téléchargement │
 └──────────────────┬──────────────────────┘
-                   │ HTTP REST (axios)
+                   │ HTTP REST API
 ┌──────────────────▼──────────────────────┐
 │         BACKEND (Python Flask)          │
-│  Parser XMI · Orchestration · Routes    │
+│ Parser XMI · Orchestration · Routes     │
 └──────────────────┬──────────────────────┘
                    │ API Call
 ┌──────────────────▼──────────────────────┐
 │         IA — Google Gemma API           │
-│  Génération code Python · PHP · Flask   │
+│  Génération Python · PHP · Flask CRUD   │
 └─────────────────────────────────────────┘
 ```
 
 ---
 
-## 🗂️ Structure du projet
+# ⚙️ Workflow de génération
 
-```
-uml-to-code/
-│
-├── backend/                        # Serveur Python Flask
-│   ├── app.py                      # Point d'entrée Flask
-│   ├── routes/
-│   │   └── upload.py               # Endpoint POST /api/upload
-│   ├── parser/
-│   │   ├── xmi_parser.py           # Parsing fichiers XMI
-│   │   └── image_parser.py         # Préparation image/PDF pour Gemma
-│   ├── ai/
-│   │   └── gemma_client.py         # Client API Google Gemma
-│   ├── generator/
-│   │   ├── base_generator.py       # Classe abstraite de base
-│   │   ├── python_generator.py     # Générateur code Python
-│   │   ├── php_generator.py        # Générateur code PHP
-│   │   └── server_generator.py     # Générateur serveur Flask auto
-│   ├── uploads/                    # Fichiers uploadés temporaires
-│   ├── requirements.txt
-│   └── .env                        # Clé API (non versionnée)
-│
-├── frontend/                       # Interface React + Vite
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── UploadZone.jsx      # Zone drag & drop
-│   │   │   ├── CodeViewer.jsx      # Affichage code généré
-│   │   │   └── Toolbar.jsx         # Boutons copier/télécharger
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   └── package.json
-│
-├── examples/                       # Fichiers XMI de test
-├── docs/                           # Documentation
-├── .gitignore
-└── README.md
+```mermaid
+flowchart LR
+    A[Upload UML] --> B[Analyse du fichier]
+    B --> C[Parser XMI / Vision AI]
+    C --> D[Gemma AI Processing]
+    D --> E[Generate Python/PHP]
+    E --> F[Generate Flask Server]
+    F --> G[Display Result]
 ```
 
 ---
 
-## ⚙️ Installation
+# 📸 Aperçu de l'application
 
-### Prérequis
+## 🏠 Interface principale
+
+```text
+Ajouter ici : docs/screenshots/home.png
+```
+
+## ⚡ Génération de code
+
+```text
+Ajouter ici : docs/screenshots/generator.png
+```
+
+## 🌗 Dark Mode
+
+```text
+Ajouter ici : docs/screenshots/darkmode.png
+```
+
+## 📱 Version mobile
+
+```text
+Ajouter ici : docs/screenshots/mobile.png
+```
+
+---
+
+# 🗂️ Structure du projet
+
+```text
+uml-to-code/
+│
+├── backend/
+│   ├── app.py
+│   ├── routes/
+│   ├── parser/
+│   ├── generator/
+│   ├── ai/
+│   ├── uploads/
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── package.json
+│
+├── docs/
+├── examples/
+├── README.md
+└── .gitignore
+```
+
+---
+
+# 📂 Formats supportés
+
+| Format | Description | Support |
+|--------|-------------|---------|
+| `.xmi` | Export UML StarUML | ✅ |
+| `.png` | Diagramme image | ✅ |
+| `.jpg/jpeg` | Diagramme image | ✅ |
+| `.pdf` | Diagramme UML PDF | ✅ |
+
+---
+
+# 🎨 UI / UX Design
+
+L’interface utilisateur a été développée avec une approche moderne :
+
+- Glassmorphism UI
+- Responsive Design
+- Animations CSS avancées
+- Dark / Light Theme
+- Effets visuels dynamiques
+- UX temps réel
+- Composants React réutilisables
+- Design inspiré des plateformes SaaS modernes
+
+---
+
+# ⚙️ Installation
+
+## 📋 Prérequis
 
 - Python 3.10+
-- Node.js 18+ (LTS)
+- Node.js 18+
 - Git
-- Clé API Google AI Studio (gratuite)
-- StarUML (pour créer les diagrammes)
+- StarUML
+- Clé API Google AI Studio
 
-### 1. Cloner le projet
+---
+
+## 1️⃣ Cloner le projet
 
 ```bash
 git clone https://github.com/ABAKAR5/uml-to-code.git
 cd uml-to-code
 ```
 
-### 2. Configurer le backend
+---
+
+## 2️⃣ Configuration Backend
 
 ```bash
 cd backend
 
-# Créer et activer l'environnement virtuel
 python -m venv venv
+```
 
-# Windows
+### Windows
+
+```bash
 venv\Scripts\activate
+```
 
-# Linux / macOS
+### Linux / macOS
+
+```bash
 source venv/bin/activate
+```
 
-# Installer les dépendances
+### Installer les dépendances
+
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configurer la clé API Gemma
+---
 
-```bash
-# Éditer le fichier .env
-GEMMA_API_KEY=ta_cle_api_ici
+## 3️⃣ Configuration API Key
+
+Créer un fichier `.env`
+
+```env
+GEMMA_API_KEY=your_api_key_here
+FLASK_ENV=development
+PORT=5000
 ```
 
-> Obtenir une clé gratuite sur : [aistudio.google.com](https://aistudio.google.com)
+Obtenir une clé gratuite :
+https://aistudio.google.com
 
-### 4. Configurer le frontend
+---
+
+## 4️⃣ Configuration Frontend
 
 ```bash
-cd ../frontend
+cd frontend
 npm install
 ```
 
 ---
 
-## 🚀 Lancement
+# 🚀 Lancement
 
-### Démarrer le backend Flask
+## ▶️ Backend Flask
 
 ```bash
 cd backend
-venv\Scripts\activate   # Windows
+venv\Scripts\activate
 python app.py
-# Serveur disponible sur http://localhost:5000
 ```
 
-### Démarrer le frontend React
+Serveur :
+```text
+http://localhost:5000
+```
+
+---
+
+## ▶️ Frontend React
 
 ```bash
 cd frontend
 npm run dev
-# Interface disponible sur http://localhost:5173
+```
+
+Interface :
+```text
+http://localhost:5173
 ```
 
 ---
 
-## 🎯 Utilisation
+# 🎯 Utilisation
 
-1. Ouvrir `http://localhost:5173` dans le navigateur
-2. Uploader un fichier **XMI**, **image PNG/JPG** ou **PDF**
-3. Choisir le langage cible : **Python** ou **PHP**
-4. Cliquer sur **"Générer le code"**
-5. Visualiser le code avec coloration syntaxique
-6. **Copier** ou **Télécharger** le fichier généré
+1. Ouvrir l'application
+2. Importer un diagramme UML
+3. Choisir le langage cible
+4. Cliquer sur **Générer**
+5. Visualiser le code généré
+6. Copier ou télécharger le résultat
 
 ---
 
-## 💡 Exemple
+# 💡 Exemple de génération
 
-**Entrée XMI :**
+## Entrée UML (XMI)
+
 ```xml
 <packagedElement xmi:type="uml:Class" name="Etudiant">
   <ownedAttribute name="nom" visibility="private"/>
@@ -202,7 +355,10 @@ npm run dev
 </packagedElement>
 ```
 
-**Sortie Python générée :**
+---
+
+## Sortie Python
+
 ```python
 class Etudiant:
     def __init__(self):
@@ -213,10 +369,15 @@ class Etudiant:
         return self.__nom
 ```
 
-**Sortie PHP générée :**
+---
+
+## Sortie PHP
+
 ```php
 <?php
+
 class Etudiant {
+
     private $nom;
     private $age;
 
@@ -234,53 +395,173 @@ class Etudiant {
 
 ---
 
-## 🛠️ Technologies utilisées
+# 🔌 API REST
 
-| Couche | Technologie | Version |
-|--------|------------|---------|
-| Frontend | React.js + Vite | 6.x |
-| Backend | Python Flask | 3.0.0 |
-| IA | Google Gemma (Gemini API) | Latest |
-| Parsing XMI | xml.etree.ElementTree | Natif Python |
-| Parsing Image/PDF | Gemma Vision + PyMuPDF | Latest |
-| Versioning | Git + GitHub | - |
+## Upload UML Diagram
+
+```http
+POST /api/upload
+```
 
 ---
 
-## 🔄 Cycle de vie — Modèle Incrémental
+## Request
+
+Multipart form-data :
+
+| Champ | Type |
+|------|------|
+| file | File |
+| language | String |
+
+---
+
+## Response
+
+```json
+{
+  "success": true,
+  "language": "python",
+  "code": "class User ..."
+}
+```
+
+---
+
+# 🛠️ Technologies utilisées
+
+| Couche | Technologie | Utilisation |
+|--------|-------------|-------------|
+| Frontend | React.js + Vite | Interface utilisateur |
+| UI | CSS3 avancé | Glassmorphism + animations |
+| Backend | Flask | API REST |
+| IA | Google Gemma API | Génération intelligente |
+| Parsing UML | XML ElementTree | Lecture XMI |
+| Vision AI | Gemma Vision | Analyse image/PDF |
+| PDF | PyMuPDF | Extraction PDF |
+| HTTP Client | Axios | Communication API |
+| Syntax Highlight | Monaco Editor / Prism | Affichage code |
+| Versioning | Git + GitHub | Gestion du projet |
+
+---
+
+# 🔐 Sécurité
+
+- Les fichiers uploadés sont temporaires
+- Les clés API sont stockées dans `.env`
+- Aucun fichier utilisateur n'est conservé définitivement
+- Validation des extensions avant traitement
+- Limitation de taille des uploads
+
+---
+
+# 📱 Compatibilité
+
+Compatible avec :
+
+- 💻 Desktop
+- 📱 Mobile
+- 📟 Tablette
+
+Navigateurs testés :
+
+- Chrome
+- Edge
+- Firefox
+
+---
+
+# 📈 Statistiques du projet
+
+- 📦 Architecture Full-Stack
+- 🧠 IA Générative intégrée
+- ⚛️ Frontend React moderne
+- 🔥 API Flask REST
+- 📄 Parsing UML automatisé
+- ⚡ Génération temps réel
+- 🎨 Interface SaaS moderne
+
+---
+
+# 🔄 Cycle de vie — Modèle incrémental
 
 | Incrément | Période | Objectif | Version |
 |-----------|---------|----------|---------|
-| 0 | 05–07 mai | Préparation, CDC, recherche | v0.0 |
-| 1 | 08–14 mai | Architecture, parser XMI, API Gemma | v0.1 |
-| 2 | 15–21 mai | Générateurs, serveur Flask, React | v0.2 |
-| 3 | 22–26 mai | Tests, rapport, soutenance | v1.0 |
+| 0 | 05–07 mai | Recherche & CDC | v0.0 |
+| 1 | 08–14 mai | Parser XMI & API IA | v0.1 |
+| 2 | 15–21 mai | Générateurs & React | v0.2 |
+| 3 | 22–26 mai | UI avancée & Tests | v1.0 |
 
 ---
 
-## 📄 Livrables académiques
+# 🛣️ Roadmap
 
-- 📋 Cahier des Charges (CDC)
-- 🗂️ Diagrammes UML — Use Case, Classes, Séquence, Activité
-- 💻 Code source complet (ce dépôt GitHub)
-- 📝 Rapport de projet (Word + PDF)
-- 🎤 Présentation slides (mini-soutenance)
-- 🎬 Démonstration live devant le jury
+## ✅ Version actuelle
 
----
-
-## 👤 Auteur
-
-**Abakar**  
-Étudiant en Génie Logiciel — 3ème année  
-Institut National Supérieur des Sciences et Techniques d'Abéché **(INSTA)**  
-Abéché, Tchad — Promotion 2026
-
-🔗 GitHub : [@ABAKAR5](https://github.com/ABAKAR5)
+- Upload UML
+- Génération Python/PHP
+- Génération Flask CRUD
+- Historique
+- Dark Mode
+- Responsive UI
 
 ---
 
-## 📜 Licence
+## 🔜 Améliorations futures
+
+- [ ] Support Java
+- [ ] Génération Spring Boot
+- [ ] Génération Laravel
+- [ ] Dockerisation
+- [ ] Authentification utilisateur
+- [ ] Historique cloud
+- [ ] Reverse Engineering UML
+- [ ] Génération multi-fichiers
+
+---
+
+# 🎓 Objectifs pédagogiques
+
+Ce projet permet d'appliquer :
+
+- Génie Logiciel
+- Architecture logicielle
+- Développement Full-Stack
+- Intelligence Artificielle
+- Parsing XML/XMI
+- APIs REST
+- UX/UI moderne
+- Conception UML
+
+---
+
+# 📄 Livrables académiques
+
+- 📋 Cahier des Charges
+- 🗂️ Diagrammes UML
+- 💻 Code source complet
+- 📝 Rapport PDF
+- 🎤 Présentation de soutenance
+- 🎬 Démonstration live
+
+---
+
+# 👨‍💻 Auteur
+
+## Abakar
+
+🎓 Étudiant en Génie Logiciel — 3ème année  
+🏫 Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA)  
+🌍 Abéché, Tchad — Promotion 2026
+
+### 🔗 Liens
+
+- GitHub : https://github.com/ABAKAR5
+- Projet : https://github.com/ABAKAR5/uml-to-code
+
+---
+
+# 📜 Licence
 
 Projet académique — Tous droits réservés © 2026 INSTA Abéché
 
@@ -288,6 +569,6 @@ Projet académique — Tous droits réservés © 2026 INSTA Abéché
 
 <div align="center">
 
-*Projet réalisé avec rigueur dans le cadre de la formation en Génie Logiciel — INSTA Abéché 2026*
+### ⭐ Projet réalisé dans le cadre de la formation en Génie Logiciel — INSTA Abéché 2026
 
 </div>

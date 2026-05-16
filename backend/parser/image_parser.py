@@ -1,9 +1,12 @@
 import base64
 import os
+from dotenv import load_dotenv
 from groq import Groq
-import fitz  # PyMuPDF
+import fitz
 
-API_KEY = ""
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '.env'))
+
+API_KEY = os.getenv("GROQ_API_KEY")
 
 client = Groq(api_key=API_KEY)
 
@@ -15,27 +18,21 @@ def parse_image(image_path, language="python"):
     base64_image = encode_image(image_path)
     ext = image_path.split(".")[-1].lower()
     media_type = "image/jpeg" if ext in ["jpg", "jpeg"] else "image/png"
-
     response = client.chat.completions.create(
         model="meta-llama/llama-4-scout-17b-16e-instruct",
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "image_url",
-                        "image_url": {
-                            "url": f"data:{media_type};base64,{base64_image}"
-                        }
-                    },
-                    {
-                        "type": "text",
-                        "text": f"""Analyse ce diagramme de classes UML et génère directement le code {language} complet.
-Réponds UNIQUEMENT avec le code, sans explication, sans balises markdown, sans backticks."""
-                    }
-                ]
-            }
-        ],
+        messages=[{
+            "role": "user",
+            "content": [
+                {
+                    "type": "image_url",
+                    "image_url": {"url": f"data:{media_type};base64,{base64_image}"}
+                },
+                {
+                    "type": "text",
+                    "text": f"Analyse ce diagramme UML et génère le code {language}. UNIQUEMENT le code, sans explication, sans backticks."
+                }
+            ]
+        }],
         max_tokens=2000
     )
     code = response.choices[0].message.content

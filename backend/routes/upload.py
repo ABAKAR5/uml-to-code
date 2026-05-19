@@ -117,25 +117,39 @@ def upload_file():
 
         elif file_format == 'image':
             code = parse_image(file_path, language)
+            import re
+            class_names = re.findall(r'^\s*class\s+(\w+)', code, re.MULTILINE)
+            classes = [{'name': name} for name in class_names]
+            server_code = ''
+            if classes:
+                server_gen = FlaskServerGenerator(classes)
+                server_code = server_gen.generate()
             return jsonify({
                 'success': True,
                 'format': file_format,
                 'language': language,
-                'classes_found': count_classes(code),
+                'classes_found': len(classes),
                 'code': code,
-                'server_code': '',
+                'server_code': server_code,
                 'ai_used': True
             })
 
         elif file_format == 'pdf':
             code = parse_pdf(file_path, language)
+            import re
+            class_names = re.findall(r'^\s*class\s+(\w+)', code, re.MULTILINE)
+            classes = [{'name': name} for name in class_names]
+            server_code = ''
+            if classes:
+                server_gen = FlaskServerGenerator(classes)
+                server_code = server_gen.generate()
             return jsonify({
                 'success': True,
                 'format': file_format,
                 'language': language,
-                'classes_found': count_classes(code),
+                'classes_found': len(classes),
                 'code': code,
-                'server_code': '',
+                'server_code': server_code,
                 'ai_used': True
             })
 

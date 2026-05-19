@@ -1,0 +1,450 @@
+INSTITUT NATIONAL SUPÉRIEUR DES SCIENCES
+ET TECHNIQUES D'ABÉCHÉ (INSTA)
+CAHIER DES CHARGES
+Mini-Projet de Fin de Module
+IA pour la Conversion de Schémas UML en Code Fonctionnel
+Champ
+Détail
+Étudiant
+Abakar
+Filière
+Génie Logiciel — 3ème Année
+Établissement
+INSTA Abéché, Tchad
+Module
+Mini-Projet de Soutenance 2026
+Encadrant
+Enseignant responsable du module
+Date de début
+08 mai 2026
+Date de soutenance
+Semaine du 26 mai 2026
+Version du document
+1.0 — Mai 2026
+GitHub : github.com/ABAKAR5/uml-to-code
+1. Introduction
+1.1 Contexte général
+Dans le domaine du Génie Logiciel, la modélisation UML (Unified Modeling Language) constitue une étape fondamentale du cycle de développement. Elle permet de concevoir et de documenter l'architecture d'un système avant son implémentation. Cependant, le passage du modèle conceptuel au code source reste une tâche manuelle, répétitive et source d'erreurs.
+Ce projet s'inscrit dans le paradigme du Développement Dirigé par les Modèles (MDD — Model-Driven Development), qui préconise la génération automatique de code à partir de modèles de haut niveau. L'intégration de l'Intelligence Artificielle générative dans ce processus représente une avancée significative, permettant de produire un code plus complet, contextuel et directement exploitable.
+1.2 Présentation du projet
+Le projet « UML-to-Code » vise à développer une application web full-stack permettant de transformer automatiquement un diagramme de classes UML en code source fonctionnel, en exploitant le modèle d'IA générative Gemma via l'API Google Gemini. L'utilisateur soumet un diagramme (au format XMI, image ou PDF), et l'application génère le code Python ou PHP correspondant, ainsi qu'un serveur Flask complet et opérationnel.
+1.3 Objectifs du document
+Ce Cahier des Charges a pour objectifs de :
+Définir le périmètre fonctionnel et technique du projet
+Identifier les acteurs et leurs interactions avec le système
+Spécifier les exigences fonctionnelles et non fonctionnelles
+Présenter l'architecture technique retenue
+Établir le planning de réalisation
+Définir les critères d'acceptation et les livrables attendus
+2. Analyse de l'Existant
+2.1 Outils existants
+Plusieurs outils de transformation UML vers code existent sur le marché. Une analyse comparative permet d'identifier leurs limites :
+Outil
+Langages générés
+Format entrée
+Limites principales
+Acceleo (Eclipse)
+Java, Python, PHP
+XMI/EMF
+Très complexe, lourd à installer
+AndroMDA
+Java EE uniquement
+XMI
+Limité à Java, pas d'IA
+GenMyModel
+Java, Python
+En ligne
+Payant, pas open source
+StarUML Plugins
+JavaScript, Java
+.mdj
+Limité, pas d'IA générative
+Solutions manuelles
+Tous langages
+Tous formats
+Lent, source d'erreurs
+2.2 Valeur ajoutée du projet
+Par rapport aux solutions existantes, UML-to-Code apporte :
+Intégration d'une IA générative (Gemma) pour un code contextuel et complet
+Support de plusieurs formats d'entrée : XMI, image PNG/JPG, PDF
+Génération automatique d'un serveur Flask complet et opérationnel
+Interface web moderne et intuitive en React.js
+Solution légère, open source et sans installation complexe
+3. Périmètre du Projet
+3.1 Ce qui est inclus
+Acceptation de diagrammes UML au format XMI (StarUML)
+Acceptation de diagrammes sous forme d'image (PNG, JPG)
+Acceptation de diagrammes intégrés dans un fichier PDF
+Génération de code Python (classes, attributs, méthodes, héritage)
+Génération de code PHP (classes avec visibilité, constructeur)
+Génération automatique d'un serveur Flask Python complet
+Interface web React.js avec upload, visualisation et téléchargement
+Copie du code généré en un clic
+Téléchargement du code généré en fichier .py ou .php
+3.2 Ce qui est exclu
+Les diagrammes de séquence, d'activité ou de cas d'utilisation
+La génération de bases de données ou de requêtes SQL
+La génération de code Java (hors scope pour ce projet)
+L'hébergement en ligne de l'application (démo locale uniquement)
+L'authentification et la gestion multi-utilisateurs
+4. Acteurs et Cas d'Utilisation
+4.1 Acteurs identifiés
+Acteur
+Rôle
+Interactions principales
+Utilisateur
+Étudiant ou développeur utilisant l'outil
+Upload, génération, téléchargement du code
+API Gemma (IA)
+Modèle d'IA générative Google
+Reçoit la description UML, retourne le code
+Système Backend
+Serveur Flask Python
+Orchestration, parsing, appel IA
+4.2 Cas d'utilisation principaux
+L'utilisateur uploade un fichier XMI, image ou PDF
+Le système détecte le format et parse le diagramme
+Le système envoie la description UML à l'API Gemma
+Gemma génère le code Python/PHP et le serveur Flask
+Le système retourne le code à l'interface React
+L'utilisateur visualise, copie ou télécharge le code généré
+5. Exigences Fonctionnelles
+5.1 Module Upload
+ID
+Exigence
+Priorité
+EF-01
+Accepter les fichiers XMI exportés depuis StarUML
+Haute
+EF-02
+Accepter les images PNG et JPG de diagrammes UML
+Haute
+EF-03
+Accepter les fichiers PDF contenant un diagramme UML
+Moyenne
+EF-04
+Valider le format du fichier avant traitement
+Haute
+EF-05
+Afficher un message d'erreur en cas de format invalide
+Haute
+5.2 Module Parsing
+ID
+Exigence
+Priorité
+EF-06
+Parser les classes, attributs et méthodes depuis un XMI
+Haute
+EF-07
+Extraire les relations d'héritage entre classes
+Haute
+EF-08
+Extraire les associations et agrégations
+Moyenne
+EF-09
+Envoyer l'image/PDF directement à Gemma (vision)
+Haute
+5.3 Module Génération IA
+ID
+Exigence
+Priorité
+EF-10
+Appeler l'API Gemma avec la description UML extraite
+Haute
+EF-11
+Générer le code Python complet avec __init__, getters, setters
+Haute
+EF-12
+Générer le code PHP avec visibilité et constructeur
+Haute
+EF-13
+Générer un serveur Flask automatique avec les routes CRUD
+Haute
+EF-14
+Permettre le choix du langage cible : Python ou PHP
+Haute
+5.4 Module Interface
+ID
+Exigence
+Priorité
+EF-15
+Afficher le code généré avec coloration syntaxique
+Haute
+EF-16
+Permettre la copie du code en un clic
+Haute
+EF-17
+Permettre le téléchargement du fichier .py ou .php
+Haute
+EF-18
+Afficher le statut de traitement (chargement, succès, erreur)
+Haute
+6. Exigences Non Fonctionnelles
+Catégorie
+Exigence
+Critère mesurable
+Performance
+Temps de réponse de la génération
+< 15 secondes par diagramme
+Disponibilité
+L'application fonctionne en local
+Sans connexion (sauf API Gemma)
+Fiabilité
+Taux de succès de la génération
+> 90% sur les cas de test
+Maintenabilité
+Code source documenté et structuré
+Commentaires sur chaque fonction
+Portabilité
+Fonctionne sur Windows et Linux
+Testé sur les deux systèmes
+Sécurité
+Clé API stockée en variable d'environnement
+Fichier .env non versionné
+Utilisabilité
+Interface intuitive sans formation
+Prise en main < 5 minutes
+7. Architecture Technique
+7.1 Stack technologique
+Couche
+Technologie
+Rôle
+Frontend
+React.js (Vite)
+Interface utilisateur web
+Backend
+Python Flask
+Serveur API REST
+IA
+Gemma via Google Gemini API
+Génération du code source
+Parsing XMI
+xml.etree.ElementTree (Python)
+Extraction des classes UML
+Parsing Image/PDF
+Vision Gemma
+Analyse visuelle du diagramme
+Communication
+HTTP REST (fetch/axios)
+Frontend ↔ Backend
+Versioning
+Git + GitHub
+Gestion du code source
+7.2 Architecture globale
+Le système suit une architecture client-serveur en 3 couches :
+Couche Présentation : React.js — interface de l'utilisateur
+Couche Métier : Flask Python — orchestration, parsing, appel IA
+Couche IA : API Gemma — génération intelligente du code
+7.3 Structure des dossiers
+Backend (Python Flask) :
+app.py — Point d'entrée du serveur Flask
+routes/upload.py — Endpoint /api/upload
+parser/xmi_parser.py — Parsing des fichiers XMI
+parser/image_parser.py — Préparation image/PDF pour Gemma
+ai/gemma_client.py — Client API Gemma
+generator/server_generator.py — Génération serveur Flask auto
+Frontend (React + Vite) :
+src/components/UploadZone.jsx — Zone de dépôt de fichier
+src/components/CodeViewer.jsx — Affichage du code généré
+src/components/Toolbar.jsx — Boutons copier/télécharger
+src/App.jsx — Composant principal
+8. Cycle de Vie du Projet
+8.1 Choix du cycle de vie : Modèle Incrémental
+Le modèle de cycle de vie retenu pour ce projet est le modèle incrémental. Ce choix est motivé par trois raisons principales :
+La durée courte du projet (3 semaines) nécessite des livraisons rapides et concrètes
+Le projet est réalisé en solo, ce qui exclut les cycles nécessitant une équipe (Scrum)
+L'intégration d'une IA générative (Gemma) introduit des incertitudes techniques qui imposent un ajustement progressif
+Le modèle incrémental permet de construire le système par couches successives. Chaque incrément produit une version fonctionnelle et testée du logiciel, enrichie de nouvelles fonctionnalités. Contrairement au modèle en cascade, il permet de valider les choix techniques tôt et d'ajuster la trajectoire si nécessaire.
+8.2 Comparaison des cycles de vie
+Cycle de vie
+Durée idéale
+Projet solo
+3 semaines
+Décision
+Cascade (Waterfall)
+6+ mois
+Oui
+Non
+Rejeté — trop rigide
+Cycle en V
+3+ mois
+Oui
+Limite
+Rejeté — phases trop longues
+Agile / Scrum
+Continu
+Limite
+Oui
+Rejeté — conçu pour équipes
+Incrémental
+1-6 mois
+Oui
+Oui
+RETENU
+8.3 Les 4 incréments du projet
+Incrément
+Période
+Fonctionnalités ajoutées
+Version GitHub
+Incrément 0 — Préparation
+05–07 mai
+Questions prof, étude XMI, recherche, CDC
+v0.0 — Init
+Incrément 1 — Fondations
+08–14 mai
+Architecture, parser XMI, modèle de données, test API Gemma
+v0.1 — Backend
+Incrément 2 — Coeur IA
+15–21 mai
+Gemma complet, génération Python+PHP, serveur Flask auto, React
+v0.2 — Full App
+Incrément 3 — Finalisation
+22–26 mai
+Tests, corrections, rapport, slides, démo soutenance
+v1.0 — Release
+8.4 Phases de chaque incrément
+Chaque incrément suit les 5 phases classiques du modèle incrémental :
+Phase
+Incrément 1
+Incrément 2
+Incrément 3
+1. Analyse
+Besoins parsing XMI
+Besoins IA + React
+Besoins tests + docs
+2. Conception
+Architecture backend
+Intégration IA + API
+Plan tests + rapport
+3. Implémentation
+Parser + modèles Python
+Gemma + Flask + React
+Corrections finales
+4. Tests
+Test parser XMI
+Test génération code
+Tests complets E2E
+5. Livraison
+v0.1 sur GitHub
+v0.2 sur GitHub
+v1.0 sur GitHub
+8.5 Jalons critiques
+Date
+Jalon
+Critère de validation
+07/05/2026
+Jalon 0 — Lancement
+CDC validé, questions prof répondues
+14/05/2026
+Jalon 1 — v0.1
+Parser XMI fonctionnel, API Gemma testée
+21/05/2026
+Jalon 2 — v0.2
+Application complète fonctionnelle end-to-end
+24/05/2026
+Jalon 3 — v1.0
+Rapport rendu, slides prêtes
+26/05/2026
+Jalon 4 — Soutenance
+Démo réussie devant le jury
+9. Planning de Réalisation
+Semaine
+Période
+Tâches principales
+Livrables
+S0
+05–07 mai
+Questions prof, étude XMI, recherche
+Questions validées
+S1
+08–14 mai
+CDC, diagrammes UML, architecture, setup
+CDC + diagrammes
+S2
+15–21 mai
+Parser XMI, API Gemma, générateurs, React
+Application complète
+S3
+22–26 mai
+Tests, rapport, slides, répétition
+Rapport + soutenance
+9.1 Jalons critiques
+08 mai 2026 — Démarrage officiel du développement
+14 mai 2026 — Architecture validée + parser XMI fonctionnel
+21 mai 2026 — Application complète et testée
+24 mai 2026 — Rapport final rendu
+26 mai 2026 — Soutenance devant le jury
+10. Livrables Attendus
+#
+Livrable
+Format
+Date cible
+1
+Cahier des Charges (ce document)
+Word + PDF
+09/05/2026
+2
+Diagrammes UML de conception
+StarUML (.mdj)
+11/05/2026
+3
+Code source complet (backend + frontend)
+GitHub
+21/05/2026
+4
+Rapport de projet complet
+Word + PDF
+24/05/2026
+5
+Présentation slides
+PowerPoint/PDF
+24/05/2026
+6
+Démonstration live
+Application en local
+26/05/2026
+11. Critères d'Acceptation
+Le projet sera considéré comme réussi si les critères suivants sont satisfaits :
+10.1 Critères techniques
+L'application accepte au moins 3 formats d'entrée (XMI, image, PDF)
+Le code Python généré est syntaxiquement correct et exécutable
+Le code PHP généré respecte la syntaxe PHP 8+
+Le serveur Flask généré contient les routes CRUD de base
+L'interface React est fonctionnelle et responsive
+Le temps de génération est inférieur à 15 secondes
+10.2 Critères académiques
+Le code source est versionné sur GitHub avec des commits réguliers
+Le rapport suit un plan académique complet (8 chapitres minimum)
+La démo fonctionne sans erreur devant le jury
+L'étudiant maîtrise et explique son architecture technique
+12. Glossaire
+Terme
+Définition
+UML
+Unified Modeling Language — Langage de modélisation unifié
+XMI
+XML Metadata Interchange — Format d'échange de modèles UML
+MDD
+Model-Driven Development — Développement dirigé par les modèles
+MDA
+Model-Driven Architecture — Architecture dirigée par les modèles (OMG)
+PIM
+Platform Independent Model — Modèle indépendant de la plateforme (le diagramme UML)
+PSM
+Platform Specific Model — Code source généré pour une plateforme donnée
+LLM
+Large Language Model — Grand modèle de langage (ex : Gemma)
+API
+Application Programming Interface — Interface de programmation
+Flask
+Micro-framework web Python pour créer des API REST
+React.js
+Bibliothèque JavaScript pour créer des interfaces utilisateur web
+CRUD
+Create, Read, Update, Delete — Opérations de base sur les données
+REST
+Representational State Transfer — Style d'architecture pour les API web
+Gemma
+Modèle d'IA générative open source de Google (via API Gemini)
+Document rédigé par : Abakar — Étudiant GL3, INSTA Abéché — Mai 2026
+GitHub : github.com/ABAKAR5/uml-to-code | Version 1.0

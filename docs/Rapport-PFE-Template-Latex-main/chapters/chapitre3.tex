@@ -1,0 +1,64 @@
+\chapter{Réalisation et Implémentation}
+
+\section{Méthodologie : Le Cycle de Vie Incrémental}
+Pour mener à bien le développement de la plateforme \textbf{UML-to-Code}, nous avons adopté une méthodologie basée sur un \textbf{cycle de vie incrémental}. Contrairement à un modèle classique en cascade ("Waterfall") où toutes les spécifications sont figées avant le développement, l'approche incrémentale consiste à découper le projet en sous-ensembles fonctionnels (les incréments) qui sont développés, testés et intégrés progressivement.
+
+Ce choix méthodologique a apporté plusieurs bénéfices majeurs :
+\begin{itemize}
+    \item \textbf{Livraison rapide d'un noyau fonctionnel} : Dès les premières semaines, l'interface utilisateur de base a pu être déployée pour validation.
+    \item \textbf{Sécurisation technique} : Chaque module sensible a été validé indépendamment. Par exemple, le moteur de parsing XMI a été entièrement testé en ligne de commande Python avant même d'être relié au serveur Web Flask.
+    \item \textbf{Intégration continue} : Les fonctionnalités avancées telles que l'historique de génération, le mode sombre, ou la connexion à l'IA ont été greffées sur une architecture déjà stable, minimisant le risque de régressions.
+\end{itemize}
+
+\section{Environnement Technologique}
+Afin de garantir la performance, la maintenabilité et l'évolutivité de l'application, l'environnement technologique résumé dans le tableau \ref{tab:technologies} a été sélectionné :
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{3cm}|p{4cm}|p{7cm}|}
+        \hline
+        \textbf{Couche} & \textbf{Technologie} & \textbf{Rôle dans l'application} \\ \hline
+        \textbf{Backend} & Python 3.10+ \& Flask & Serveur d'API REST léger et manipulation de données XML. \\ \hline
+        \textbf{Frontend} & React.js (ES6+) \& Vite & Création d'une interface utilisateur dynamique, réactive et performante (SPA). \\ \hline
+        \textbf{Intelligence Artificielle} & API Groq (Llama 3.3) & Interprétation sémantique de texte et d'images pour la génération de code. \\ \hline
+        \textbf{Outils d'Édition} & Monaco Editor & Fournir un éditeur de code avancé directement dans le navigateur. \\ \hline
+        \textbf{Gestion de version} & Git \& GitHub & Suivi des modifications et sauvegarde du code source. \\ \hline
+    \end{tabular}
+    \caption{Environnement technologique du projet UML-to-Code}
+    \label{tab:technologies}
+\end{table}
+
+\section{Implémentation du Backend et Parsing XML}
+Le cœur logique du système réside dans le serveur Flask. Son rôle ne se limite pas à faire le pont entre le client et l'IA ; il abrite le moteur algorithmique de génération de code.
+
+\subsection{Le module \texttt{xml.etree.ElementTree}}
+L'extraction des données depuis un fichier StarUML (format XMI) repose sur la bibliothèque standard Python \texttt{xml.etree.ElementTree}. Cette bibliothèque parcourt le fichier texte XML et le charge en mémoire sous forme d'un arbre d'objets manipulables.
+
+Le processus d'analyse (parsing) suit l'algorithme suivant :
+\begin{enumerate}
+    \item \textbf{Initialisation} : Le fichier est chargé et les espaces de noms (namespaces) requis par la norme XMI sont définis pour permettre la recherche de balises spécifiques.
+    \item \textbf{Extraction des Classes} : Le script recherche toutes les occurrences de la balise \texttt{<packagedElement xmi:type="uml:Class">}. Chaque occurrence instancie un objet Python interne représentant la classe UML.
+    \item \textbf{Extraction des Propriétés} : Pour chaque classe trouvée, une sous-recherche est lancée pour trouver les \texttt{<ownedAttribute>} (les variables) et les \texttt{<ownedOperation>} (les méthodes). L'attribut XML \texttt{visibility} (public, private) est lu pour adapter la syntaxe dans le langage cible (ex: le double underscore \texttt{\_\_} en Python pour le private).
+    \item \textbf{Gestion des Relations} : Les balises \texttt{<generalization>} sont analysées pour identifier la classe mère d'une classe fille, afin d'écrire correctement la syntaxe d'héritage.
+\end{enumerate}
+
+\subsection{Orchestration des Générateurs}
+Une fois l'arbre UML abstrait construit en mémoire, le système fait appel à des classes de type "Générateur" (ex: \texttt{python\_generator.py}, \texttt{php\_generator.py}). Ces classes appliquent des \textit{templates} textuels pour produire le code source final. Un module spécialisé, \texttt{zip\_generator.py}, prend ensuite ces chaînes de caractères, crée des fichiers physiques en mémoire, et les package dans une archive \texttt{.zip} prête au téléchargement.
+
+\section{Intégration de l'Intelligence Artificielle}
+Le module \texttt{gemma\_client.py} est responsable de la communication avec l'API Groq, fournissant l'accès au modèle \textbf{Llama 3.3 (70 milliards de paramètres)}. 
+Lorsqu'un utilisateur soumet une image de diagramme, le backend Python encode cette image en Base64 et formule une requête HTTP sécurisée contenant un prompt très strict (Prompt Engineering). 
+Ce prompt ordonne au LLM d'analyser l'image en tant que diagramme UML et de retourner \textit{exclusivement} le code source (sans texte explicatif superflu), assurant ainsi que le résultat puisse être injecté directement dans l'éditeur du client.
+
+\section{Réalisation de l'Interface Utilisateur (Frontend)}
+Le frontend React a été conçu avec une exigence "Premium", visant à offrir l'expérience d'un véritable IDE dans le navigateur.
+
+\subsection{Design System : Glassmorphism}
+L'interface adopte le style visuel \textit{Glassmorphism}, caractérisé par des fonds translucides, des effets de flou d'arrière-plan (backdrop-blur) et des bordures subtiles. Ce design met en valeur le contenu principal tout en offrant un aspect moderne et épuré.
+
+\subsection{L'intégration de Monaco Editor}
+L'un des défis majeurs a été l'intégration de \textbf{Monaco Editor}, le moteur de coloration syntaxique et d'édition de texte qui propulse Microsoft Visual Studio Code. Grâce à lui, l'utilisateur bénéficie d'une lecture de code confortable (thèmes clair/sombre, numérotation des lignes, mini-map) directement après la génération. L'application conserve également un \textbf{historique local} (via localStorage) des 10 dernières générations, permettant au développeur de retrouver facilement ses travaux précédents.
+
+\section{Conclusion du chapitre}
+La phase de réalisation a permis de concrétiser les concepts théoriques élaborés précédemment. Le choix d'outils performants (Flask, React) et l'intégration de technologies de pointe (LLM) ont abouti à une application stable, rapide et ergonomique. Les tests effectués valident la précision à 100\% de l'approche algorithmique sur le format XMI, et confirment l'impressionnante capacité d'adaptation de l'approche IA face à des diagrammes variés.

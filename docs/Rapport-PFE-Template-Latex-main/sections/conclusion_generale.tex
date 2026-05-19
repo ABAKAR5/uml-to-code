@@ -1,0 +1,29 @@
+\chapter*{Conclusion Générale}
+\addcontentsline{toc}{chapter}{Conclusion Générale}
+\thispagestyle{plain}
+\pagestyle{plain}
+\markboth{}{}
+
+La conception et la réalisation de la plateforme \textbf{UML-to-Code} ont constitué une expérience hautement enrichissante, marquant l'aboutissement de notre formation en Génie Logiciel à l'Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA). Ce projet est né d'un constat simple mais critique dans l'industrie du logiciel : la nécessité de réduire le fossé temporel et technique entre la modélisation architecturale et l'implémentation concrète du code source.
+
+Tout au long de ce document, nous avons démontré comment l'approche du Développement Dirigé par les Modèles (MDD) pouvait être matérialisée par un outil moderne et accessible. En partant de l'analyse des besoins jusqu'au déploiement de l'architecture client-serveur, le projet a suivi un cycle de vie incrémental rigoureux, permettant de valider chaque composant technologique.
+
+Les résultats obtenus sont très satisfaisants et répondent intégralement aux objectifs fixés. La plateforme réussit le pari d'offrir :
+\begin{itemize}
+    \item Une robustesse absolue via son moteur de parsing XML (\texttt{xml.etree}) capable d'extraire la sémantique précise des fichiers XMI normalisés par l'OMG.
+    \item Une flexibilité sans précédent grâce à l'intégration de l'Intelligence Artificielle (Llama 3.3), qui brise les barrières des formats d'exportation propriétaires en permettant la génération de code à partir de simples images ou PDF de diagrammes.
+    \item Un confort d'utilisation professionnel, matérialisé par une interface "Glassmorphism" épurée intégrant l'éditeur de code Monaco, véritable standard de l'industrie.
+\end{itemize}
+
+Sur le plan personnel, ce projet de fin d'études a été un formidable terrain d'application pour consolider mes acquis. Il a exigé une maîtrise complète de la pile technologique "Full-Stack" (React.js, Flask, Python), une compréhension profonde des standards d'architecture logicielle (UML, XML/XMI), ainsi qu'une capacité à appréhender et intégrer les technologies émergentes (LLM via API).
+
+\section*{Perspectives d'évolution}
+Bien que fonctionnelle et aboutie, l'application \textbf{UML-to-Code} constitue une fondation sur laquelle de nombreuses évolutions peuvent être envisagées pour en faire un outil de qualité industrielle :
+\begin{itemize}
+    \item \textbf{Extension sémantique} : Prendre en charge d'autres types de diagrammes UML (Diagrammes de Séquence pour générer le corps des fonctions, Diagrammes d'États-Transitions pour générer des machines à états).
+    \item \textbf{Diversification linguistique} : Ajouter des générateurs pour d'autres langages fortement typés tels que Java, C++, ou TypeScript, ainsi que la prise en charge de frameworks ORM (comme SQLAlchemy ou Doctrine).
+    \item \textbf{Intégration au flux de travail (CI/CD)} : Développer la solution sous forme d'extension native pour des IDE (Visual Studio Code, IntelliJ) afin que la génération se fasse de manière transparente durant le développement.
+\end{itemize}
+
+En définitive, \textbf{UML-to-Code} illustre parfaitement comment l'alliance entre les méthodes classiques d'ingénierie logicielle et les avancées fulgurantes de l'intelligence artificielle peut redéfinir et optimiser le métier de développeur pour les années à venir.
+\newpage

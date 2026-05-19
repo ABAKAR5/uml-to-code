@@ -1,0 +1,72 @@
+\chapter{Conception de la Solution}
+
+\section{Approche Théorique : L'Ingénierie Dirigée par les Modèles}
+
+La conception de notre solution repose sur un socle théorique solide largement reconnu dans le domaine du génie logiciel : l'Ingénierie Dirigée par les Modèles (IDM). 
+
+\subsection{Le concept du MDD (Model-Driven Development)}
+Notre projet s'inscrit pleinement dans l'approche \textbf{MDD (Model-Driven Development)}. Dans cette méthodologie, le modèle n'est plus considéré comme un simple document de documentation ou un croquis préliminaire, mais comme l'artefact principal et central du processus de développement. L'objectif est de générer tout ou partie du code source du système directement à partir de ce modèle. Cette automatisation garantit que l'implémentation reflète fidèlement la conception, réduisant ainsi la fracture entre l'architecte et le développeur.
+
+\subsection{L'Architecture MDA (Model-Driven Architecture)}
+Pour concrétiser le MDD, nous nous appuyons sur la \textbf{MDA (Model-Driven Architecture)}, un cadre conceptuel standardisé par l'OMG. La MDA prône la séparation stricte entre les spécifications fonctionnelles d'un système et son implémentation technologique. Elle distingue trois niveaux d'abstraction majeurs :
+
+\begin{itemize}
+    \item \textbf{CIM (Computation Independent Model)} : Le modèle indépendant des calculs. Il représente la vue métier du système, les exigences des utilisateurs, sans aucune considération technologique.
+    \item \textbf{PIM (Platform Independent Model)} : Le modèle indépendant de la plateforme. Il décrit la structure et le comportement du système (dans notre cas, le diagramme de classes UML fourni en entrée par l'utilisateur).
+    \item \textbf{PSM (Platform Specific Model)} : Le modèle spécifique à la plateforme. Il représente le code source ciblé (Python, PHP, ou Flask) généré par notre application.
+\end{itemize}
+
+L'application \textbf{UML-to-Code} agit donc comme le moteur de transformation automatisé (Transformation Engine) permettant de passer du niveau \textbf{PIM} au niveau \textbf{PSM}.
+
+\section{Stratégies de Transformation}
+Pour réaliser cette transformation PIM vers PSM, notre plateforme innove en proposant deux approches distinctes et complémentaires.
+
+\subsection{L'Approche Algorithmique (Déterministe)}
+Cette méthode est basée sur des règles de transformation strictes et codées en dur. Le système parcourt le fichier XMI et applique des équivalences :
+\begin{itemize}
+    \item Un nœud \texttt{uml:Class} déclenche la création d'une structure \texttt{class NomClasse:} en Python.
+    \item Un nœud \texttt{ownedAttribute} avec \texttt{visibility="private"} génère des variables encapsulées (\texttt{\_\_attribut} en Python).
+\end{itemize}
+\textit{Avantages :} Cette approche est extrêmement rapide, fiable, ne nécessite aucune connexion internet, et donne un résultat 100\% prédictible.
+
+\subsection{L'Approche par IA Générative (LLM)}
+Pour contourner les limites du parsing algorithmique (qui exige un fichier XMI parfaitement formaté), nous intégrons une approche sémantique. Le modèle XMI, ou directement une capture d'écran du diagramme, est envoyé à un Large Language Model (Llama 3.3 via l'API Groq) accompagné d'un prompt métier très précis. L'IA analyse visuellement ou textuellement les entités et génère le code.
+\textit{Avantages :} Une flexibilité immense permettant de comprendre des croquis à main levée, des PDF, et de générer du code métier complexe.
+
+\section{Architecture Globale du Système}
+Pour supporter ces deux approches, nous avons opté pour une architecture logicielle moderne, séparant clairement les responsabilités.
+
+\subsection{Architecture Client-Serveur}
+Le système est divisé en trois tiers principaux :
+\begin{itemize}
+    \item \textbf{Le Frontend (Client)} : Développé en React.js avec le bundler Vite. Il offre une interface riche ("Single Page Application"), gère les interactions utilisateur, la prévisualisation des fichiers et intègre un éditeur de code avancé (Monaco Editor).
+    \item \textbf{Le Backend (Serveur API)} : Développé en Python avec le micro-framework Flask. Il reçoit les fichiers du frontend, orchestre le parsing XML, exécute les algorithmes de génération, prépare les fichiers ZIP, et gère la communication avec les services externes.
+    \item \textbf{Le Service IA Externe} : L'API cloud de Groq qui exécute le modèle open-source Llama 3.3 pour les tâches de vision et de génération de texte.
+\end{itemize}
+
+\section{Modélisation UML de la Solution}
+
+\subsection{Diagramme de Cas d'Utilisation}
+Les acteurs interagissant avec le système sont le \textbf{Développeur} (utilisateur final) et le \textbf{Système Externe} (API Groq).
+Les cas d'utilisation principaux pour le développeur incluent :
+\begin{itemize}
+    \item Uploader un modèle (XMI, PNG, PDF).
+    \item Configurer la génération (choix du langage et du mode).
+    \item Lancer la génération de code.
+    \item Consulter l'historique des générations.
+    \item Exporter le projet généré (Format texte ou ZIP).
+\end{itemize}
+
+\subsection{Diagramme de Séquence (Génération via IA)}
+Afin de comprendre la cinématique d'une requête complexe, voici les étapes d'une génération utilisant l'IA :
+\begin{enumerate}
+    \item \textbf{Développeur} $\rightarrow$ \textbf{Frontend} : Soumet une image de diagramme et sélectionne "Génération Python via IA".
+    \item \textbf{Frontend} $\rightarrow$ \textbf{Backend Flask} : Envoi d'une requête POST contenant l'image et les paramètres.
+    \item \textbf{Backend Flask} $\rightarrow$ \textbf{API Groq} : Formation d'un prompt d'instruction couplé à l'image encodée en base64. L'appel réseau est initié.
+    \item \textbf{API Groq} $\rightarrow$ \textbf{Backend Flask} : Après un traitement d'environ 10 à 15 secondes, l'IA retourne le code généré sous forme de texte brut.
+    \item \textbf{Backend Flask} $\rightarrow$ \textbf{Frontend} : Le texte est formaté, encapsulé dans un objet JSON, et renvoyé au client.
+    \item \textbf{Frontend} $\rightarrow$ \textbf{Développeur} : Affichage du code dans le Monaco Editor avec coloration syntaxique.
+\end{enumerate}
+
+\section{Conclusion du chapitre}
+L'architecture conçue pour UML-to-Code repose sur les principes de la MDA, traduits par une implémentation client-serveur moderne. La dualité algorithme/IA permet de couvrir un spectre très large de cas d'usage, allant de l'export d'entreprise strict à l'esquisse rapide. Le chapitre suivant s'attachera à détailler les choix techniques et la réalisation concrète de cette conception.

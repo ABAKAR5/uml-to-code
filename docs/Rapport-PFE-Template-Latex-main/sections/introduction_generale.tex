@@ -1,0 +1,29 @@
+\chapter*{Introduction Générale}
+\addcontentsline{toc}{chapter}{Introduction Générale}
+\thispagestyle{plain}
+\pagestyle{plain}
+\markboth{}{}
+
+Le domaine de l'ingénierie logicielle est en constante évolution, cherchant sans cesse à optimiser les processus de développement pour réduire les délais de livraison tout en maintenant un haut niveau de qualité. Dans le cycle de vie classique du développement logiciel, la phase de conception, souvent modélisée à l'aide du langage UML (Unified Modeling Language), est une étape fondamentale. Elle permet d'établir une architecture claire et de définir les interactions entre les différentes composantes du système avant même d'écrire la première ligne de code.
+
+Cependant, la traduction de ces modèles conceptuels en code source concret reste une tâche laborieuse, répétitive et chronophage. Bien que l'architecture soit définie, le développeur doit manuellement recréer les classes, les attributs, les méthodes et les relations dans le langage cible. Cette étape manuelle est non seulement une perte de temps précieux, mais elle est également sujette à des erreurs humaines qui peuvent introduire des incohérences entre le modèle conçu et l'implémentation finale.
+
+C'est dans ce contexte que s'inscrit notre projet de fin de cycle intitulé \textbf{UML-to-Code}. Ce projet a pour ambition d'automatiser cette transition délicate entre la conception et l'implémentation. \textbf{UML-to-Code} est une plateforme web intelligente conçue pour transformer automatiquement des diagrammes de classes UML en code source fonctionnel, structuré et prêt à l'emploi. 
+
+Notre solution se démarque par une approche hybride innovante :
+\begin{itemize}
+    \item \textbf{Une approche algorithmique déterministe} : capable d'analyser des fichiers XMI (XML Metadata Interchange) exportés depuis des outils de modélisation standards comme StarUML.
+    \item \textbf{Une approche basée sur l'Intelligence Artificielle} : intégrant un modèle de langage avancé (LLM - Llama 3.3 via Groq) pour analyser des diagrammes sous format image (PNG, JPG) ou PDF, offrant ainsi une flexibilité sans précédent aux développeurs qui préfèrent dessiner leurs architectures.
+\end{itemize}
+
+Ce rapport s'attache à décrire de manière exhaustive les différentes phases qui ont jalonné la réalisation de cette plateforme. Le document est structuré de la manière suivante :
+
+\begin{itemize}
+    \item Le \textbf{Chapitre 1} dresse le contexte du projet, l'étude de l'existant, ainsi que l'analyse détaillée des besoins fonctionnels et non fonctionnels auxquels l'application doit répondre.
+    \item Le \textbf{Chapitre 2} est consacré à la conception de la solution. Il y est abordé l'approche théorique (MDA/MDD), l'architecture logicielle retenue et les différents diagrammes modélisant le comportement du système.
+    \item Le \textbf{Chapitre 3} détaille la phase de réalisation et d'implémentation. Nous y présenterons le cycle de vie adopté, les choix technologiques (React, Flask, Groq), ainsi que des extraits de code illustrant les mécanismes clés comme le parsing XML.
+\end{itemize}
+
+Enfin, une \textbf{Conclusion Générale} viendra synthétiser les résultats obtenus, les compétences acquises au cours de ce projet et les perspectives d'évolution envisageables pour la plateforme UML-to-Code.
+
+\newpage

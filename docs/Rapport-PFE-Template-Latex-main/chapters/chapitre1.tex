@@ -1,0 +1,71 @@
+\chapter{Analyse et Spécification des Besoins}
+
+\section{Contexte et Motivation du projet}
+Le présent projet s'inscrit dans le cadre de la formation en Génie Logiciel à l'Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA). Il vise à concevoir et réaliser une application full-stack répondant à une problématique réelle de productivité logicielle : la transition automatique de la modélisation à l'implémentation. 
+
+La modélisation UML est un standard incontournable, mais le temps passé à transcrire des classes UML en code (Python, PHP, etc.) est considérable. La motivation principale de \textbf{UML-to-Code} est de fournir un pont transparent, rapide et intelligent entre la conception visuelle et le code métier.
+
+\section{Le Format XMI (XML Metadata Interchange)}
+Pour comprendre le fonctionnement de la génération algorithmique, il est essentiel d'étudier le format XMI. XMI est un standard défini par l'OMG (Object Management Group), l'organisation qui gère également UML et MOF (Meta Object Facility). 
+
+Ce format basé sur XML a pour objectif principal de faciliter l'échange de modèles UML entre différents outils de modélisation de l'industrie (tels que StarUML, Enterprise Architect, ou ArgoUML). L'interopérabilité offerte par XMI permet à un modèle créé dans un outil d'être analysé et traité par un autre système de manière fiable.
+
+\subsection{Structure d'un fichier XMI}
+Concrètement, dans un logiciel comme StarUML, l'ensemble des éléments créés (classes, attributs, diagrammes, relations) forme un modèle interne. L'exportation en XMI permet de sérialiser ce modèle en XML, en utilisant des balises standardisées. Voici les éléments majeurs que notre système identifie :
+\begin{itemize}
+    \item \texttt{<uml:Model>} : Représente le conteneur global du projet.
+    \item \texttt{<packagedElement xmi:type="uml:Class">} : Définit l'existence d'une classe.
+    \item \texttt{<ownedAttribute>} : Spécifie les propriétés (attributs) d'une classe, incluant leur type et leur visibilité.
+    \item \texttt{<ownedOperation>} : Définit les méthodes associées à la classe.
+    \item \texttt{<generalization>} : Indique une relation d'héritage entre deux classes.
+\end{itemize}
+
+\section{Étude de l'existant}
+Avant de concevoir notre solution, une étude approfondie des outils existants dans le domaine de la génération de code a été menée. Le tableau \ref{tab:outils_existants} résume les caractéristiques et les limites de quelques solutions majeures du marché.
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|p{3cm}|p{3cm}|p{2cm}|p{6cm}|}
+        \hline
+        \textbf{Outil} & \textbf{Langages générés} & \textbf{Format d'entrée} & \textbf{Limites principales} \\ \hline
+        \textbf{Acceleo} & Java, Python, PHP & XMI (EMF) & Écosystème très complexe et lourd (Eclipse). Courbe d'apprentissage rude. \\ \hline
+        \textbf{AndroMDA} & Java EE & XMI & Solution vieillissante, limitée exclusivement à l'écosystème Java. \\ \hline
+        \textbf{Plugins StarUML / UML2Code} & JS, Java, etc. & .mdj / XMI & Dépendance totale à un logiciel tiers. Interface rigide. \\ \hline
+        \textbf{GenMyModel} & Java, Python & Interface Web & Modèle commercial payant, code source fermé, dépendance au cloud de l'éditeur. \\ \hline
+    \end{tabular}
+    \caption{Comparaison des outils existants de génération de code}
+    \label{tab:outils_existants}
+\end{table}
+
+\subsection{La valeur ajoutée de UML-to-Code}
+Face à ces limites, \textbf{UML-to-Code} se positionne comme une plateforme web légère, intuitive et universelle. Sa principale valeur ajoutée réside dans :
+\begin{enumerate}
+    \item \textbf{La double approche} : Contrairement aux outils classiques limités au XMI, notre plateforme accepte des images (PNG, PDF) analysées par l'Intelligence Artificielle.
+    \item \textbf{L'absence d'installation} : Tout se passe dans le navigateur grâce à une interface moderne.
+    \item \textbf{Le multi-langage} : Génération de Python, de PHP et même d'un serveur Flask complet avec routes CRUD prêtes à l'emploi.
+\end{enumerate}
+
+\section{Analyse des besoins}
+La phase d'analyse a permis de déterminer les fonctionnalités attendues par le système pour répondre aux exigences des utilisateurs finaux (les développeurs et architectes logiciels).
+
+\subsection{Besoins fonctionnels}
+Le système doit impérativement offrir les fonctionnalités suivantes :
+\begin{itemize}
+    \item \textbf{Gestion des formats d'entrée} : Uploader et valider des fichiers XMI (exportés depuis StarUML version 2.1), ainsi que des images ou PDF.
+    \item \textbf{Sélection des paramètres de sortie} : Permettre le choix du langage cible (Python, PHP) et de l'architecture cible (Code simple ou Serveur Flask).
+    \item \textbf{Sélection du moteur de génération} : Laisser l'utilisateur choisir entre le moteur Algorithmique (rapide et hors-ligne) et le moteur IA (intelligent).
+    \item \textbf{Édition et Visualisation} : Fournir un éditeur de code intégré (type IDE) permettant de lire, modifier et copier le code généré.
+    \item \textbf{Exportation} : Permettre le téléchargement du résultat final sous forme de projet compressé (ZIP) contenant toute l'arborescence.
+\end{itemize}
+
+\subsection{Besoins non fonctionnels}
+Pour garantir une expérience utilisateur de qualité, les critères suivants doivent être respectés :
+\begin{itemize}
+    \item \textbf{Performance} : La génération algorithmique doit être quasi-instantanée. La génération via IA (faisant appel à un service externe) doit s'effectuer en un temps raisonnable (10 à 15 secondes).
+    \item \textbf{Ergonomie et Design} : L'interface doit être visuellement attrayante (thème Glassmorphism), intuitive, et s'adapter aux différents terminaux (Responsivité).
+    \item \textbf{Extensibilité} : L'architecture logicielle doit permettre l'ajout futur de nouveaux langages de programmation (Java, C++) sans modification majeure du cœur du système.
+\end{itemize}
+
+\section{Conclusion du chapitre}
+Ce chapitre a permis de définir le cadre précis de notre projet. En comprenant les mécanismes du standard XMI et en analysant les limites des outils existants, nous avons pu formuler des besoins clairs pour UML-to-Code. Le prochain chapitre abordera l'architecture théorique et technique imaginée pour répondre à ces exigences.

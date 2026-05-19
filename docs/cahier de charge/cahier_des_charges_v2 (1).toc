@@ -1,0 +1,38 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Contexte général}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Présentation du projet}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Objectifs du document}{4}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Analyse de l'Existant}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Outils existants}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Valeur ajoutée du projet}{5}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Périmètre du Projet}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Ce qui est inclus}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Ce qui est exclu}{6}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Acteurs et Cas d'Utilisation}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Acteurs identifiés}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Cas d'utilisation principaux}{7}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Diagramme de Cas d'Utilisation}{8}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Exigences Fonctionnelles}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Module Upload}{8}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Module Parsing}{9}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Module Génération IA}{9}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Module Interface et Expérience Utilisateur}{10}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Exigences Non Fonctionnelles}{11}{section.6}%
+\contentsline {section}{\numberline {7}Architecture Technique}{12}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Stack technologique}{12}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Architecture globale}{12}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Diagramme de Classes}{14}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Diagramme de Séquence}{15}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Structure des dossiers}{16}{subsection.7.5}%
+\contentsline {section}{\numberline {8}Cycle de Vie du Projet}{16}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Choix du cycle de vie : Modèle Incrémental}{16}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Comparaison des cycles de vie}{16}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Les 5 incréments du projet}{17}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Jalons critiques}{17}{subsection.8.4}%
+\contentsline {section}{\numberline {9}Planning de Réalisation}{18}{section.9}%
+\contentsline {section}{\numberline {10}Livrables Attendus}{18}{section.10}%
+\contentsline {section}{\numberline {11}Critères d'Acceptation}{18}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Critères techniques}{18}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Critères académiques}{19}{subsection.11.2}%
+\contentsline {section}{\numberline {12}Glossaire}{19}{section.12}%

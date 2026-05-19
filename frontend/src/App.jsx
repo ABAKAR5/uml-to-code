@@ -37,6 +37,8 @@ function ToastContainer({ toasts }) {
   )
 }
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function App() {
   const [file, setFile] = useState(null)
   const [language, setLanguage] = useState("python")
@@ -152,7 +154,7 @@ function App() {
     formData.append("use_ai", useAi.toString())
 
     try {
-      const res = await axios.post("http://localhost:5000/api/upload", formData, {
+      const res = await axios.post(`${API_URL}/api/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" }
       })
       setCurrentStep(stepsConfig.length - 1)
@@ -201,7 +203,7 @@ function App() {
 
   const handleDownloadZip = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/download-zip",
+      const res = await axios.post(`${API_URL}/api/download-zip`,
         { code, server_code: serverCode, language },
         { responseType: "blob" }
       )

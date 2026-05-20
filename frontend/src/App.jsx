@@ -580,12 +580,39 @@ function App() {
                     }}><FaDownload /> Télécharger</button>
                   </div>
                 </div>
-                <div className="editor-container-main" style={{ borderRadius: '0 0 16px 16px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                  {isMobile ? (
-                    <pre className="code-block" style={{ margin: 0, borderRadius: 0, maxHeight: '500px', overflow: 'auto' }}>
-                      <code>{activeTab === 'code' ? code : serverCode}</code>
-                    </pre>
-                  ) : (
+                {isMobile ? (
+                  <div className="mobile-code-success" style={{
+                    padding: '24px 20px',
+                    textAlign: 'center',
+                    background: 'rgba(16, 185, 129, 0.05)',
+                    borderBottom: '1px solid var(--border)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '12px'
+                  }}>
+                    <div style={{
+                      width: '48px',
+                      height: '48px',
+                      borderRadius: '50%',
+                      background: 'rgba(16, 185, 129, 0.1)',
+                      color: 'var(--green)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.5rem'
+                    }}>
+                      <FaCheckCircle />
+                    </div>
+                    <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '700', color: 'var(--text-primary)' }}>
+                      Code généré avec succès !
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
+                      Le code source est prêt. Utilisez les boutons ci-dessus pour le copier, le télécharger ou l'exporter en archive ZIP.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="editor-container-main" style={{ borderRadius: '0 0 16px 16px', overflow: 'hidden', border: '1px solid var(--border)' }}>
                     <Editor
                       height="500px"
                       language={activeTab === 'server' ? 'python' : language}
@@ -594,8 +621,8 @@ function App() {
                       options={{ minimap: { enabled: true }, fontSize: 14, automaticLayout: true, padding: { top: 20, bottom: 20 } }}
                       onChange={(val) => activeTab === 'code' ? setCode(val) : setServerCode(val)}
                     />
-                  )}
-                </div>
+                  </div>
+                )}
                 <div className="code-stats">
                   <span>📏 {(activeTab === 'code' ? code : serverCode).split('\n').length} Lignes</span>
                   <span><FaThLarge /> {classesFound} Classes</span>

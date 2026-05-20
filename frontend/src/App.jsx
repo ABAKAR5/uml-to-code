@@ -52,6 +52,7 @@ function App() {
   const [dragOver, setDragOver] = useState(false)
   const [aiUsed, setAiUsed] = useState(false)
   const fileInputRef = useRef(null)
+  const resultRef = useRef(null)
   const [steps, setSteps] = useState([])
   const [currentStep, setCurrentStep] = useState(-1)
   const [preview, setPreview] = useState(null)
@@ -190,6 +191,12 @@ function App() {
       })
 
       addToast("Code généré avec succès !", "success")
+      // Sur mobile, scroll automatiquement vers les résultats
+      if (window.innerWidth <= 768 && resultRef.current) {
+        setTimeout(() => {
+          resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 300)
+      }
     } catch (err) {
       setError(err.response?.data?.error || "Erreur lors de la génération")
     } finally {
@@ -556,7 +563,7 @@ function App() {
             </div>
           </div>
 
-          <div className="right-panel">
+          <div className="right-panel" ref={resultRef}>
             {code ? (
               <div className="panel-card result-card">
                 <div className="result-header">
@@ -631,13 +638,15 @@ function App() {
                 </div>
               </div>
             ) : (
-              <div className="panel-card empty-panel">
-                <div className="empty-content">
-                  <div className="empty-icon"><FaRocket /></div>
-                  <h3>Votre code apparaîtra ici</h3>
-                  <p>Uploadez un diagramme UML pour commencer.</p>
+              !isMobile && (
+                <div className="panel-card empty-panel">
+                  <div className="empty-content">
+                    <div className="empty-icon"><FaRocket /></div>
+                    <h3>Votre code apparaîtra ici</h3>
+                    <p>Uploadez un diagramme UML pour commencer.</p>
+                  </div>
                 </div>
-              </div>
+              )
             )}
           </div>
         </div>

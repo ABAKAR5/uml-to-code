@@ -1902,13 +1902,16 @@ html, body {
   .result-actions {
     justify-content: space-between !important;
     width: 100% !important;
-    gap: 6px !important;
+    gap: 8px !important;
   }
   .action-btn {
     flex: 1 !important;
-    padding: 8px 6px !important;
-    font-size: 0.78rem !important;
+    padding: 12px 8px !important;
+    font-size: 0.82rem !important;
     text-align: center !important;
+    justify-content: center !important;
+    font-weight: 700 !important;
+    min-height: 44px !important;
   }
   
   /* Code stats wrapping */
@@ -1917,6 +1920,11 @@ html, body {
     flex-wrap: wrap !important;
     gap: 10px !important;
     font-size: 0.74rem !important;
+  }
+
+  /* Result card scroll target on mobile */
+  .result-card {
+    scroll-margin-top: 80px;
   }
 }
 
@@ -1945,10 +1953,20 @@ html, body {
   .doc-card {
     padding: 18px !important;
   }
-  .empty-panel {
-    min-height: 350px !important;
-  }
   .empty-icon {
     font-size: 3rem !important;
   }
-}
+
+  /* Action buttons stacked 2x2 on very small screens */
+  .result-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .action-btn {
+    padding: 14px 8px !important;
+    font-size: 0.85rem !important;
+    min-height: 48px !important;
+    border-radius: 10px !important;
+  }
+}

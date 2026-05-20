@@ -61,6 +61,16 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
   const { toasts, addToast } = useToast()
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -571,14 +581,20 @@ function App() {
                   </div>
                 </div>
                 <div className="editor-container-main" style={{ borderRadius: '0 0 16px 16px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                  <Editor
-                    height="500px"
-                    language={activeTab === 'server' ? 'python' : language}
-                    theme="vs-dark"
-                    value={activeTab === 'code' ? code : serverCode}
-                    options={{ minimap: { enabled: true }, fontSize: 14, automaticLayout: true, padding: { top: 20, bottom: 20 } }}
-                    onChange={(val) => activeTab === 'code' ? setCode(val) : setServerCode(val)}
-                  />
+                  {isMobile ? (
+                    <pre className="code-block" style={{ margin: 0, borderRadius: 0, maxHeight: '500px', overflow: 'auto' }}>
+                      <code>{activeTab === 'code' ? code : serverCode}</code>
+                    </pre>
+                  ) : (
+                    <Editor
+                      height="500px"
+                      language={activeTab === 'server' ? 'python' : language}
+                      theme="vs-dark"
+                      value={activeTab === 'code' ? code : serverCode}
+                      options={{ minimap: { enabled: true }, fontSize: 14, automaticLayout: true, padding: { top: 20, bottom: 20 } }}
+                      onChange={(val) => activeTab === 'code' ? setCode(val) : setServerCode(val)}
+                    />
+                  )}
                 </div>
                 <div className="code-stats">
                   <span>📏 {(activeTab === 'code' ? code : serverCode).split('\n').length} Lignes</span>

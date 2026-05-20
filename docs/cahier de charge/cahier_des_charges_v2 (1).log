@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.5.7)  19 MAY 2026 13:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.5.7)  20 MAY 2026 09:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -857,6 +857,14 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 21
  (C:\Users\abvip\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
+
+Package fancyhdr Warning: \headheight is too small (24.0pt): 
+(fancyhdr)                Make it at least 24.01996pt, for example:
+(fancyhdr)                \setlength{\headheight}{24.01996pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-0.01996pt}.
+
+[6]
 Underfull \hbox (badness 10000) in paragraph at lines 256--256
 []|\T1/lmr/m/n/12 Orchestration, par-sing
  []
@@ -866,20 +874,11 @@ Underfull \hbox (badness 2495) in paragraph at lines 256--256
 \T1/lmr/m/n/12 XMI/image/PDF, ap-pel API Groq,
  []
 
-
-Package fancyhdr Warning: \headheight is too small (24.0pt): 
-(fancyhdr)                Make it at least 24.01996pt, for example:
-(fancyhdr)                \setlength{\headheight}{24.01996pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-0.01996pt}.
-
-[6]
 <UCD_UML_to_Code.jpg, id=272, 1066.98625pt x 942.52126pt>
 File: UCD_UML_to_Code.jpg Graphic file (type jpg)
 <use UCD_UML_to_Code.jpg>
 Package pdftex.def Info: UCD_UML_to_Code.jpg  used on input line 279.
 (pdftex.def)             Requested size: 386.96027pt x 341.82419pt.
-
 
 Package fancyhdr Warning: \headheight is too small (24.0pt): 
 (fancyhdr)                Make it at least 24.01996pt, for example:
@@ -888,6 +887,8 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.01996pt}.
 
 [7
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -953,22 +954,22 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 pdfTeX warning (ext4): destination with the same identifier (name{table.7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.472 \newpage
-              ]
-Underfull \hbox (badness 2150) in paragraph at lines 515--515
+l.467 \clearpage
+                ]
+Underfull \hbox (badness 2150) in paragraph at lines 510--510
 []|\T1/lmr/m/n/12 IcÙnes UI (Fa-Home, Fa-Bolt,
  []
 
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 539.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 534.
 (C:\Users\abvip\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 541.
+(Font)              <14.4> on input line 536.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 541.
+(Font)              <10> on input line 536.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 541.
+(Font)              <7> on input line 536.
 
 
 Package fancyhdr Warning: \headheight is too small (24.0pt): 
@@ -978,15 +979,17 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.01996pt}.
 
 [12
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{table.8}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.562 \end{center}
+l.557 \end{center}
                   ]
 <CD_UML_to_Code.jpg, id=321, 1671.24374pt x 1577.895pt>
 File: CD_UML_to_Code.jpg Graphic file (type jpg)
 <use CD_UML_to_Code.jpg>
-Package pdftex.def Info: CD_UML_to_Code.jpg  used on input line 568.
+Package pdftex.def Info: CD_UML_to_Code.jpg  used on input line 563.
 (pdftex.def)             Requested size: 455.24411pt x 429.81738pt.
 
 
@@ -1000,7 +1003,7 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 <SD_Generation_Code.jpg, id=329, 2147.02126pt x 1592.95125pt>
 File: SD_Generation_Code.jpg Graphic file (type jpg)
 <use SD_Generation_Code.jpg>
-Package pdftex.def Info: SD_Generation_Code.jpg  used on input line 576.
+Package pdftex.def Info: SD_Generation_Code.jpg  used on input line 571.
 (pdftex.def)             Requested size: 455.24411pt x 337.76239pt.
 
 
@@ -1014,7 +1017,7 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.579 
+l.574 
        <./CD_UML_to_Code.jpg>]
 
 Package fancyhdr Warning: \headheight is too small (24.0pt): 
@@ -1027,7 +1030,7 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.605 
+l.600 
        <./SD_Generation_Code.jpg>]
 
 Package fancyhdr Warning: \headheight is too small (24.0pt): 
@@ -1040,24 +1043,24 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 pdfTeX warning (ext4): destination with the same identifier (name{table.9}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.646 \subsection{Les 5 incr√©ments du projet}
+l.641 \subsection{Les 5 incr√©ments du projet}
                                               ]
-Underfull \hbox (badness 10000) in paragraph at lines 671--671
+Underfull \hbox (badness 10000) in paragraph at lines 666--666
 []|\T1/lmr/m/n/12 Groq com-plet, gÈ-nÈ-ra-teurs Py-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 671--671
+Underfull \hbox (badness 10000) in paragraph at lines 666--666
 \T1/lmr/m/n/12 thon+PHP, Flask auto, React
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 671--671
+Underfull \hbox (badness 10000) in paragraph at lines 666--666
 \T1/lmr/m/n/12 Glass-mor-phism, Mo-naco Edi-tor,
  []
 
 
-Underfull \hbox (badness 5331) in paragraph at lines 671--671
+Underfull \hbox (badness 5331) in paragraph at lines 666--666
 \T1/lmr/m/n/12 sombre/clair, ani-ma-tions, rap-port,
  []
 
@@ -1072,13 +1075,87 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 pdfTeX warning (ext4): destination with the same identifier (name{table.10}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.730 
+l.725 
       
 pdfTeX warning (ext4): destination with the same identifier (name{table.11}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.730 
+l.725 
       ]
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 Charges
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 (ce do-cu-
+ []
+
+
+Overfull \hbox (6.95784pt too wide) in paragraph at lines 755--755
+[]|\T1/lmr/m/n/12 Diagrammes
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 UML de
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 concep-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 Classes,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+[]|\T1/lmr/m/n/12 Code
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 source
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 com-plet
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 (ba-ckend
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 + fron-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+[]|\T1/lmr/m/n/12 Rapport
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 755--755
+\T1/lmr/m/n/12 de pro-jet
+ []
+
+
+Overfull \hbox (7.60957pt too wide) in paragraph at lines 755--755
+[]|\T1/lmr/m/n/12 PrÈsentation
+ []
+
+
+Overfull \hbox (19.36047pt too wide) in paragraph at lines 755--755
+[]|\T1/lmr/m/n/12 DÈmonstration
+ []
+
 
 Package fancyhdr Warning: \headheight is too small (24.0pt): 
 (fancyhdr)                Make it at least 24.01996pt, for example:
@@ -1090,13 +1167,8 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 pdfTeX warning (ext4): destination with the same identifier (name{table.12}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.776   \item L
-               'historique local sauvegarde et restaure les 10 derni√®res g√...
-pdfTeX warning (ext4): destination with the same identifier (name{table.13}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.776   \item L
-               'historique local sauvegarde et restaure les 10 derni√®res g√...]
+l.758 
+      ]
 
 Package fancyhdr Warning: \headheight is too small (24.0pt): 
 (fancyhdr)                Make it at least 24.01996pt, for example:
@@ -1105,11 +1177,11 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-0.01996pt}.
 
 [19
-pdfTeX warning (ext4): destination with the same identifier (name{table.14}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{table.13}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.850 \end{document}
-                    ]
+l.773   \item L
+               'export ZIP contient le code + le serveur Flask, pr√™t √† d√©...]
 
 Package fancyhdr Warning: \headheight is too small (24.0pt): 
 (fancyhdr)                Make it at least 24.01996pt, for example:
@@ -1117,7 +1189,12 @@ Package fancyhdr Warning: \headheight is too small (24.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-0.01996pt}.
 
-[20] (cahier_des_charges_v2 (1).aux)
+[20
+pdfTeX warning (ext4): destination with the same identifier (name{table.14}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.846 \end{document}
+                    ] (cahier_des_charges_v2 (1).aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
@@ -1134,9 +1211,9 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  98i,17n,108p,1273b,728s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/abvip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on "cahier_des_charges_v2 (1).pdf" (20 pages, 3238196 bytes).
+Output written on "cahier_des_charges_v2 (1).pdf" (20 pages, 3241782 bytes).
 PDF statistics:
- 442 PDF objects out of 1000 (max. 8388607)
+ 446 PDF objects out of 1000 (max. 8388607)
  88 named destinations out of 1000 (max. 500000)
  339 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -223,12 +223,12 @@ Par rapport aux solutions existantes, UML-to-Code apporte :
   \item Les diagrammes de séquence, d'activité ou de cas d'utilisation
   \item La génération de bases de données ou de requêtes SQL
   \item La génération de code Java (hors scope pour ce projet)
-  \item L'hébergement en ligne de l'application (démo locale uniquement)
   \item L'authentification et la gestion multi-utilisateurs centralisée
   \item La sauvegarde serveur (historique en localStorage uniquement)
 \end{itemize}
 
 % ─────────────────────────────────────────────
+\clearpage
 \section{Acteurs et Cas d'Utilisation}
 
 \subsection{Acteurs identifiés}
@@ -463,13 +463,8 @@ EF-32 & Animations et transitions modernes (fadeIn, float, slideUp) & \lowpriori
 \caption{Exigences non fonctionnelles}
 \end{table}
 
-
-
-
-
-
 % ─────────────────────────────────────────────
-\newpage
+\clearpage
 \section{Architecture Technique}
 
 \subsection{Stack technologique}
@@ -755,7 +750,7 @@ S3 & 22–26 mai & Tests, rapport, slides, export ZIP, répétition soutenance &
 5 & Présentation slides & PowerPoint/PDF & 24/05/2026 \\
 \hline
 \rowcolor{lightgray}
-6 & Démonstration live & Application locale & 26/05/2026 \\
+6 & Démonstration live & Application hébergée — \href{https://uml-to-code-peach.vercel.app}{uml-to-code-peach.vercel.app} & 26/05/2026 \\
 \hline
 \end{tabularx}
 \caption{Livrables attendus}
@@ -772,6 +767,7 @@ S3 & 22–26 mai & Tests, rapport, slides, export ZIP, répétition soutenance &
   \item Le code PHP généré respecte la syntaxe PHP 8+
   \item Le serveur Flask généré contient les routes CRUD de base
   \item L'interface React est fonctionnelle et responsive (mobile + desktop)
+  \item L'application est déployée et accessible en ligne sur \href{https://uml-to-code-peach.vercel.app}{\texttt{uml-to-code-peach.vercel.app}}
   \item Le Monaco Editor affiche le code avec coloration syntaxique
   \item L'historique local sauvegarde et restaure les 10 dernières générations
   \item L'export ZIP contient le code + le serveur Flask, prêt à déployer

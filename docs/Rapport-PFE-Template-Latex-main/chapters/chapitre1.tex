@@ -1,71 +1,326 @@
-\chapter{Analyse et Spécification des Besoins}
+\chapter{Étude Préliminaire et Analyse des Besoins}
 
-\section{Contexte et Motivation du projet}
-Le présent projet s'inscrit dans le cadre de la formation en Génie Logiciel à l'Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA). Il vise à concevoir et réaliser une application full-stack répondant à une problématique réelle de productivité logicielle : la transition automatique de la modélisation à l'implémentation. 
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
 
-La modélisation UML est un standard incontournable, mais le temps passé à transcrire des classes UML en code (Python, PHP, etc.) est considérable. La motivation principale de \textbf{UML-to-Code} est de fournir un pont transparent, rapide et intelligent entre la conception visuelle et le code métier.
+Dans ce premier chapitre, nous présentons l'Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA), notre établissement de formation. Nous exposons ensuite le contexte général du projet, l'analyse de l'existant, la problématique identifiée, ainsi que les besoins fonctionnels et non fonctionnels du système à concevoir.
 
-\section{Le Format XMI (XML Metadata Interchange)}
-Pour comprendre le fonctionnement de la génération algorithmique, il est essentiel d'étudier le format XMI. XMI est un standard défini par l'OMG (Object Management Group), l'organisation qui gère également UML et MOF (Meta Object Facility). 
+%=============================================
+\section{Contexte Institutionnel : l'INSTA}
+%=============================================
 
-Ce format basé sur XML a pour objectif principal de faciliter l'échange de modèles UML entre différents outils de modélisation de l'industrie (tels que StarUML, Enterprise Architect, ou ArgoUML). L'interopérabilité offerte par XMI permet à un modèle créé dans un outil d'être analysé et traité par un autre système de manière fiable.
+\subsection{Présentation générale}
 
-\subsection{Structure d'un fichier XMI}
-Concrètement, dans un logiciel comme StarUML, l'ensemble des éléments créés (classes, attributs, diagrammes, relations) forme un modèle interne. L'exportation en XMI permet de sérialiser ce modèle en XML, en utilisant des balises standardisées. Voici les éléments majeurs que notre système identifie :
+L'Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA) est un établissement public d'enseignement supérieur à caractère scientifique et technique, situé dans la ville d'Abéché (province du Ouaddaï), au Nord-Est du Tchad. Créé initialement sous le nom d'Institut Universitaire des Sciences et Techniques d'Abéché (IUSTA) en 1997, il a été rebaptisé INSTA par l'Ordonnance N°004/PR/MES/2015 du 02 mars 2015.
+
+\subsection{Missions de l'INSTA}
+
+L'institut poursuit plusieurs missions fondamentales :
+
 \begin{itemize}
-    \item \texttt{<uml:Model>} : Représente le conteneur global du projet.
-    \item \texttt{<packagedElement xmi:type="uml:Class">} : Définit l'existence d'une classe.
-    \item \texttt{<ownedAttribute>} : Spécifie les propriétés (attributs) d'une classe, incluant leur type et leur visibilité.
-    \item \texttt{<ownedOperation>} : Définit les méthodes associées à la classe.
-    \item \texttt{<generalization>} : Indique une relation d'héritage entre deux classes.
+    \item \textbf{Formation académique et professionnelle} : former des étudiants dans divers domaines techniques et scientifiques, en vue de répondre aux besoins du marché de l'emploi.
+    \item \textbf{Recherche et innovation} : promouvoir la recherche scientifique et valoriser les résultats pour répondre aux besoins du pays.
+    \item \textbf{Partenariats} : établir des collaborations avec des institutions nationales et internationales pour renforcer la qualité de l'enseignement.
+    \item \textbf{Contribution au développement} : fournir au marché de l'emploi des ingénieurs compétents capables d'apporter des solutions aux problématiques locales.
 \end{itemize}
 
-\section{Étude de l'existant}
-Avant de concevoir notre solution, une étude approfondie des outils existants dans le domaine de la génération de code a été menée. Le tableau \ref{tab:outils_existants} résume les caractéristiques et les limites de quelques solutions majeures du marché.
+\subsection{Offres de formation}
+
+L'INSTA offre deux cycles principaux :
+
+\begin{itemize}
+    \item \textbf{Premier cycle} : Licence professionnelle (3 ans) formant des licenciés professionnels dans les domaines scientifiques et techniques.
+    \item \textbf{Deuxième cycle} : Master (2 ans), divisé en Master professionnel et recherche, dans les domaines de Génie Électrique, Génie Mécanique, Génie Énergétique, Sciences Biomédicales et Sciences et Techniques d'Élevage.
+\end{itemize}
+
+\subsection{Départements de l'INSTA}
+
+L'institut est composé de plusieurs départements :
+
+\begin{itemize}
+    \item Département de Génie Informatique (GI) — option Génie Logiciel
+    \item Département de Génie Mécanique (GM)
+    \item Département de Génie Électrique (GE)
+    \item Département de Génie Énergétique (GEN)
+    \item Département de Télécommunication et Réseau (TLC)
+    \item Département Conception, Installation et Maintenance des Systèmes (CIMS)
+    \item Département des Sciences et Techniques d'Élevage (STE)
+    \item Département des Sciences Biomédicales et Pharmaceutiques (SBMP)
+\end{itemize}
+
+%=============================================
+\section{Contexte Général du Projet}
+%=============================================
+
+\subsection{Le Génie Logiciel et la modélisation UML}
+
+Le Génie Logiciel est la discipline qui s'intéresse à la conception, au développement, à la maintenance et à la gestion de systèmes logiciels de qualité. Parmi les pratiques fondamentales de cette discipline, la modélisation occupe une place centrale. Elle permet de représenter un système sous forme abstraite avant son implémentation, facilitant ainsi la communication entre les parties prenantes et la détection précoce des erreurs de conception.
+
+L'UML (\textit{Unified Modeling Language}) est le langage de modélisation le plus utilisé dans l'industrie du logiciel. Il propose un ensemble de diagrammes standardisés permettant de décrire l'architecture statique et dynamique d'un système logiciel. Pour notre projet, nous avons utilisé trois types de diagrammes :
 
 \begin{table}[H]
-    \centering
-    \renewcommand{\arraystretch}{1.5}
-    \begin{tabular}{|p{3cm}|p{3cm}|p{2cm}|p{6cm}|}
-        \hline
-        \textbf{Outil} & \textbf{Langages générés} & \textbf{Format d'entrée} & \textbf{Limites principales} \\ \hline
-        \textbf{Acceleo} & Java, Python, PHP & XMI (EMF) & Écosystème très complexe et lourd (Eclipse). Courbe d'apprentissage rude. \\ \hline
-        \textbf{AndroMDA} & Java EE & XMI & Solution vieillissante, limitée exclusivement à l'écosystème Java. \\ \hline
-        \textbf{Plugins StarUML / UML2Code} & JS, Java, etc. & .mdj / XMI & Dépendance totale à un logiciel tiers. Interface rigide. \\ \hline
-        \textbf{GenMyModel} & Java, Python & Interface Web & Modèle commercial payant, code source fermé, dépendance au cloud de l'éditeur. \\ \hline
-    \end{tabular}
-    \caption{Comparaison des outils existants de génération de code}
-    \label{tab:outils_existants}
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|p{5cm}|l|}
+\hline
+\rowcolor{gray!30}
+\textbf{Diagramme} & \textbf{Objectif} & \textbf{Type} \\
+\hline
+Diagramme de classes & Représenter la structure statique du système : classes, attributs, méthodes et relations & Statique \\
+\hline
+Diagramme de cas d'utilisation & Décrire les interactions entre les acteurs et le système & Fonctionnel \\
+\hline
+Diagramme de séquence & Illustrer les échanges entre composants dans un ordre temporel & Dynamique \\
+\hline
+\end{tabular}
+\caption{Diagrammes UML utilisés dans le projet}
 \end{table}
 
-\subsection{La valeur ajoutée de UML-to-Code}
-Face à ces limites, \textbf{UML-to-Code} se positionne comme une plateforme web légère, intuitive et universelle. Sa principale valeur ajoutée réside dans :
-\begin{enumerate}
-    \item \textbf{La double approche} : Contrairement aux outils classiques limités au XMI, notre plateforme accepte des images (PNG, PDF) analysées par l'Intelligence Artificielle.
-    \item \textbf{L'absence d'installation} : Tout se passe dans le navigateur grâce à une interface moderne.
-    \item \textbf{Le multi-langage} : Génération de Python, de PHP et même d'un serveur Flask complet avec routes CRUD prêtes à l'emploi.
-\end{enumerate}
+\subsection{Le Développement Dirigé par les Modèles (MDD)}
 
-\section{Analyse des besoins}
-La phase d'analyse a permis de déterminer les fonctionnalités attendues par le système pour répondre aux exigences des utilisateurs finaux (les développeurs et architectes logiciels).
+Le \textbf{Développement Dirigé par les Modèles} (MDD — \textit{Model-Driven Development}) est un paradigme de développement logiciel qui place le modèle au cœur du processus de développement. L'idée fondatrice du MDD est que le modèle n'est plus un simple document de documentation, mais un artefact de première classe à partir duquel le code source peut être généré automatiquement.
 
-\subsection{Besoins fonctionnels}
-Le système doit impérativement offrir les fonctionnalités suivantes :
+Dans ce paradigme, on distingue :
 \begin{itemize}
-    \item \textbf{Gestion des formats d'entrée} : Uploader et valider des fichiers XMI (exportés depuis StarUML version 2.1), ainsi que des images ou PDF.
-    \item \textbf{Sélection des paramètres de sortie} : Permettre le choix du langage cible (Python, PHP) et de l'architecture cible (Code simple ou Serveur Flask).
-    \item \textbf{Sélection du moteur de génération} : Laisser l'utilisateur choisir entre le moteur Algorithmique (rapide et hors-ligne) et le moteur IA (intelligent).
-    \item \textbf{Édition et Visualisation} : Fournir un éditeur de code intégré (type IDE) permettant de lire, modifier et copier le code généré.
-    \item \textbf{Exportation} : Permettre le téléchargement du résultat final sous forme de projet compressé (ZIP) contenant toute l'arborescence.
+    \item Le \textbf{PIM} (\textit{Platform Independent Model}) : le modèle UML indépendant de toute plateforme
+    \item Le \textbf{PSM} (\textit{Platform Specific Model}) : le code source généré pour une plateforme cible (Python, PHP, etc.)
+    \item La \textbf{transformation} : le processus automatique qui convertit le PIM en PSM
 \end{itemize}
 
-\subsection{Besoins non fonctionnels}
-Pour garantir une expérience utilisateur de qualité, les critères suivants doivent être respectés :
+Notre projet s'inscrit exactement dans cette approche : le diagramme UML est le PIM, et le code Python ou PHP généré est le PSM.
+
+\subsection{L'Intelligence Artificielle générative}
+
+L'avènement des \textbf{Grands Modèles de Langage} (LLM — \textit{Large Language Models}) représente une révolution dans le domaine de l'Intelligence Artificielle. Ces modèles, entraînés sur des milliards de lignes de texte et de code source, sont capables de comprendre et de générer du code source de manière contextuelle et cohérente.
+
+Dans le cadre de ce projet, nous exploitons le modèle \textbf{Groq Llama 3.3-70b}, un LLM open source de 70 milliards de paramètres développé par Meta et hébergé sur l'infrastructure d'inférence ultra-rapide \textbf{Groq}, qui permet des temps de génération de l'ordre de 2 à 5 secondes.
+
+\subsection{Le format XMI}
+
+Le format \textbf{XMI} (\textit{XML Metadata Interchange}) est un standard défini par l'OMG (\textit{Object Management Group}) pour l'échange de modèles UML entre différents outils de modélisation. C'est un fichier texte structuré en XML qui contient la description complète d'un modèle UML : classes, attributs, méthodes, relations et héritage.
+
+StarUML, l'outil de modélisation que nous utilisons, permet d'exporter les diagrammes de classes au format XMI 2.1. Notre application parse ce fichier pour en extraire automatiquement la structure orientée objet et générer le code correspondant.
+
+%=============================================
+\section{Analyse de l'Existant}
+%=============================================
+
+\subsection{Outils existants de transformation UML vers code}
+
+Plusieurs outils de transformation UML vers code existent sur le marché. Nous en avons analysé les principaux afin d'identifier leurs limites :
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|l|l|p{4.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{Outil} & \textbf{Langages générés} & \textbf{Format entrée} & \textbf{Limites principales} \\
+\hline
+Acceleo (Eclipse) & Java, Python, PHP & XMI/EMF & Très complexe, lourd à installer \\
+\hline
+AndroMDA & Java EE uniquement & XMI & Limité à Java, pas d'IA \\
+\hline
+GenMyModel & Java, Python & En ligne & Payant, pas open source \\
+\hline
+StarUML Plugins & JavaScript, Java & .mdj & Limité, pas d'IA générative \\
+\hline
+Solutions manuelles & Tous langages & Tous formats & Lent, source d'erreurs \\
+\hline
+\end{tabular}
+\caption{Comparatif des outils existants de transformation UML vers code}
+\end{table}
+
+\subsection{Limites des solutions existantes}
+
+L'analyse comparative révèle plusieurs lacunes communes :
+
 \begin{itemize}
-    \item \textbf{Performance} : La génération algorithmique doit être quasi-instantanée. La génération via IA (faisant appel à un service externe) doit s'effectuer en un temps raisonnable (10 à 15 secondes).
-    \item \textbf{Ergonomie et Design} : L'interface doit être visuellement attrayante (thème Glassmorphism), intuitive, et s'adapter aux différents terminaux (Responsivité).
-    \item \textbf{Extensibilité} : L'architecture logicielle doit permettre l'ajout futur de nouveaux langages de programmation (Java, C++) sans modification majeure du cœur du système.
+    \item \textbf{Complexité d'installation} : des outils comme Acceleo nécessitent une installation lourde et une configuration complexe
+    \item \textbf{Absence d'IA} : aucun outil n'intègre de modèle d'IA générative pour produire un code contextuel
+    \item \textbf{Formats d'entrée limités} : la plupart n'acceptent que le format XMI, excluant les images et les PDF
+    \item \textbf{Coût} : certaines solutions performantes sont payantes et propriétaires
+    \item \textbf{Pas de génération de serveur} : aucun outil ne génère automatiquement un serveur REST opérationnel
 \end{itemize}
 
-\section{Conclusion du chapitre}
-Ce chapitre a permis de définir le cadre précis de notre projet. En comprenant les mécanismes du standard XMI et en analysant les limites des outils existants, nous avons pu formuler des besoins clairs pour UML-to-Code. Le prochain chapitre abordera l'architecture théorique et technique imaginée pour répondre à ces exigences.
+\subsection{Valeur ajoutée de notre solution}
+
+Face à ces limitations, \textbf{UML-to-Code} apporte une réponse innovante :
+\begin{itemize}
+    \item Intégration d'une IA générative (\textbf{Groq Llama 3.3-70b}) pour un code contextuel et complet
+    \item Support de plusieurs formats d'entrée : XMI, image PNG/JPG, PDF
+    \item Génération automatique d'un serveur Flask complet avec routes CRUD
+    \item Interface web moderne avec Monaco Editor, historique local, mode sombre/clair
+    \item Export en archive ZIP du projet complet prêt à déployer
+    \item Déploiement en ligne accessible via \href{https://uml-to-code-peach.vercel.app}{\texttt{uml-to-code-peach.vercel.app}}
+    \item Solution légère, open source et sans installation complexe
+\end{itemize}
+
+%=============================================
+\section{Spécification des Besoins}
+%=============================================
+
+\subsection{Acteurs du système}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|p{4cm}|p{6cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{Acteur} & \textbf{Rôle} & \textbf{Interactions principales} \\
+\hline
+\textbf{Utilisateur} & Étudiant ou développeur utilisant l'outil & Upload fichier, choix options, génération, visualisation Monaco Editor, copie, téléchargement, consultation historique \\
+\hline
+\textbf{API Groq (IA)} & Modèle Llama 3.3-70b & Reçoit la description UML extraite, retourne le code généré \\
+\hline
+\textbf{Backend Flask} & Serveur Python & Orchestration, parsing XMI/image/PDF, appel API Groq, génération ZIP \\
+\hline
+\textbf{localStorage} & Stockage navigateur & Persiste l'historique des 10 dernières générations et le thème \\
+\hline
+\end{tabular}
+\caption{Acteurs du système UML-to-Code}
+\end{table}
+
+\subsection{Exigences Fonctionnelles}
+
+\subsubsection{Module Upload}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|p{8cm}|c|}
+\hline
+\rowcolor{gray!30}
+\textbf{ID} & \textbf{Exigence} & \textbf{Priorité} \\
+\hline
+EF-01 & Accepter les fichiers XMI exportés depuis StarUML & Haute \\
+\hline
+EF-02 & Accepter les images PNG et JPG de diagrammes UML & Haute \\
+\hline
+EF-03 & Accepter les fichiers PDF contenant un diagramme UML & Moyenne \\
+\hline
+EF-04 & Valider le format du fichier avant traitement & Haute \\
+\hline
+EF-05 & Afficher un message d'erreur en cas de format invalide & Haute \\
+\hline
+EF-06 & Afficher un aperçu visuel du diagramme pour PNG/JPG & Moyenne \\
+\hline
+\end{tabular}
+\caption{Exigences fonctionnelles — Module Upload}
+\end{table}
+
+\subsubsection{Module Parsing}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|p{8cm}|c|}
+\hline
+\rowcolor{gray!30}
+\textbf{ID} & \textbf{Exigence} & \textbf{Priorité} \\
+\hline
+EF-07 & Parser les classes, attributs et méthodes depuis un XMI & Haute \\
+\hline
+EF-08 & Extraire les relations d'héritage entre classes & Haute \\
+\hline
+EF-09 & Extraire les associations et agrégations & Moyenne \\
+\hline
+EF-10 & Envoyer l'image/PDF directement à Groq (vision IA) & Haute \\
+\hline
+\end{tabular}
+\caption{Exigences fonctionnelles — Module Parsing}
+\end{table}
+
+\subsubsection{Module Génération IA}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|p{8cm}|c|}
+\hline
+\rowcolor{gray!30}
+\textbf{ID} & \textbf{Exigence} & \textbf{Priorité} \\
+\hline
+EF-11 & Appeler l'API Groq (Llama 3.3-70b) avec la description UML & Haute \\
+\hline
+EF-12 & Générer le code Python complet avec \_\_init\_\_, getters, setters & Haute \\
+\hline
+EF-13 & Générer le code PHP avec visibilité, constructeur, getters & Haute \\
+\hline
+EF-14 & Générer un serveur Flask avec les routes CRUD & Haute \\
+\hline
+EF-15 & Permettre le choix du langage cible : Python ou PHP & Haute \\
+\hline
+EF-16 & Permettre le choix du mode : Algorithmique ou IA Groq & Haute \\
+\hline
+\end{tabular}
+\caption{Exigences fonctionnelles — Module Génération IA}
+\end{table}
+
+\subsubsection{Module Interface Utilisateur}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|p{8cm}|c|}
+\hline
+\rowcolor{gray!30}
+\textbf{ID} & \textbf{Exigence} & \textbf{Priorité} \\
+\hline
+EF-17 & Afficher le code dans Monaco Editor (VS Code intégré) & Haute \\
+\hline
+EF-18 & Afficher onglet Code et onglet Serveur Flask séparément & Haute \\
+\hline
+EF-19 & Permettre la copie du code en un clic & Haute \\
+\hline
+EF-20 & Permettre le téléchargement du fichier .py ou .php & Haute \\
+\hline
+EF-21 & Permettre l'export en archive ZIP & Haute \\
+\hline
+EF-22 & Afficher une barre de progression en temps réel & Haute \\
+\hline
+EF-23 & Implémenter un historique local des 10 dernières générations & Haute \\
+\hline
+EF-24 & Implémenter le mode sombre / mode clair & Moyenne \\
+\hline
+EF-25 & Afficher des notifications toast & Moyenne \\
+\hline
+\end{tabular}
+\caption{Exigences fonctionnelles — Module Interface}
+\end{table}
+
+\subsection{Exigences Non Fonctionnelles}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|p{5cm}|p{4.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{Catégorie} & \textbf{Exigence} & \textbf{Critère mesurable} \\
+\hline
+Performance & Temps de réponse de la génération & $<$ 15 secondes par diagramme \\
+\hline
+Disponibilité & Application accessible en ligne & 24h/24, 7j/7 via Vercel \\
+\hline
+Fiabilité & Taux de succès de la génération & $>$ 90\% sur les cas de test \\
+\hline
+Maintenabilité & Code source documenté et structuré & Commentaires sur chaque fonction \\
+\hline
+Portabilité & Fonctionne sur Windows et Linux & Testé sur les deux systèmes \\
+\hline
+Sécurité & Clé API en variable d'environnement & Fichier .env non versionné \\
+\hline
+Utilisabilité & Interface intuitive sans formation & Prise en main $<$ 5 minutes \\
+\hline
+Responsivité & Interface adaptée mobile et desktop & Testé de 320px à 1440px \\
+\hline
+\end{tabular}
+\caption{Exigences non fonctionnelles}
+\end{table}
+
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+
+Dans ce premier chapitre, nous avons présenté l'établissement d'accueil INSTA et exposé le contexte général du projet. Nous avons analysé les solutions existantes de transformation UML vers code et identifié leurs limites, ce qui nous a permis de justifier la valeur ajoutée de notre solution UML-to-Code. Enfin, nous avons spécifié les besoins fonctionnels et non fonctionnels du système à concevoir. Le chapitre suivant sera consacré à la conception et la modélisation du système.

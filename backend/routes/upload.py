@@ -5,7 +5,7 @@ from generator.python_generator import PythonGenerator
 from generator.php_generator import PHPGenerator
 from generator.server_generator import FlaskServerGenerator
 from ai.gemma_client import generate_code
-from parser.image_parser import parse_image, parse_pdf
+from parser.image_parser import parse_image, parse_pdf, NotAClassDiagramError
 from generator.zip_generator import ZipGenerator
 
 upload_bp = Blueprint('upload', __name__)
@@ -153,6 +153,8 @@ def upload_file():
                 'ai_used': True
             })
 
+    except NotAClassDiagramError as e:
+        return jsonify({'error': str(e), 'error_type': 'not_class_diagram'}), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

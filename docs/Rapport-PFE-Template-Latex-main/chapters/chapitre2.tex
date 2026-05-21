@@ -1,72 +1,293 @@
-\chapter{Conception de la Solution}
+\chapter{Conception et Modélisation}
 
-\section{Approche Théorique : L'Ingénierie Dirigée par les Modèles}
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
 
-La conception de notre solution repose sur un socle théorique solide largement reconnu dans le domaine du génie logiciel : l'Ingénierie Dirigée par les Modèles (IDM). 
+Dans ce chapitre, nous présentons les choix de conception retenus pour le projet UML-to-Code. Nous décrivons le cycle de vie adopté, l'architecture globale du système, puis nous modélisons le système à travers les diagrammes UML de conception : diagramme de cas d'utilisation, diagramme de classes et diagramme de séquence. Nous terminons par une description détaillée des modules principaux.
 
-\subsection{Le concept du MDD (Model-Driven Development)}
-Notre projet s'inscrit pleinement dans l'approche \textbf{MDD (Model-Driven Development)}. Dans cette méthodologie, le modèle n'est plus considéré comme un simple document de documentation ou un croquis préliminaire, mais comme l'artefact principal et central du processus de développement. L'objectif est de générer tout ou partie du code source du système directement à partir de ce modèle. Cette automatisation garantit que l'implémentation reflète fidèlement la conception, réduisant ainsi la fracture entre l'architecte et le développeur.
+%=============================================================
+\section{Choix du Cycle de Vie}
+%=============================================================
 
-\subsection{L'Architecture MDA (Model-Driven Architecture)}
-Pour concrétiser le MDD, nous nous appuyons sur la \textbf{MDA (Model-Driven Architecture)}, un cadre conceptuel standardisé par l'OMG. La MDA prône la séparation stricte entre les spécifications fonctionnelles d'un système et son implémentation technologique. Elle distingue trois niveaux d'abstraction majeurs :
+\subsection{Définition du cycle de vie}
+
+Le cycle de vie de développement d'une application représente la période de temps qui recouvre la vie d'une application : sa naissance, sa construction, son exploitation, sa maintenance et son retrait. Le choix du cycle de vie est une décision fondamentale qui détermine la manière dont les activités de développement sont organisées et enchaînées dans le temps.
+
+\subsection{Comparaison des cycles de vie}
+
+Plusieurs modèles de cycle de vie existent, chacun adapté à des contextes spécifiques. Le tableau ci-dessous présente une comparaison des principaux modèles :
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|c|c|c|l|}
+\hline
+\rowcolor{gray!30}
+\textbf{Cycle de vie} & \textbf{Durée idéale} & \textbf{Solo} & \textbf{3 semaines} & \textbf{Décision} \\
+\hline
+Cascade (Waterfall) & 6+ mois & Oui & Non & Rejeté \\
+\hline
+Cycle en V & 3+ mois & Oui & Limite & Rejeté \\
+\hline
+Agile / Scrum & Continu & Limite & Oui & Rejeté \\
+\hline
+\textbf{Incrémental} & \textbf{1--6 mois} & \textbf{Oui} & \textbf{Oui} & \textbf{Retenu} \\
+\hline
+\end{tabular}
+\caption{Comparaison des cycles de vie}
+\end{table}
+
+\subsection{Modèle Incrémental — Justification}
+
+Le modèle de cycle de vie retenu pour ce projet est le \textbf{modèle incrémental}. Ce choix est motivé par trois raisons principales :
 
 \begin{itemize}
-    \item \textbf{CIM (Computation Independent Model)} : Le modèle indépendant des calculs. Il représente la vue métier du système, les exigences des utilisateurs, sans aucune considération technologique.
-    \item \textbf{PIM (Platform Independent Model)} : Le modèle indépendant de la plateforme. Il décrit la structure et le comportement du système (dans notre cas, le diagramme de classes UML fourni en entrée par l'utilisateur).
-    \item \textbf{PSM (Platform Specific Model)} : Le modèle spécifique à la plateforme. Il représente le code source ciblé (Python, PHP, ou Flask) généré par notre application.
+    \item \textbf{Durée courte du projet} : trois semaines de développement nécessitent des livraisons rapides et concrètes à chaque étape
+    \item \textbf{Projet réalisé en solo} : les cycles nécessitant une équipe (comme Scrum) ne sont pas adaptés à un développeur unique
+    \item \textbf{Incertitudes techniques} : l'intégration de l'IA générative (Groq) et des interfaces avancées (Monaco Editor) impose un ajustement progressif
 \end{itemize}
 
-L'application \textbf{UML-to-Code} agit donc comme le moteur de transformation automatisé (Transformation Engine) permettant de passer du niveau \textbf{PIM} au niveau \textbf{PSM}.
+Le modèle incrémental permet de construire le système par couches successives. Chaque incrément produit une version fonctionnelle et testée du logiciel, enrichie de nouvelles fonctionnalités. Contrairement au modèle en cascade, il permet de valider les choix techniques tôt et d'ajuster la trajectoire si nécessaire.
 
-\section{Stratégies de Transformation}
-Pour réaliser cette transformation PIM vers PSM, notre plateforme innove en proposant deux approches distinctes et complémentaires.
+\subsection{Les 5 incréments du projet}
 
-\subsection{L'Approche Algorithmique (Déterministe)}
-Cette méthode est basée sur des règles de transformation strictes et codées en dur. Le système parcourt le fichier XMI et applique des équivalences :
-\begin{itemize}
-    \item Un nœud \texttt{uml:Class} déclenche la création d'une structure \texttt{class NomClasse:} en Python.
-    \item Un nœud \texttt{ownedAttribute} avec \texttt{visibility="private"} génère des variables encapsulées (\texttt{\_\_attribut} en Python).
-\end{itemize}
-\textit{Avantages :} Cette approche est extrêmement rapide, fiable, ne nécessite aucune connexion internet, et donne un résultat 100\% prédictible.
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|l|p{6cm}|c|}
+\hline
+\rowcolor{gray!30}
+\textbf{Incrément} & \textbf{Période} & \textbf{Fonctionnalités ajoutées} & \textbf{Version} \\
+\hline
+0 — Préparation & 05--07 mai & Questions prof, étude XMI, recherche, CDC & v0.0 \\
+\hline
+1 — Fondations & 08--14 mai & Architecture, parser XMI, modèle de données, test API Groq & v0.1 \\
+\hline
+2 — Cœur IA \& UI & 15--21 mai & Groq complet, générateurs Python+PHP, Flask auto, React, Monaco Editor, Historique & v0.2 \\
+\hline
+3 — Finalisation & 22--26 mai & Tests, export ZIP, thème sombre/clair, animations, rapport, slides & v1.0 \\
+\hline
+4 — Améliorations & 27 mai+ & Optimisations UI, statistiques, toast, déploiement Vercel & v1.1 \\
+\hline
+\end{tabular}
+\caption{Les 5 incréments du projet UML-to-Code}
+\end{table}
 
-\subsection{L'Approche par IA Générative (LLM)}
-Pour contourner les limites du parsing algorithmique (qui exige un fichier XMI parfaitement formaté), nous intégrons une approche sémantique. Le modèle XMI, ou directement une capture d'écran du diagramme, est envoyé à un Large Language Model (Llama 3.3 via l'API Groq) accompagné d'un prompt métier très précis. L'IA analyse visuellement ou textuellement les entités et génère le code.
-\textit{Avantages :} Une flexibilité immense permettant de comprendre des croquis à main levée, des PDF, et de générer du code métier complexe.
-
+%=============================================================
 \section{Architecture Globale du Système}
-Pour supporter ces deux approches, nous avons opté pour une architecture logicielle moderne, séparant clairement les responsabilités.
+%=============================================================
 
-\subsection{Architecture Client-Serveur}
-Le système est divisé en trois tiers principaux :
+\subsection{Vue d'ensemble}
+
+Le système UML-to-Code suit une \textbf{architecture client-serveur en 3 couches} :
+
 \begin{itemize}
-    \item \textbf{Le Frontend (Client)} : Développé en React.js avec le bundler Vite. Il offre une interface riche ("Single Page Application"), gère les interactions utilisateur, la prévisualisation des fichiers et intègre un éditeur de code avancé (Monaco Editor).
-    \item \textbf{Le Backend (Serveur API)} : Développé en Python avec le micro-framework Flask. Il reçoit les fichiers du frontend, orchestre le parsing XML, exécute les algorithmes de génération, prépare les fichiers ZIP, et gère la communication avec les services externes.
-    \item \textbf{Le Service IA Externe} : L'API cloud de Groq qui exécute le modèle open-source Llama 3.3 pour les tâches de vision et de génération de texte.
+    \item \textbf{Couche Présentation} : Interface React.js avec design Glassmorphism, Monaco Editor, historique localStorage, thème sombre/clair et animations
+    \item \textbf{Couche Métier} : Serveur Flask Python assurant l'orchestration, le parsing XMI/image/PDF, l'appel à l'API Groq et la génération ZIP
+    \item \textbf{Couche IA} : API Groq (Llama 3.3-70b) assurant la génération intelligente du code Python, PHP et Flask
 \end{itemize}
 
-\section{Modélisation UML de la Solution}
+\begin{figure}[H]
+\centering
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{c}
+    \fbox{\parbox{10cm}{\centering \textbf{COUCHE PRÉSENTATION} \\ React.js + Vite \\ Monaco Editor \textbullet\ Toast \textbullet\ Historique \textbullet\ Thèmes}} \\
+    $\downarrow$ \textit{HTTP REST (axios)} $\downarrow$ \\
+    \fbox{\parbox{10cm}{\centering \textbf{COUCHE MÉTIER} \\ Python Flask \\ Parser XMI \textbullet\ Orchestration \textbullet\ Routes API \textbullet\ ZIP}} \\
+    $\downarrow$ \textit{API Call (Groq)} $\downarrow$ \\
+    \fbox{\parbox{10cm}{\centering \textbf{COUCHE IA} \\ Groq Llama 3.3-70b \\ Génération Python \textbullet\ PHP \textbullet\ Flask}}
+\end{tabular}
+\caption{Architecture globale en 3 couches du système UML-to-Code}
+\end{figure}
+
+\subsection{Stack technologique}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|l|l|p{4.5cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{Couche} & \textbf{Technologie} & \textbf{Version} & \textbf{Rôle} \\
+\hline
+Frontend & React.js + Vite & 6.x & Interface utilisateur web \\
+\hline
+Éditeur & Monaco Editor & Latest & Éditeur de code intégré (VS Code) \\
+\hline
+HTTP Client & Axios & Latest & Requêtes Frontend $\rightarrow$ Backend \\
+\hline
+Backend & Python Flask & 3.0.0 & Serveur API REST \\
+\hline
+IA & Groq Llama 3.3-70b & Latest & Génération de code intelligent \\
+\hline
+Parsing XMI & xml.etree & Natif Python & Extraction classes UML depuis XMI \\
+\hline
+Parsing Image & PyMuPDF & 1.27 & Conversion PDF $\rightarrow$ image \\
+\hline
+Export & zipfile & Natif Python & Export projet ZIP \\
+\hline
+Stockage & localStorage & Natif Web & Historique local + thème \\
+\hline
+Déploiement & Vercel + Render & --- & Hébergement Frontend + Backend \\
+\hline
+Versioning & Git + GitHub & --- & Gestion du code source \\
+\hline
+\end{tabular}
+\caption{Stack technologique du projet UML-to-Code}
+\end{table}
+
+%=============================================================
+\section{Modélisation UML}
+%=============================================================
 
 \subsection{Diagramme de Cas d'Utilisation}
-Les acteurs interagissant avec le système sont le \textbf{Développeur} (utilisateur final) et le \textbf{Système Externe} (API Groq).
-Les cas d'utilisation principaux pour le développeur incluent :
+
+\subsubsection{Définition}
+
+Le diagramme de cas d'utilisation décrit les utilisations requises d'un système, ou ce qu'un système est supposé faire. Les principaux concepts de ce diagramme sont les acteurs, les cas d'utilisation et les sujets. Il modélise \textbf{à QUOI sert le système}.
+
+\subsubsection{Identification des cas d'utilisation}
+
+Dans l'application UML-to-Code, nous avons identifié les cas d'utilisation suivants :
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|l|p{7cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{N°} & \textbf{Acteur} & \textbf{Cas d'utilisation} \\
+\hline
+1 & Utilisateur & Charger un fichier UML (XMI, PNG, JPG, PDF) \\
+\hline
+2 & Utilisateur & Choisir le format d'entrée \\
+\hline
+3 & Utilisateur & Choisir le langage cible (Python ou PHP) \\
+\hline
+4 & Utilisateur & Générer le code source \\
+\hline
+5 & Utilisateur & Générer le serveur Flask automatique \\
+\hline
+6 & Utilisateur & Visualiser le code généré (Monaco Editor) \\
+\hline
+7 & Utilisateur & Copier le code généré \\
+\hline
+8 & Utilisateur & Télécharger le fichier généré (.py / .php) \\
+\hline
+9 & Utilisateur & Exporter le projet en ZIP \\
+\hline
+10 & Utilisateur & Consulter l'historique des générations \\
+\hline
+11 & API Groq & Recevoir la description UML et retourner le code \\
+\hline
+\end{tabular}
+\caption{Cas d'utilisation identifiés du système UML-to-Code}
+\end{table}
+
+\subsubsection{Diagramme de cas d'utilisation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{UCD_UML_to_Code.jpg}
+    \caption{Diagramme de cas d'utilisation — UML-to-Code}
+\end{figure}
+
+\subsection{Diagramme de Classes}
+
+\subsubsection{Définition}
+
+Le diagramme de classes est le diagramme le plus important pour les méthodes d'analyse orientées objet. Il permet de spécifier \textbf{QUI intervient} à l'intérieur du système et représente une vue statique du système d'information. Il modélise les classes, leurs attributs, leurs méthodes et leurs relations.
+
+\subsubsection{Description des classes}
+
+Les classes principales du système sont :
+
 \begin{itemize}
-    \item Uploader un modèle (XMI, PNG, PDF).
-    \item Configurer la génération (choix du langage et du mode).
-    \item Lancer la génération de code.
-    \item Consulter l'historique des générations.
-    \item Exporter le projet généré (Format texte ou ZIP).
+    \item \textbf{XMIParser} : responsable du parsing des fichiers XMI et de l'extraction des classes UML
+    \item \textbf{FileUploadHandler} : gère l'upload, la validation et la détection du format des fichiers
+    \item \textbf{UMLClass, UMLAttribute, UMLMethod} : le modèle de données représentant un diagramme UML parsé
+    \item \textbf{GroqClient} : client de l'API Groq pour la génération de code par IA
+    \item \textbf{BaseGenerator} : classe abstraite dont héritent \textit{PythonGenerator} et \textit{PHPGenerator}
+    \item \textbf{FlaskServerGenerator} : génère automatiquement le serveur Flask avec routes CRUD
+    \item \textbf{ZipGenerator} : regroupe le code et le serveur Flask dans une archive ZIP
 \end{itemize}
 
-\subsection{Diagramme de Séquence (Génération via IA)}
-Afin de comprendre la cinématique d'une requête complexe, voici les étapes d'une génération utilisant l'IA :
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{CD_UML_to_Code.jpg}
+    \caption{Diagramme de classes — UML-to-Code}
+\end{figure}
+
+\subsection{Diagramme de Séquence}
+
+\subsubsection{Définition}
+
+Le diagramme de séquence permet de valider les cas d'utilisation et de comprendre la logique de l'application. Il met en évidence les objets et leurs interactions d'un point de vue temporel, modélisant \textbf{COMMENT le système réalise} les cas d'utilisation.
+
+\subsubsection{Diagramme de séquence — Génération de code}
+
+Le diagramme ci-dessous décrit le flux complet d'interaction lors d'une génération de code, depuis l'upload du fichier jusqu'à l'affichage du résultat dans le Monaco Editor :
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{SD_Generation_Code.jpg}
+    \caption{Diagramme de séquence — Génération de code}
+\end{figure}
+
+Les étapes clés du processus sont :
+
 \begin{enumerate}
-    \item \textbf{Développeur} $\rightarrow$ \textbf{Frontend} : Soumet une image de diagramme et sélectionne "Génération Python via IA".
-    \item \textbf{Frontend} $\rightarrow$ \textbf{Backend Flask} : Envoi d'une requête POST contenant l'image et les paramètres.
-    \item \textbf{Backend Flask} $\rightarrow$ \textbf{API Groq} : Formation d'un prompt d'instruction couplé à l'image encodée en base64. L'appel réseau est initié.
-    \item \textbf{API Groq} $\rightarrow$ \textbf{Backend Flask} : Après un traitement d'environ 10 à 15 secondes, l'IA retourne le code généré sous forme de texte brut.
-    \item \textbf{Backend Flask} $\rightarrow$ \textbf{Frontend} : Le texte est formaté, encapsulé dans un objet JSON, et renvoyé au client.
-    \item \textbf{Frontend} $\rightarrow$ \textbf{Développeur} : Affichage du code dans le Monaco Editor avec coloration syntaxique.
+    \item L'utilisateur uploade un fichier via l'interface React
+    \item Le frontend envoie une requête POST à l'API Flask
+    \item Le \textit{FileUploadHandler} détecte le format du fichier
+    \item Si XMI : le \textit{XMIParser} extrait les classes et attributs
+    \item \textit{FileUploadHandler} retourne le format et chemin du fichier à Flask
+    \item Si image/PDF : le fichier est envoyé au \textit{GroqClient} pour analyse visuelle
+    \item Le \textit{GroqClient} construit le prompt et appelle l'API Groq
+    \item Le \textit{BaseGenerator} génère le code Python ou PHP
+    \item Le code final est retourné à l'interface et affiché dans le Monaco Editor
 \end{enumerate}
 
-\section{Conclusion du chapitre}
-L'architecture conçue pour UML-to-Code repose sur les principes de la MDA, traduits par une implémentation client-serveur moderne. La dualité algorithme/IA permet de couvrir un spectre très large de cas d'usage, allant de l'export d'entreprise strict à l'esquisse rapide. Le chapitre suivant s'attachera à détailler les choix techniques et la réalisation concrète de cette conception.
+%=============================================================
+\section{Conception Détaillée des Modules}
+%=============================================================
+
+\subsection{Module de Parsing XMI}
+
+Le module de parsing XMI est le cœur algorithmique du système. Il utilise la bibliothèque native \texttt{xml.etree.ElementTree} de Python pour analyser les fichiers XMI exportés depuis StarUML. Le processus se déroule en plusieurs étapes :
+
+\begin{enumerate}
+    \item \textbf{Lecture et parsing} du fichier XMI
+    \item \textbf{Extraction des classes} : nom, identifiant, classe parente (héritage)
+    \item \textbf{Extraction des attributs} : nom, type, visibilité (public, private, protected)
+    \item \textbf{Extraction des méthodes} : nom, paramètres, type de retour, visibilité
+    \item \textbf{Construction} d'une liste d'objets \texttt{UMLClass} utilisables par les générateurs
+\end{enumerate}
+
+\subsection{Module de Génération de Code}
+
+La génération de code repose sur une hiérarchie de classes utilisant le patron de conception \textbf{Template Method}. La classe abstraite \texttt{BaseGenerator} définit le squelette de l'algorithme de génération, tandis que \texttt{PythonGenerator} et \texttt{PHPGenerator} fournissent les implémentations spécifiques à chaque langage.
+
+Pour chaque classe UML extraite, le générateur produit :
+\begin{itemize}
+    \item Le \textbf{constructeur} avec initialisation de tous les attributs
+    \item Les \textbf{getters} et \textbf{setters} pour chaque attribut
+    \item La \textbf{gestion de l'héritage} (\texttt{extends} en PHP, héritage Python)
+    \item Les \textbf{commentaires} de documentation
+\end{itemize}
+
+\subsection{Module IA — GroqClient}
+
+Le \texttt{GroqClient} est responsable de la communication avec l'API Groq. Pour les fichiers XMI, il reçoit une description textuelle des classes extraites et génère un code enrichi et contextuel. Pour les images et PDF, il exploite les capacités de \textbf{vision} du modèle Llama 3.3-70b pour analyser directement le diagramme visuel.
+
+Le prompt envoyé à l'API est construit dynamiquement par la méthode \texttt{buildPrompt()} qui inclut :
+\begin{itemize}
+    \item La liste des classes avec leurs attributs et méthodes
+    \item Le langage cible (Python ou PHP)
+    \item Les instructions de formatage du code généré
+\end{itemize}
+
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+
+Dans ce deuxième chapitre, nous avons présenté les choix de conception du projet UML-to-Code. Nous avons justifié le recours au modèle incrémental comme cycle de vie, décrit l'architecture globale en trois couches, et modélisé le système à travers les diagrammes de cas d'utilisation, de classes et de séquence. Ces éléments de conception constituent la base sur laquelle s'appuie l'implémentation présentée dans le chapitre suivant.

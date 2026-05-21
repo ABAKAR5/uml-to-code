@@ -198,7 +198,9 @@ function App() {
         }, 300)
       }
     } catch (err) {
-      setError(err.response?.data?.error || "Erreur lors de la génération")
+      const msg = err.response?.data?.error || "Erreur lors de la génération"
+      setError(msg)
+      addToast(msg, "error")
     } finally {
       setLoading(false); setCurrentStep(-1); setSteps([])
     }
@@ -565,77 +567,102 @@ function App() {
 
           <div className="right-panel" ref={resultRef}>
             {code ? (
-              <div className="panel-card result-card">
-                <div className="result-header">
-                  <div className="tabs">
-                    <button className={`tab ${activeTab === 'code' ? 'active' : ''}`} onClick={() => setActiveTab('code')}>
-                      <FaCode /> Code {language.toUpperCase()}
-                      {classesFound > 0 && <span className="tab-badge">{classesFound}</span>}
-                    </button>
-                    {serverCode && (
-                      <button className={`tab ${activeTab === 'server' ? 'active' : ''}`} onClick={() => setActiveTab('server')}>
-                        <FaThLarge /> Serveur Flask
-                      </button>
-                    )}
-                  </div>
-                  <div className="result-actions">
-                    <button className="action-btn" onClick={() => handleCopy(activeTab === 'code' ? code : serverCode)}><FaCopy /> Copier</button>
-                    <button className="action-btn" onClick={handleDownloadZip}><FaCube /> ZIP</button>
-                    <button className="action-btn" onClick={() => {
-                      const ext = activeTab === 'server' ? 'py' : language === 'python' ? 'py' : 'php'
-                      handleDownload(activeTab === 'code' ? code : serverCode, `generated.${ext}`)
-                    }}><FaDownload /> Télécharger</button>
-                  </div>
-                </div>
+              <div className={`panel-card result-card ${isMobile ? 'result-card--mobile' : ''}`}>
                 {isMobile ? (
-                  <div className="mobile-code-success" style={{
-                    padding: '24px 20px',
-                    textAlign: 'center',
-                    background: 'rgba(16, 185, 129, 0.05)',
-                    borderBottom: '1px solid var(--border)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '12px'
-                  }}>
-                    <div style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: '50%',
-                      background: 'rgba(16, 185, 129, 0.1)',
-                      color: 'var(--green)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1.5rem'
-                    }}>
-                      <FaCheckCircle />
+                  <div className="mobile-result-panel">
+                    <div className="mobile-result-success">
+                      <div className="mobile-success-icon"><FaCheckCircle /></div>
+                      <h4>Code généré avec succès</h4>
+                      <p>
+                        {classesFound} classe{classesFound > 1 ? 's' : ''} · {genTime}s
+                        {aiUsed && ' · IA Groq'}
+                      </p>
                     </div>
-                    <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '700', color: 'var(--text-primary)' }}>
-                      Code généré avec succès !
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-                      Le code source est prêt. Utilisez les boutons ci-dessus pour le copier, le télécharger ou l'exporter en archive ZIP.
+                    {serverCode && (
+                      <div className="mobile-result-tabs">
+                        <button
+                          type="button"
+                          className={`mobile-tab ${activeTab === 'code' ? 'active' : ''}`}
+                          onClick={() => setActiveTab('code')}
+                        >
+                          <FaCode /> {language.toUpperCase()}
+                        </button>
+                        <button
+                          type="button"
+                          className={`mobile-tab ${activeTab === 'server' ? 'active' : ''}`}
+                          onClick={() => setActiveTab('server')}
+                        >
+                          <FaThLarge /> Flask
+                        </button>
+                      </div>
+                    )}
+                    <div className="mobile-result-actions">
+                      <button
+                        type="button"
+                        className="mobile-action-btn mobile-action-copy"
+                        onClick={() => handleCopy(activeTab === 'code' ? code : serverCode)}
+                      >
+                        <FaCopy /> Copier le code
+                      </button>
+                      <button type="button" className="mobile-action-btn mobile-action-zip" onClick={handleDownloadZip}>
+                        <FaCube /> Télécharger ZIP
+                      </button>
+                      <button
+                        type="button"
+                        className="mobile-action-btn mobile-action-dl"
+                        onClick={() => {
+                          const ext = activeTab === 'server' ? 'py' : language === 'python' ? 'py' : 'php'
+                          handleDownload(activeTab === 'code' ? code : serverCode, `generated.${ext}`)
+                        }}
+                      >
+                        <FaDownload /> Télécharger fichier
+                      </button>
+                    </div>
+                    <p className="mobile-result-hint">
+                      Le code n&apos;est pas affiché sur mobile pour gagner de la place. Utilisez Copier ou Télécharger.
                     </p>
                   </div>
                 ) : (
-                  <div className="editor-container-main" style={{ borderRadius: '0 0 16px 16px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                    <Editor
-                      height="500px"
-                      language={activeTab === 'server' ? 'python' : language}
-                      theme="vs-dark"
-                      value={activeTab === 'code' ? code : serverCode}
-                      options={{ minimap: { enabled: true }, fontSize: 14, automaticLayout: true, padding: { top: 20, bottom: 20 } }}
-                      onChange={(val) => activeTab === 'code' ? setCode(val) : setServerCode(val)}
-                    />
-                  </div>
+                  <>
+                    <div className="result-header">
+                      <div className="tabs">
+                        <button className={`tab ${activeTab === 'code' ? 'active' : ''}`} onClick={() => setActiveTab('code')}>
+                          <FaCode /> Code {language.toUpperCase()}
+                          {classesFound > 0 && <span className="tab-badge">{classesFound}</span>}
+                        </button>
+                        {serverCode && (
+                          <button className={`tab ${activeTab === 'server' ? 'active' : ''}`} onClick={() => setActiveTab('server')}>
+                            <FaThLarge /> Serveur Flask
+                          </button>
+                        )}
+                      </div>
+                      <div className="result-actions">
+                        <button className="action-btn" onClick={() => handleCopy(activeTab === 'code' ? code : serverCode)}><FaCopy /> Copier</button>
+                        <button className="action-btn" onClick={handleDownloadZip}><FaCube /> ZIP</button>
+                        <button className="action-btn" onClick={() => {
+                          const ext = activeTab === 'server' ? 'py' : language === 'python' ? 'py' : 'php'
+                          handleDownload(activeTab === 'code' ? code : serverCode, `generated.${ext}`)
+                        }}><FaDownload /> Télécharger</button>
+                      </div>
+                    </div>
+                    <div className="editor-container-main">
+                      <Editor
+                        height="500px"
+                        language={activeTab === 'server' ? 'python' : language}
+                        theme="vs-dark"
+                        value={activeTab === 'code' ? code : serverCode}
+                        options={{ minimap: { enabled: true }, fontSize: 14, automaticLayout: true, padding: { top: 20, bottom: 20 } }}
+                        onChange={(val) => activeTab === 'code' ? setCode(val) : setServerCode(val)}
+                      />
+                    </div>
+                    <div className="code-stats">
+                      <span>📏 {(activeTab === 'code' ? code : serverCode).split('\n').length} Lignes</span>
+                      <span><FaThLarge /> {classesFound} Classes</span>
+                      <span><FaBolt /> {genTime}s</span>
+                      {aiUsed && <span className="ai-stat-badge"><FaRobot /> IA Groq</span>}
+                    </div>
+                  </>
                 )}
-                <div className="code-stats">
-                  <span>📏 {(activeTab === 'code' ? code : serverCode).split('\n').length} Lignes</span>
-                  <span><FaThLarge /> {classesFound} Classes</span>
-                  <span><FaBolt /> {genTime}s</span>
-                  {aiUsed && <span className="ai-stat-badge"><FaRobot /> IA Groq</span>}
-                </div>
               </div>
             ) : (
               !isMobile && (

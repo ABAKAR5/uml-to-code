@@ -1,29 +1,42 @@
 \chapter*{Introduction Générale}
 \addcontentsline{toc}{chapter}{Introduction Générale}
-\thispagestyle{plain}
-\pagestyle{plain}
-\markboth{}{}
+\markboth{Introduction Générale}{Introduction Générale}
 
-Le domaine de l'ingénierie logicielle est en constante évolution, cherchant sans cesse à optimiser les processus de développement pour réduire les délais de livraison tout en maintenant un haut niveau de qualité. Dans le cycle de vie classique du développement logiciel, la phase de conception, souvent modélisée à l'aide du langage UML (Unified Modeling Language), est une étape fondamentale. Elle permet d'établir une architecture claire et de définir les interactions entre les différentes composantes du système avant même d'écrire la première ligne de code.
+\section*{Contexte et problématique}
 
-Cependant, la traduction de ces modèles conceptuels en code source concret reste une tâche laborieuse, répétitive et chronophage. Bien que l'architecture soit définie, le développeur doit manuellement recréer les classes, les attributs, les méthodes et les relations dans le langage cible. Cette étape manuelle est non seulement une perte de temps précieux, mais elle est également sujette à des erreurs humaines qui peuvent introduire des incohérences entre le modèle conçu et l'implémentation finale.
+Dans le domaine du Génie Logiciel, la modélisation UML (\textit{Unified Modeling Language}) constitue une étape incontournable du cycle de développement logiciel. Elle permet aux développeurs et architectes de concevoir, documenter et communiquer l'architecture d'un système de manière standardisée, avant même d'écrire la première ligne de code. Cependant, le passage du modèle conceptuel UML au code source représente encore aujourd'hui une tâche manuelle, répétitive et souvent source d'erreurs et d'incohérences.
 
-C'est dans ce contexte que s'inscrit notre projet de fin de cycle intitulé \textbf{UML-to-Code}. Ce projet a pour ambition d'automatiser cette transition délicate entre la conception et l'implémentation. \textbf{UML-to-Code} est une plateforme web intelligente conçue pour transformer automatiquement des diagrammes de classes UML en code source fonctionnel, structuré et prêt à l'emploi. 
+Cette problématique s'inscrit dans le cadre du \textbf{Développement Dirigé par les Modèles} (MDD — \textit{Model-Driven Development}), un paradigme qui préconise la génération automatique de code à partir de modèles de haut niveau. Malgré l'existence de plusieurs outils de transformation UML vers code, ceux-ci restent soit trop complexes à installer et à utiliser, soit limités à un seul langage cible, soit dépourvus de toute intelligence artificielle pour produire un code contextuel et exploitable directement.
 
-Notre solution se démarque par une approche hybride innovante :
+\section*{Motivation}
+
+L'émergence des modèles d'Intelligence Artificielle générative de grande taille (\textit{Large Language Models} — LLM) ouvre de nouvelles perspectives pour automatiser et enrichir ce processus de transformation. En exploitant la capacité de ces modèles à comprendre la structure d'un diagramme UML et à générer du code source cohérent, il devient possible de franchir un cap significatif dans l'automatisation du développement logiciel.
+
+C'est dans ce contexte que s'inscrit le présent projet, réalisé dans le cadre du module de Mini-Projet de Soutenance de la troisième année en Génie Logiciel à l'Institut National Supérieur des Sciences et Techniques d'Abéché (INSTA), Tchad.
+
+\section*{Objectifs}
+
+Ce projet a pour objectif principal de concevoir et développer une application web full-stack, baptisée \textbf{UML-to-Code}, capable de transformer automatiquement un diagramme de classes UML en code source fonctionnel, en exploitant le modèle d'IA générative \textbf{Groq Llama 3.3-70b}.
+
+Plus précisément, les objectifs visés sont les suivants :
+
 \begin{itemize}
-    \item \textbf{Une approche algorithmique déterministe} : capable d'analyser des fichiers XMI (XML Metadata Interchange) exportés depuis des outils de modélisation standards comme StarUML.
-    \item \textbf{Une approche basée sur l'Intelligence Artificielle} : intégrant un modèle de langage avancé (LLM - Llama 3.3 via Groq) pour analyser des diagrammes sous format image (PNG, JPG) ou PDF, offrant ainsi une flexibilité sans précédent aux développeurs qui préfèrent dessiner leurs architectures.
+    \item Accepter plusieurs formats d'entrée : fichier XMI exporté depuis StarUML, image PNG/JPG, ou document PDF
+    \item Générer du code source \textbf{Python} ou \textbf{PHP} complet avec classes, attributs, méthodes et relations d'héritage
+    \item Générer automatiquement un \textbf{serveur Flask} avec les routes CRUD correspondantes
+    \item Proposer une interface web moderne, intuitive et responsive avec un éditeur de code intégré (\textbf{Monaco Editor})
+    \item Permettre l'export du projet complet en archive \textbf{ZIP} prête à déployer
+    \item Déployer l'application en ligne et la rendre accessible au grand public
 \end{itemize}
 
-Ce rapport s'attache à décrire de manière exhaustive les différentes phases qui ont jalonné la réalisation de cette plateforme. Le document est structuré de la manière suivante :
+\section*{Structure du rapport}
+
+Ce rapport est organisé en trois chapitres principaux, encadrés par une introduction et une conclusion générales :
 
 \begin{itemize}
-    \item Le \textbf{Chapitre 1} dresse le contexte du projet, l'étude de l'existant, ainsi que l'analyse détaillée des besoins fonctionnels et non fonctionnels auxquels l'application doit répondre.
-    \item Le \textbf{Chapitre 2} est consacré à la conception de la solution. Il y est abordé l'approche théorique (MDA/MDD), l'architecture logicielle retenue et les différents diagrammes modélisant le comportement du système.
-    \item Le \textbf{Chapitre 3} détaille la phase de réalisation et d'implémentation. Nous y présenterons le cycle de vie adopté, les choix technologiques (React, Flask, Groq), ainsi que des extraits de code illustrant les mécanismes clés comme le parsing XML.
+    \item \textbf{Chapitre 1 — Étude préliminaire et analyse des besoins} : présente le contexte général du projet, l'analyse de l'existant, la problématique identifiée, les acteurs du système et les exigences fonctionnelles et non fonctionnelles.
+
+    \item \textbf{Chapitre 2 — Conception et Modélisation} : décrit les choix de conception, le cycle de vie retenu, l'architecture globale du système, ainsi que les diagrammes UML de conception (Use Case, Classes, Séquence).
+
+    \item \textbf{Chapitre 3 — Réalisation et Implémentation} : présente l'environnement de développement, les détails d'implémentation du backend et du frontend, le déploiement de l'application, ainsi que les tests et résultats obtenus.
 \end{itemize}
-
-Enfin, une \textbf{Conclusion Générale} viendra synthétiser les résultats obtenus, les compétences acquises au cours de ce projet et les perspectives d'évolution envisageables pour la plateforme UML-to-Code.
-
-\newpage

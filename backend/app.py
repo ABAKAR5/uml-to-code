@@ -1,6 +1,7 @@
-from dotenv import load_dotenv
 import os
-load_dotenv()
+from config import is_groq_configured, load_env
+
+load_env()
 
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -25,7 +26,19 @@ app.register_blueprint(upload_bp, url_prefix='/api')
 
 @app.route('/')
 def index():
-    return {'message': 'UML-to-Code API is running !', 'status': 'ok'}
+    return {
+        'message': 'UML-to-Code API is running !',
+        'status': 'ok',
+        'groq_configured': is_groq_configured(),
+    }
+
+
+@app.route('/api/health')
+def health():
+    return {
+        'status': 'ok',
+        'groq_configured': is_groq_configured(),
+    }
 
 @app.errorhandler(Exception)
 def handle_exception(e):

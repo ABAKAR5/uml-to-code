@@ -37,7 +37,21 @@ function ToastContainer({ toasts }) {
   )
 }
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+function resolveApiUrl() {
+  const fromEnv = import.meta.env.VITE_API_URL?.trim()
+  if (fromEnv) return fromEnv.replace(/\/$/, "")
+
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname
+    if (host.includes("vercel.app") || host.endsWith("uml-to-code-peach.vercel.app")) {
+      return "https://uml-to-code.onrender.com"
+    }
+  }
+
+  return "http://localhost:5000"
+}
+
+const API_URL = resolveApiUrl()
 
 function App() {
   const [file, setFile] = useState(null)

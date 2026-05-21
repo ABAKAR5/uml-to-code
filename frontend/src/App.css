@@ -1798,8 +1798,33 @@ html, body {
 }
 .footer-cta p { color:var(--text-secondary); margin-bottom:20px; }
 
+/* ── Mobile / Desktop visibility (CSS = fiable même si JS isMobile en retard) ── */
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
+.mobile-result-inline {
+  margin-top: 16px;
+  scroll-margin-top: 88px;
+}
+
 /* ── ULTRA RESPONSIVE MOBILE FIXES (OVERRIDE LAYER) ── */
 @media (max-width: 768px) {
+  .mobile-only {
+    display: block !important;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .right-panel {
+    display: none !important;
+  }
   /* Navbar spacing and fit */
   .navbar {
     padding: 12px 16px !important;
@@ -2060,10 +2085,6 @@ html, body {
     text-align: center;
   }
 
-  .right-panel {
-    width: 100%;
-    max-width: 100%;
-  }
 }
 
 @media (max-width: 480px) {
@@ -2107,4 +2128,4 @@ html, body {
     min-height: 48px !important;
     border-radius: 10px !important;
   }
-}
+}

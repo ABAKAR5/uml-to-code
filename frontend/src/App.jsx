@@ -191,12 +191,9 @@ function App() {
       })
 
       addToast("Code généré avec succès !", "success")
-      // Sur mobile, scroll automatiquement vers les résultats
-      if (window.innerWidth <= 768 && resultRef.current) {
-        setTimeout(() => {
-          resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }, 300)
-      }
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
+      }, 350)
     } catch (err) {
       const msg = err.response?.data?.error || "Erreur lors de la génération"
       setError(msg)
@@ -250,6 +247,64 @@ function App() {
     if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB"
     return (bytes / 1048576).toFixed(1) + " MB"
   }
+
+  const mobileResultBlock = code ? (
+    <div className="panel-card result-card result-card--mobile mobile-result-inline">
+      <div className="mobile-result-panel">
+        <div className="mobile-result-success">
+          <div className="mobile-success-icon"><FaCheckCircle /></div>
+          <h4>Code généré avec succès</h4>
+          <p>
+            {classesFound} classe{classesFound > 1 ? "s" : ""} · {genTime}s
+            {aiUsed && " · IA Groq"}
+          </p>
+        </div>
+        {serverCode && (
+          <div className="mobile-result-tabs">
+            <button
+              type="button"
+              className={`mobile-tab ${activeTab === "code" ? "active" : ""}`}
+              onClick={() => setActiveTab("code")}
+            >
+              <FaCode /> {language.toUpperCase()}
+            </button>
+            <button
+              type="button"
+              className={`mobile-tab ${activeTab === "server" ? "active" : ""}`}
+              onClick={() => setActiveTab("server")}
+            >
+              <FaThLarge /> Flask
+            </button>
+          </div>
+        )}
+        <div className="mobile-result-actions">
+          <button
+            type="button"
+            className="mobile-action-btn mobile-action-copy"
+            onClick={() => handleCopy(activeTab === "code" ? code : serverCode)}
+          >
+            <FaCopy /> Copier le code
+          </button>
+          <button type="button" className="mobile-action-btn mobile-action-zip" onClick={handleDownloadZip}>
+            <FaCube /> Télécharger ZIP
+          </button>
+          <button
+            type="button"
+            className="mobile-action-btn mobile-action-dl"
+            onClick={() => {
+              const ext = activeTab === "server" ? "py" : language === "python" ? "py" : "php"
+              handleDownload(activeTab === "code" ? code : serverCode, `generated.${ext}`)
+            }}
+          >
+            <FaDownload /> Télécharger fichier
+          </button>
+        </div>
+        <p className="mobile-result-hint">
+          Le code n&apos;est pas affiché sur mobile pour gagner de la place. Utilisez Copier ou Télécharger.
+        </p>
+      </div>
+    </div>
+  ) : null
 
   return (
     <div className="app">
@@ -562,118 +617,64 @@ function App() {
                 {loading ? <span className="spinner" /> : <><FaBolt /> Générer le code</>}
               </button>
               {error && <div className="error-box"><FaExclamationCircle /> {error}</div>}
+
+              {/* Mobile : résultats juste sous le bouton (visible sans scroller) */}
+              <div className="mobile-only" ref={resultRef}>
+                {mobileResultBlock}
+              </div>
             </div>
           </div>
 
-          <div className="right-panel" ref={resultRef}>
+          {/* Desktop : panneau code à droite */}
+          <div className="right-panel desktop-only">
             {code ? (
-              <div className={`panel-card result-card ${isMobile ? 'result-card--mobile' : ''}`}>
-                {isMobile ? (
-                  <div className="mobile-result-panel">
-                    <div className="mobile-result-success">
-                      <div className="mobile-success-icon"><FaCheckCircle /></div>
-                      <h4>Code généré avec succès</h4>
-                      <p>
-                        {classesFound} classe{classesFound > 1 ? 's' : ''} · {genTime}s
-                        {aiUsed && ' · IA Groq'}
-                      </p>
-                    </div>
+              <div className="panel-card result-card">
+                <div className="result-header">
+                  <div className="tabs">
+                    <button className={`tab ${activeTab === 'code' ? 'active' : ''}`} onClick={() => setActiveTab('code')}>
+                      <FaCode /> Code {language.toUpperCase()}
+                      {classesFound > 0 && <span className="tab-badge">{classesFound}</span>}
+                    </button>
                     {serverCode && (
-                      <div className="mobile-result-tabs">
-                        <button
-                          type="button"
-                          className={`mobile-tab ${activeTab === 'code' ? 'active' : ''}`}
-                          onClick={() => setActiveTab('code')}
-                        >
-                          <FaCode /> {language.toUpperCase()}
-                        </button>
-                        <button
-                          type="button"
-                          className={`mobile-tab ${activeTab === 'server' ? 'active' : ''}`}
-                          onClick={() => setActiveTab('server')}
-                        >
-                          <FaThLarge /> Flask
-                        </button>
-                      </div>
+                      <button className={`tab ${activeTab === 'server' ? 'active' : ''}`} onClick={() => setActiveTab('server')}>
+                        <FaThLarge /> Serveur Flask
+                      </button>
                     )}
-                    <div className="mobile-result-actions">
-                      <button
-                        type="button"
-                        className="mobile-action-btn mobile-action-copy"
-                        onClick={() => handleCopy(activeTab === 'code' ? code : serverCode)}
-                      >
-                        <FaCopy /> Copier le code
-                      </button>
-                      <button type="button" className="mobile-action-btn mobile-action-zip" onClick={handleDownloadZip}>
-                        <FaCube /> Télécharger ZIP
-                      </button>
-                      <button
-                        type="button"
-                        className="mobile-action-btn mobile-action-dl"
-                        onClick={() => {
-                          const ext = activeTab === 'server' ? 'py' : language === 'python' ? 'py' : 'php'
-                          handleDownload(activeTab === 'code' ? code : serverCode, `generated.${ext}`)
-                        }}
-                      >
-                        <FaDownload /> Télécharger fichier
-                      </button>
-                    </div>
-                    <p className="mobile-result-hint">
-                      Le code n&apos;est pas affiché sur mobile pour gagner de la place. Utilisez Copier ou Télécharger.
-                    </p>
                   </div>
-                ) : (
-                  <>
-                    <div className="result-header">
-                      <div className="tabs">
-                        <button className={`tab ${activeTab === 'code' ? 'active' : ''}`} onClick={() => setActiveTab('code')}>
-                          <FaCode /> Code {language.toUpperCase()}
-                          {classesFound > 0 && <span className="tab-badge">{classesFound}</span>}
-                        </button>
-                        {serverCode && (
-                          <button className={`tab ${activeTab === 'server' ? 'active' : ''}`} onClick={() => setActiveTab('server')}>
-                            <FaThLarge /> Serveur Flask
-                          </button>
-                        )}
-                      </div>
-                      <div className="result-actions">
-                        <button className="action-btn" onClick={() => handleCopy(activeTab === 'code' ? code : serverCode)}><FaCopy /> Copier</button>
-                        <button className="action-btn" onClick={handleDownloadZip}><FaCube /> ZIP</button>
-                        <button className="action-btn" onClick={() => {
-                          const ext = activeTab === 'server' ? 'py' : language === 'python' ? 'py' : 'php'
-                          handleDownload(activeTab === 'code' ? code : serverCode, `generated.${ext}`)
-                        }}><FaDownload /> Télécharger</button>
-                      </div>
-                    </div>
-                    <div className="editor-container-main">
-                      <Editor
-                        height="500px"
-                        language={activeTab === 'server' ? 'python' : language}
-                        theme="vs-dark"
-                        value={activeTab === 'code' ? code : serverCode}
-                        options={{ minimap: { enabled: true }, fontSize: 14, automaticLayout: true, padding: { top: 20, bottom: 20 } }}
-                        onChange={(val) => activeTab === 'code' ? setCode(val) : setServerCode(val)}
-                      />
-                    </div>
-                    <div className="code-stats">
-                      <span>📏 {(activeTab === 'code' ? code : serverCode).split('\n').length} Lignes</span>
-                      <span><FaThLarge /> {classesFound} Classes</span>
-                      <span><FaBolt /> {genTime}s</span>
-                      {aiUsed && <span className="ai-stat-badge"><FaRobot /> IA Groq</span>}
-                    </div>
-                  </>
-                )}
-              </div>
-            ) : (
-              !isMobile && (
-                <div className="panel-card empty-panel">
-                  <div className="empty-content">
-                    <div className="empty-icon"><FaRocket /></div>
-                    <h3>Votre code apparaîtra ici</h3>
-                    <p>Uploadez un diagramme UML pour commencer.</p>
+                  <div className="result-actions">
+                    <button className="action-btn" onClick={() => handleCopy(activeTab === 'code' ? code : serverCode)}><FaCopy /> Copier</button>
+                    <button className="action-btn" onClick={handleDownloadZip}><FaCube /> ZIP</button>
+                    <button className="action-btn" onClick={() => {
+                      const ext = activeTab === 'server' ? 'py' : language === 'python' ? 'py' : 'php'
+                      handleDownload(activeTab === 'code' ? code : serverCode, `generated.${ext}`)
+                    }}><FaDownload /> Télécharger</button>
                   </div>
                 </div>
-              )
+                <div className="editor-container-main">
+                  <Editor
+                    height="500px"
+                    language={activeTab === 'server' ? 'python' : language}
+                    theme="vs-dark"
+                    value={activeTab === 'code' ? code : serverCode}
+                    options={{ minimap: { enabled: true }, fontSize: 14, automaticLayout: true, padding: { top: 20, bottom: 20 } }}
+                    onChange={(val) => activeTab === 'code' ? setCode(val) : setServerCode(val)}
+                  />
+                </div>
+                <div className="code-stats">
+                  <span>📏 {(activeTab === 'code' ? code : serverCode).split('\n').length} Lignes</span>
+                  <span><FaThLarge /> {classesFound} Classes</span>
+                  <span><FaBolt /> {genTime}s</span>
+                  {aiUsed && <span className="ai-stat-badge"><FaRobot /> IA Groq</span>}
+                </div>
+              </div>
+            ) : (
+              <div className="panel-card empty-panel">
+                <div className="empty-content">
+                  <div className="empty-icon"><FaRocket /></div>
+                  <h3>Votre code apparaîtra ici</h3>
+                  <p>Uploadez un diagramme UML pour commencer.</p>
+                </div>
+              </div>
             )}
           </div>
         </div>

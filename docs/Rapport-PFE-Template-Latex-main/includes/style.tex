@@ -1,0 +1,108 @@
+% ── Style global du rapport UML-to-Code ──
+
+\usepackage{placeins}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xurl}
+\usepackage{footnote}
+\usepackage{etoolbox}
+
+% Police : serif lisible (académique), pas sans-serif
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\rmdefault}
+
+% Espacement compact
+\setstretch{1.12}
+\setlength{\parskip}{0.35ex plus 0.15ex minus 0.1ex}
+\setlist[itemize]{noitemsep, topsep=3pt, parsep=1pt, leftmargin=1.5em}
+\setlist[enumerate]{noitemsep, topsep=3pt, parsep=1pt, leftmargin=1.8em}
+
+% Liens et URL (coupure de ligne)
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black!80,
+    filecolor=blue!70,
+    urlcolor=blue!70!black,
+    citecolor=black!70,
+    breaklinks=true
+}
+\urlstyle{same}
+\newcommand{\reporturl}[1]{\href{#1}{\nolinkurl{#1}}}
+
+% Notes de bas de page
+\makesavenoteenv{itemize}
+\makesavenoteenv{enumerate}
+
+% Tableaux améliorés
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{5pt}
+
+\newcommand{\tablerule}{\midrule}
+\newcommand{\tableheader}{\rowcolor{blue!12}\bfseries}
+
+% En-têtes et pieds de page (référence projet en haut à droite)
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{gray!70}{\leftmark}}
+\fancyhead[R]{\small\textcolor{gray!65}{%
+  Réf. : \href{https://github.com/ABAKAR5/uml-to-code}{GitHub}%
+  \textbar\ \href{https://console.groq.com/docs}{Groq}%
+  \textbar\ \href{https://uml-to-code-peach.vercel.app}{Vercel}%
+}}
+\fancyfoot[L]{\small\textcolor{gray!60}{INSTA — \annee}}
+\fancyfoot[C]{\small\textbf{\thepage}}
+\fancyfoot[R]{\small\textcolor{gray!60}{ABVIP}}
+\renewcommand{\headrulewidth}{0.35pt}
+\renewcommand{\footrulewidth}{0.25pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{blue!40}\leaders\hrule height \headrulewidth\hfill}}
+
+% Pages préliminaires (sans en-tête gauche verbeux)
+\fancypagestyle{prelim}{%
+  \fancyhf{}
+  \fancyfoot[C]{\small\textbf{\thepage}}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+% Titres plus compacts
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{blue!50!black}\centering}
+  {\chaptertitlename\ \thechapter}
+  {12pt}
+  {\Huge}
+\titlespacing*{\chapter}{0pt}{-18pt}{22pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{blue!45!black}}
+  {\thesection}
+  {0.8em}
+  {}
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection}
+  {0.6em}
+  {}
+\titlespacing*{\subsection}{0pt}{8pt}{4pt}
+
+% Listings code plus compacts
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    aboveskip=6pt,
+    belowskip=6pt
+}
+
+% Figures : légende serrée
+\captionsetup{font=small, labelfont=bf, skip=6pt}
+
+% Tableaux : taille réduite, placement souple (évite pages vides en bas)
+\AtBeginEnvironment{table}{\small\centering}
+\floatplacement{table}{htbp}
+\floatplacement{figure}{htbp}
+\raggedbottom
+
+% TikZ (cycle de vie)
+\usetikzlibrary{positioning,shapes,arrows.meta}

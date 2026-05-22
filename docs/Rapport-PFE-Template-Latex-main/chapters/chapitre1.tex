@@ -58,7 +58,7 @@ Le Génie Logiciel est la discipline qui s'intéresse à la conception, au déve
 
 L'UML (\textit{Unified Modeling Language}) est le langage de modélisation le plus utilisé dans l'industrie du logiciel. Il propose un ensemble de diagrammes standardisés permettant de décrire l'architecture statique et dynamique d'un système logiciel. Pour notre projet, nous avons utilisé trois types de diagrammes :
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|p{5cm}|l|}
@@ -97,9 +97,9 @@ Dans le cadre de ce projet, nous exploitons le modèle \textbf{Groq Llama 3.3-70
 
 \subsection{Le format XMI}
 
-Le format \textbf{XMI} (\textit{XML Metadata Interchange}) est un standard défini par l'OMG (\textit{Object Management Group}) pour l'échange de modèles UML entre différents outils de modélisation. C'est un fichier texte structuré en XML qui contient la description complète d'un modèle UML : classes, attributs, méthodes, relations et héritage.
+Le format \textbf{XMI} (\textit{XML Metadata Interchange}) est un standard défini par l'OMG\footnote{Object Management Group : \reporturl{https://www.omg.org}} pour l'échange de modèles UML entre différents outils de modélisation. C'est un fichier texte structuré en XML qui contient la description complète d'un modèle UML : classes, attributs, méthodes, relations et héritage.
 
-StarUML, l'outil de modélisation que nous utilisons, permet d'exporter les diagrammes de classes au format XMI 2.1. Notre application parse ce fichier pour en extraire automatiquement la structure orientée objet et générer le code correspondant.
+StarUML\fnStarUML, l'outil de modélisation que nous utilisons, permet d'exporter les diagrammes de classes au format XMI 2.1. Notre application parse ce fichier pour en extraire automatiquement la structure orientée objet et générer le code correspondant.
 
 %=============================================
 \section{Analyse de l'Existant}
@@ -109,7 +109,7 @@ StarUML, l'outil de modélisation que nous utilisons, permet d'exporter les diag
 
 Plusieurs outils de transformation UML vers code existent sur le marché. Nous en avons analysé les principaux afin d'identifier leurs limites :
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|l|l|p{4.5cm}|}
@@ -152,7 +152,7 @@ Face à ces limitations, \textbf{UML-to-Code} apporte une réponse innovante :
     \item Génération automatique d'un serveur Flask complet avec routes CRUD
     \item Interface web moderne avec Monaco Editor, historique local, mode sombre/clair
     \item Export en archive ZIP du projet complet prêt à déployer
-    \item Déploiement en ligne accessible via \href{https://uml-to-code-peach.vercel.app}{\texttt{uml-to-code-peach.vercel.app}}
+    \item Déploiement en ligne accessible via Vercel\fnVercel{} et Render\fnRender
     \item Solution légère, open source et sans installation complexe
 \end{itemize}
 
@@ -162,7 +162,7 @@ Face à ces limitations, \textbf{UML-to-Code} apporte une réponse innovante :
 
 \subsection{Acteurs du système}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|p{4cm}|p{6cm}|}
@@ -184,125 +184,86 @@ Face à ces limitations, \textbf{UML-to-Code} apporte une réponse innovante :
 
 \subsection{Exigences Fonctionnelles}
 
-\subsubsection{Module Upload}
+Les exigences fonctionnelles sont regroupées par module dans le tableau~\ref{tab:ef-complet}. Les priorités \og Haute \fg{} et \og Moyenne \fg{} guident l'ordre de réalisation des incréments.
 
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|c|p{8cm}|c|}
+\begin{longtable}{|c|l|P{6.8cm}|c|}
 \hline
-\rowcolor{gray!30}
-\textbf{ID} & \textbf{Exigence} & \textbf{Priorité} \\
+\rowcolor{blue!12}
+\textbf{ID} & \textbf{Module} & \textbf{Exigence} & \textbf{Priorité} \\
 \hline
-EF-01 & Accepter les fichiers XMI exportés depuis StarUML & Haute \\
+\endfirsthead
 \hline
-EF-02 & Accepter les images PNG et JPG de diagrammes UML & Haute \\
+\rowcolor{blue!12}
+\textbf{ID} & \textbf{Module} & \textbf{Exigence} & \textbf{Priorité} \\
 \hline
-EF-03 & Accepter les fichiers PDF contenant un diagramme UML & Moyenne \\
+\endhead
+EF-01 & Upload & Accepter les fichiers XMI exportés depuis StarUML\fnStarUML & Haute \\
 \hline
-EF-04 & Valider le format du fichier avant traitement & Haute \\
+EF-02 & Upload & Accepter les images PNG et JPG de diagrammes UML & Haute \\
 \hline
-EF-05 & Afficher un message d'erreur en cas de format invalide & Haute \\
+EF-03 & Upload & Accepter les fichiers PDF contenant un diagramme UML & Moyenne \\
 \hline
-EF-06 & Afficher un aperçu visuel du diagramme pour PNG/JPG & Moyenne \\
+EF-04 & Upload & Valider le format du fichier avant traitement & Haute \\
 \hline
-\end{tabular}
-\caption{Exigences fonctionnelles — Module Upload}
-\end{table}
-
-\subsubsection{Module Parsing}
-
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|c|p{8cm}|c|}
+EF-05 & Upload & Afficher un message d'erreur en cas de format invalide & Haute \\
 \hline
-\rowcolor{gray!30}
-\textbf{ID} & \textbf{Exigence} & \textbf{Priorité} \\
+EF-06 & Upload & Afficher un aperçu visuel du diagramme pour PNG/JPG & Moyenne \\
 \hline
-EF-07 & Parser les classes, attributs et méthodes depuis un XMI & Haute \\
+EF-07 & Parsing & Parser les classes, attributs et méthodes depuis un XMI & Haute \\
 \hline
-EF-08 & Extraire les relations d'héritage entre classes & Haute \\
+EF-08 & Parsing & Extraire les relations d'héritage entre classes & Haute \\
 \hline
-EF-09 & Extraire les associations et agrégations & Moyenne \\
+EF-09 & Parsing & Extraire les associations et agrégations & Moyenne \\
 \hline
-EF-10 & Envoyer l'image/PDF directement à Groq (vision IA) & Haute \\
+EF-10 & Parsing & Envoyer l'image/PDF à Groq (vision IA)\fnGroq & Haute \\
 \hline
-\end{tabular}
-\caption{Exigences fonctionnelles — Module Parsing}
-\end{table}
-
-\subsubsection{Module Génération IA}
-
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|c|p{8cm}|c|}
+EF-11 & Génération & Appeler l'API Groq (Llama 3.3-70b) avec la description UML & Haute \\
 \hline
-\rowcolor{gray!30}
-\textbf{ID} & \textbf{Exigence} & \textbf{Priorité} \\
+EF-12 & Génération & Générer le code Python (\texttt{\_\_init\_\_}, getters, setters) & Haute \\
 \hline
-EF-11 & Appeler l'API Groq (Llama 3.3-70b) avec la description UML & Haute \\
+EF-13 & Génération & Générer le code PHP (constructeur, getters) & Haute \\
 \hline
-EF-12 & Générer le code Python complet avec \_\_init\_\_, getters, setters & Haute \\
+EF-14 & Génération & Générer un serveur Flask avec routes CRUD\fnFlask & Haute \\
 \hline
-EF-13 & Générer le code PHP avec visibilité, constructeur, getters & Haute \\
+EF-15 & Génération & Choix du langage : Python ou PHP & Haute \\
 \hline
-EF-14 & Générer un serveur Flask avec les routes CRUD & Haute \\
+EF-16 & Génération & Choix du mode : Algorithmique ou IA Groq & Haute \\
 \hline
-EF-15 & Permettre le choix du langage cible : Python ou PHP & Haute \\
+EF-17 & Interface & Afficher le code dans Monaco Editor\fnMonaco & Haute \\
 \hline
-EF-16 & Permettre le choix du mode : Algorithmique ou IA Groq & Haute \\
+EF-18 & Interface & Onglets Code et Serveur Flask séparés & Haute \\
 \hline
-\end{tabular}
-\caption{Exigences fonctionnelles — Module Génération IA}
-\end{table}
-
-\subsubsection{Module Interface Utilisateur}
-
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|c|p{8cm}|c|}
+EF-19 & Interface & Copie du code en un clic & Haute \\
 \hline
-\rowcolor{gray!30}
-\textbf{ID} & \textbf{Exigence} & \textbf{Priorité} \\
+EF-20 & Interface & Téléchargement du fichier \texttt{.py} ou \texttt{.php} & Haute \\
 \hline
-EF-17 & Afficher le code dans Monaco Editor (VS Code intégré) & Haute \\
+EF-21 & Interface & Export en archive ZIP & Haute \\
 \hline
-EF-18 & Afficher onglet Code et onglet Serveur Flask séparément & Haute \\
+EF-22 & Interface & Barre de progression en temps réel & Haute \\
 \hline
-EF-19 & Permettre la copie du code en un clic & Haute \\
+EF-23 & Interface & Historique local (10 générations) & Haute \\
 \hline
-EF-20 & Permettre le téléchargement du fichier .py ou .php & Haute \\
+EF-24 & Interface & Mode sombre / mode clair & Moyenne \\
 \hline
-EF-21 & Permettre l'export en archive ZIP & Haute \\
+EF-25 & Interface & Notifications toast & Moyenne \\
 \hline
-EF-22 & Afficher une barre de progression en temps réel & Haute \\
-\hline
-EF-23 & Implémenter un historique local des 10 dernières générations & Haute \\
-\hline
-EF-24 & Implémenter le mode sombre / mode clair & Moyenne \\
-\hline
-EF-25 & Afficher des notifications toast & Moyenne \\
-\hline
-\end{tabular}
-\caption{Exigences fonctionnelles — Module Interface}
-\end{table}
+\caption{Exigences fonctionnelles complètes du système UML-to-Code}
+\label{tab:ef-complet}
+\end{longtable}
 
 \subsection{Exigences Non Fonctionnelles}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|l|p{5cm}|p{4.5cm}|}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|l|P{4.8cm}|P{4.2cm}|}
 \hline
-\rowcolor{gray!30}
+\rowcolor{blue!12}
 \textbf{Catégorie} & \textbf{Exigence} & \textbf{Critère mesurable} \\
 \hline
 Performance & Temps de réponse de la génération & $<$ 15 secondes par diagramme \\
 \hline
-Disponibilité & Application accessible en ligne & 24h/24, 7j/7 via Vercel \\
+Disponibilité & Application accessible en ligne\fnVercel & 24h/24 via Vercel \\
 \hline
 Fiabilité & Taux de succès de la génération & $>$ 90\% sur les cas de test \\
 \hline
@@ -310,17 +271,18 @@ Maintenabilité & Code source documenté et structuré & Commentaires sur chaque
 \hline
 Portabilité & Fonctionne sur Windows et Linux & Testé sur les deux systèmes \\
 \hline
-Sécurité & Clé API en variable d'environnement & Fichier .env non versionné \\
+Sécurité & Clé API en variable d'environnement & Fichier \texttt{.env} non versionné \\
 \hline
 Utilisabilité & Interface intuitive sans formation & Prise en main $<$ 5 minutes \\
 \hline
-Responsivité & Interface adaptée mobile et desktop & Testé de 320px à 1440px \\
+Responsivité & Interface adaptée mobile et desktop & 320px à 1440px \\
 \hline
 \end{tabular}
 \caption{Exigences non fonctionnelles}
+\label{tab:enf}
 \end{table}
 
 \section*{Conclusion}
 \addcontentsline{toc}{section}{Conclusion}
 
-Dans ce premier chapitre, nous avons présenté l'établissement d'accueil INSTA et exposé le contexte général du projet. Nous avons analysé les solutions existantes de transformation UML vers code et identifié leurs limites, ce qui nous a permis de justifier la valeur ajoutée de notre solution UML-to-Code. Enfin, nous avons spécifié les besoins fonctionnels et non fonctionnels du système à concevoir. Le chapitre suivant sera consacré à la conception et la modélisation du système.
+Dans ce premier chapitre, nous avons présenté l'établissement d'accueil INSTA et exposé le contexte général du projet. Nous avons analysé les solutions existantes de transformation UML vers code et identifié leurs limites, ce qui nous a permis de justifier la valeur ajoutée de notre solution UML-to-Code\fnGitHub. Enfin, nous avons spécifié les besoins fonctionnels et non fonctionnels du système à concevoir. Le chapitre suivant sera consacré à la conception et la modélisation du système.

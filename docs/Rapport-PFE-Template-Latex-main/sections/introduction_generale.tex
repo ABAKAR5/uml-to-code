@@ -4,7 +4,7 @@
 
 \section*{Contexte et problématique}
 
-Dans le domaine du Génie Logiciel, la modélisation UML (\textit{Unified Modeling Language}) constitue une étape incontournable du cycle de développement logiciel. Elle permet aux développeurs et architectes de concevoir, documenter et communiquer l'architecture d'un système de manière standardisée, avant même d'écrire la première ligne de code. Cependant, le passage du modèle conceptuel UML au code source représente encore aujourd'hui une tâche manuelle, répétitive et souvent source d'erreurs et d'incohérences.
+Dans le domaine du Génie Logiciel, la modélisation UML\fnUML (\textit{Unified Modeling Language}) constitue une étape incontournable du cycle de développement logiciel. Elle permet aux développeurs et architectes de concevoir, documenter et communiquer l'architecture d'un système de manière standardisée, avant même d'écrire la première ligne de code. Cependant, le passage du modèle conceptuel UML au code source représente encore aujourd'hui une tâche manuelle, répétitive et souvent source d'erreurs et d'incohérences.
 
 Cette problématique s'inscrit dans le cadre du \textbf{Développement Dirigé par les Modèles} (MDD — \textit{Model-Driven Development}), un paradigme qui préconise la génération automatique de code à partir de modèles de haut niveau. Malgré l'existence de plusieurs outils de transformation UML vers code, ceux-ci restent soit trop complexes à installer et à utiliser, soit limités à un seul langage cible, soit dépourvus de toute intelligence artificielle pour produire un code contextuel et exploitable directement.
 
@@ -16,7 +16,7 @@ C'est dans ce contexte que s'inscrit le présent projet, réalisé dans le cadre
 
 \section*{Objectifs}
 
-Ce projet a pour objectif principal de concevoir et développer une application web full-stack, baptisée \textbf{UML-to-Code}, capable de transformer automatiquement un diagramme de classes UML en code source fonctionnel, en exploitant le modèle d'IA générative \textbf{Groq Llama 3.3-70b}.
+Ce projet a pour objectif principal de concevoir et développer une application web full-stack, baptisée \textbf{UML-to-Code}, capable de transformer automatiquement un diagramme de classes UML en code source fonctionnel, en exploitant le modèle d'IA générative \textbf{Groq Llama 3.3-70b}\fnGroq.
 
 Plus précisément, les objectifs visés sont les suivants :
 
@@ -26,7 +26,7 @@ Plus précisément, les objectifs visés sont les suivants :
     \item Générer automatiquement un \textbf{serveur Flask} avec les routes CRUD correspondantes
     \item Proposer une interface web moderne, intuitive et responsive avec un éditeur de code intégré (\textbf{Monaco Editor})
     \item Permettre l'export du projet complet en archive \textbf{ZIP} prête à déployer
-    \item Déployer l'application en ligne et la rendre accessible au grand public
+    \item Déployer l'application en ligne\footnote{Vercel : \reporturl{https://uml-to-code-peach.vercel.app} ; Render : \reporturl{https://uml-to-code.onrender.com}} et la rendre accessible au grand public
 \end{itemize}
 
 \section*{Structure du rapport}

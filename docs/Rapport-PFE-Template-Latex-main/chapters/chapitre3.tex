@@ -1,12 +1,19 @@
 \chapter{Réalisation et Implémentation}
 
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+
+Dans ce troisième et dernier chapitre, nous présentons la phase de réalisation du projet UML-to-Code. Nous commençons par décrire l'environnement de développement et les outils techniques utilisés, puis nous détaillons l'implémentation du backend et du frontend. Nous présentons ensuite le déploiement de l'application, et nous terminons par les tests et les résultats obtenus.
+
+%=============================================================
 \section{Environnement de Développement}
+%=============================================================
 
 \subsection{Matériel et système d'exploitation}
 
 Le développement du projet a été réalisé sur la configuration suivante :
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|l|}
@@ -22,7 +29,7 @@ Système d'exploitation & Windows 11 \\
 \hline
 Terminal & PowerShell / Git Bash \\
 \hline
-Versioning & Git + GitHub (\href{https://github.com/ABAKAR5/uml-to-code}{github.com/ABAKAR5/uml-to-code}) \\
+Versioning & Git + GitHub\footnote{\reporturl{https://github.com/ABAKAR5/uml-to-code}} \\
 \hline
 Modélisation UML & StarUML \\
 \hline
@@ -30,40 +37,137 @@ Modélisation UML & StarUML \\
 \caption{Environnement matériel et logiciel de développement}
 \end{table}
 
-\subsection{Outils et technologies utilisés}
+%=============================================================
+\section{Outils Techniques Utilisés}
+%=============================================================
 
-\subsubsection{Backend — Python Flask}
+\subsection{Outils de développement}
 
-Le backend a été développé en \textbf{Python} avec le micro-framework \textbf{Flask 3.0.0}. L'environnement virtuel Python a été utilisé pour isoler les dépendances du projet. Les principales bibliothèques utilisées sont :
+\subsubsection{Visual Studio Code}
 
-\begin{itemize}
-    \item \textbf{Flask} : serveur web et gestion des routes API REST
-    \item \textbf{flask-cors} : gestion des requêtes Cross-Origin (CORS) depuis le frontend React
-    \item \textbf{groq} : client officiel Python pour l'API Groq
-    \item \textbf{PyMuPDF (fitz)} : conversion des fichiers PDF en images pour l'analyse visuelle
-    \item \textbf{python-dotenv} : chargement des variables d'environnement depuis le fichier \texttt{.env}
-    \item \textbf{zipfile} : module natif Python pour la création des archives ZIP
-    \item \textbf{xml.etree.ElementTree} : module natif Python pour le parsing des fichiers XMI
-\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/vscode.png}
+    \caption{Visual Studio Code}
+\end{figure}
 
-\subsubsection{Frontend — React + Vite}
+Visual Studio Code (VS Code) est un éditeur de code source léger mais puissant, développé par Microsoft. Il a été utilisé comme environnement de développement principal pour ce projet. Il offre une grande flexibilité grâce à ses nombreuses extensions, notamment pour Python, React.js et LaTeX.
 
-L'interface utilisateur a été développée avec \textbf{React.js} et le bundler \textbf{Vite 6.x}. Les principales bibliothèques utilisées sont :
+\subsubsection{StarUML}
 
-\begin{itemize}
-    \item \textbf{@monaco-editor/react} : intégration de Monaco Editor (le moteur de VS Code)
-    \item \textbf{axios} : client HTTP pour les requêtes vers le backend Flask
-    \item \textbf{react-icons} : bibliothèque d'icônes (FaHome, FaBolt, FaRobot, etc.)
-    \item \textbf{CSS Variables} : système de thèmes (sombre/clair) via variables CSS natives
-\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/staruml.png}
+    \caption{StarUML}
+\end{figure}
 
+StarUML\fnStarUML{} est un outil de modélisation UML professionnel. Il a été utilisé pour créer les diagrammes de classes, de cas d'utilisation et de séquence du projet. Il permet également l'export des diagrammes au format XMI, format utilisé comme entrée principale de l'application.
+
+\subsubsection{Git \& GitHub}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/github.png}
+    \caption{Git \& GitHub}
+\end{figure}
+
+Git est le système de gestion de versions utilisé pour suivre l'évolution du code source tout au long du développement. GitHub a été utilisé comme plateforme d'hébergement du dépôt distant\fnGitHub, permettant la sauvegarde du code et son partage en open source.
+
+\subsection{Technologies Backend}
+
+\subsubsection{Python}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/python.png}
+    \caption{Python}
+\end{figure}
+
+Python est le langage de programmation utilisé pour développer le backend du projet. Sa simplicité, sa lisibilité et sa richesse en bibliothèques en font un choix idéal pour le développement web, le parsing XML et l'intégration d'API d'IA. La version 3.10+ a été utilisée.
+
+\subsubsection{Flask}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/flask.png}
+    \caption{Flask}
+\end{figure}
+
+Flask est un micro-framework web Python léger et flexible. Il a été utilisé pour créer le serveur API REST du backend. Sa simplicité de configuration et sa compatibilité avec les bibliothèques Python en font un choix adapté à ce projet.
+
+\subsubsection{Groq API — Llama 3.3-70b}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/groq.png}
+    \caption{Groq API}
+\end{figure}
+
+Groq est une plateforme d'inférence IA ultra-rapide utilisant des puces LPU (\textit{Language Processing Unit}) spécialisées. Elle héberge le modèle \textbf{Llama 3.3-70b} de Meta, un LLM open source de 70 milliards de paramètres. Ce modèle est utilisé pour analyser les diagrammes UML et générer le code source correspondant en Python ou PHP.
+
+\subsubsection{PyMuPDF}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/python.png}
+    \caption{PyMuPDF}
+\end{figure}
+
+PyMuPDF (aussi connu sous le nom \texttt{fitz}) est une bibliothèque Python pour le traitement de fichiers PDF. Elle a été utilisée pour convertir les fichiers PDF uploadés en images, permettant ensuite leur analyse visuelle par le modèle Groq.
+
+\subsection{Technologies Frontend}
+
+\subsubsection{React.js + Vite}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/react.png}
+    \caption{React.js}
+\end{figure}
+
+React.js est une bibliothèque JavaScript développée par Meta pour la création d'interfaces utilisateur web. Vite est le bundler moderne utilisé pour accélérer le développement et optimiser le build de production. L'interface complète de l'application a été développée avec ces deux outils.
+
+\subsubsection{Monaco Editor}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/vscode.png}
+    \caption{Monaco Editor}
+\end{figure}
+
+Monaco Editor est le moteur d'édition de code qui propulse Visual Studio Code. Il a été intégré dans l'interface React via la bibliothèque \texttt{@monaco-editor/react}. Il offre la coloration syntaxique, la numérotation des lignes et la minimap pour visualiser le code généré.
+
+\subsection{Plateformes de Déploiement}
+
+\subsubsection{Vercel}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/vercel.png}
+    \caption{Vercel}
+\end{figure}
+
+Vercel est la plateforme utilisée pour héberger le frontend React de l'application. Elle offre un déploiement automatique depuis GitHub, un CDN mondial et un certificat HTTPS gratuit. L'application est accessible en ligne\fnVercel.
+
+\subsubsection{Render}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.12\textwidth]{tools/render.png}
+    \caption{Render}
+\end{figure}
+
+Render est la plateforme utilisée pour héberger le backend Flask. Elle supporte nativement Python et permet le déploiement automatique depuis GitHub avec gestion des variables d'environnement pour la clé API Groq.
+
+%=============================================================
 \section{Implémentation du Backend}
+%=============================================================
 
 \subsection{Structure du Backend}
 
-Le backend Flask est organisé de manière modulaire, chaque module ayant une responsabilité précise :
+Le backend Flask est organisé de manière modulaire :
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|p{8cm}|}
@@ -73,23 +177,23 @@ Le backend Flask est organisé de manière modulaire, chaque module ayant une re
 \hline
 \texttt{app.py} & Point d'entrée du serveur Flask, configuration CORS \\
 \hline
-\texttt{routes/upload.py} & Endpoints API : \texttt{/api/upload} et \texttt{/api/download-zip} \\
+\texttt{routes/upload.py} & Endpoints : \texttt{/api/upload} et \texttt{/api/download-zip} \\
 \hline
-\texttt{parser/xmi\_parser.py} & Parsing des fichiers XMI et extraction des classes UML \\
+\texttt{parser/xmi\_parser.py} & Parsing des fichiers XMI \\
 \hline
-\texttt{parser/image\_parser.py} & Préparation des images et PDF pour l'analyse IA \\
+\texttt{parser/image\_parser.py} & Préparation des images et PDF \\
 \hline
-\texttt{ai/gemma\_client.py} & Client API Groq (Llama 3.3-70b) \\
+\texttt{ai/gemma\_client.py} & Client API Groq (Llama 3.3) \\
 \hline
-\texttt{generator/base\_generator.py} & Classe abstraite de génération de code \\
+\texttt{config.py} & Chargement \texttt{GROQ\_API\_KEY} (local + Render) \\
 \hline
 \texttt{generator/python\_generator.py} & Générateur de code Python \\
 \hline
 \texttt{generator/php\_generator.py} & Générateur de code PHP \\
 \hline
-\texttt{generator/server\_generator.py} & Générateur du serveur Flask automatique \\
+\texttt{generator/server\_generator.py} & Générateur du serveur Flask \\
 \hline
-\texttt{generator/zip\_generator.py} & Création de l'archive ZIP du projet \\
+\texttt{generator/zip\_generator.py} & Création de l'archive ZIP \\
 \hline
 \end{tabular}
 \caption{Structure modulaire du backend Flask}
@@ -97,65 +201,41 @@ Le backend Flask est organisé de manière modulaire, chaque module ayant une re
 
 \subsection{Parser XMI}
 
-Le parser XMI est le composant algorithmique central du backend. Il analyse les fichiers XMI exportés depuis StarUML et en extrait la structure orientée objet.
-
-Le fichier XMI est un format XML standardisé par l'OMG (\textit{Object Management Group}) pour l'échange de modèles UML. Voici un exemple de fichier XMI d'entrée :
+Le parser XMI analyse les fichiers XMI exportés depuis StarUML. Voici un exemple de fichier XMI d'entrée et le code Python généré correspondant :
 
 \begin{lstlisting}[language=XML, caption=Exemple de fichier XMI d'entrée]
 <packagedElement xmi:type="uml:Class" name="Etudiant">
-  <ownedAttribute name="nom" visibility="private"
-                  xmi:type="uml:Property">
+  <ownedAttribute name="nom" visibility="private">
     <type xmi:type="uml:PrimitiveType" href="String"/>
   </ownedAttribute>
-  <ownedOperation name="getNom" visibility="public"
-                  xmi:type="uml:Operation"/>
+  <ownedOperation name="getNom" visibility="public"/>
 </packagedElement>
 \end{lstlisting}
 
-À partir de ce fichier, le parser extrait :
-\begin{itemize}
-    \item Le nom de la classe : \texttt{Etudiant}
-    \item L'attribut privé : \texttt{nom: String}
-    \item La méthode publique : \texttt{getNom(): String}
-\end{itemize}
-
 \subsection{Génération de Code Python}
-
-Le \texttt{PythonGenerator} hérite de \texttt{BaseGenerator} et implémente la génération de classes Python complètes. Voici un exemple de code Python généré à partir du diagramme XMI :
 
 \begin{lstlisting}[language=Python, caption=Exemple de code Python généré]
 class Etudiant:
     """Etudiant class"""
     def __init__(self):
         self.__nom = ""
-        self.__age = 0
 
     def get_nom(self):
         return self.__nom
 
     def set_nom(self, nom):
         self.__nom = nom
-
-    def get_age(self):
-        return self.__age
-
-    def set_age(self, age):
-        self.__age = age
 \end{lstlisting}
 
 \subsection{Génération de Code PHP}
-
-Le \texttt{PHPGenerator} génère des classes PHP 8+ avec gestion de la visibilité, constructeur et getters/setters :
 
 \begin{lstlisting}[language=PHP, caption=Exemple de code PHP généré]
 <?php
 class Etudiant {
     private $nom;
-    private $age;
 
     public function __construct() {
         $this->nom = "";
-        $this->age = 0;
     }
 
     public function getNom() {
@@ -171,12 +251,9 @@ class Etudiant {
 
 \subsection{Génération du Serveur Flask}
 
-Le \texttt{FlaskServerGenerator} génère automatiquement un serveur Flask complet avec les routes CRUD pour chaque classe détectée :
-
 \begin{lstlisting}[language=Python, caption=Exemple de serveur Flask généré]
 from flask import Flask, jsonify, request
 app = Flask(__name__)
-
 etudiant_store = []
 
 @app.route('/etudiants', methods=['GET'])
@@ -189,81 +266,61 @@ def create_etudiant():
     etudiant_store.append(data)
     return jsonify(data), 201
 
-@app.route('/etudiants/<int:id>', methods=['PUT'])
-def update_etudiant(id):
-    data = request.json
-    etudiant_store[id] = data
-    return jsonify(data)
-
-@app.route('/etudiants/<int:id>', methods=['DELETE'])
-def delete_etudiant(id):
-    etudiant_store.pop(id)
-    return jsonify({'message': 'Deleted'})
-
 if __name__ == '__main__':
     app.run(debug=True)
 \end{lstlisting}
 
+%=============================================================
 \section{Implémentation du Frontend}
+%=============================================================
 
 \subsection{Structure du Frontend}
 
-L'interface utilisateur est une Single Page Application (SPA) développée avec React.js. Elle est organisée en une seule page composée de plusieurs sections :
+L'interface utilisateur est développée en \textbf{React.js} avec le bundler \textbf{Vite}. L'application est organisée autour du composant principal \texttt{App.jsx} :
 
-\begin{itemize}
-    \item \textbf{Navbar} : navigation responsive avec menu hamburger mobile et bascule de thème
-    \item \textbf{Hero} : section d'accueil avec présentation et aperçu du code généré
-    \item \textbf{Features} : présentation des fonctionnalités clés
-    \item \textbf{How it works} : workflow en 4 étapes
-    \item \textbf{Demo} : zone principale de génération (upload + Monaco Editor)
-    \item \textbf{History} : historique des 10 dernières générations
-    \item \textbf{About} : informations sur le projet et l'auteur
-    \item \textbf{Footer} : pied de page avec liens
-\end{itemize}
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|p{8cm}|}
+\hline
+\rowcolor{gray!30}
+\textbf{Élément} & \textbf{Rôle} \\
+\hline
+Zone d'upload & Glisser-déposer ; formats XMI, PNG, JPG, PDF \\
+\hline
+Options & Choix Python/PHP ; mode Algorithmique ou IA Groq \\
+\hline
+Monaco Editor & Affichage et édition du code généré (desktop) \\
+\hline
+Historique local & 10 dernières générations (\texttt{localStorage}) \\
+\hline
+Actions & Copier, télécharger fichier, export ZIP \\
+\hline
+Thème & Mode clair / sombre \\
+\hline
+Vue mobile & Boutons d'action sans éditeur (gain de place) \\
+\hline
+\end{tabular}
+\caption{Fonctionnalités principales de l'interface React}
+\end{table}
 
-\subsection{Monaco Editor}
+\subsection{Communication avec le backend}
 
-L'intégration de \textbf{Monaco Editor} — le moteur qui propulse Visual Studio Code — constitue l'une des fonctionnalités phares de l'interface. Il offre :
+Le frontend communique avec l'API Flask via \textbf{axios}. L'URL de l'API est définie par la variable \texttt{VITE\_API\_URL} (Vercel) ou détectée automatiquement en production (\texttt{uml-to-code.onrender.com}). En développement local, l'URL par défaut est \texttt{http://localhost:5000}.
 
-\begin{itemize}
-    \item La \textbf{coloration syntaxique} pour Python et PHP
-    \item La \textbf{numérotation des lignes}
-    \item La \textbf{minimap} pour la navigation dans le code
-    \item L'\textbf{édition directe} du code généré par l'utilisateur
-    \item Le \textbf{thème VS Dark} cohérent avec l'interface
-\end{itemize}
+\subsection{Adaptation mobile}
 
-\subsection{Système d'Historique Local}
+Sur écran de largeur inférieure à 768\,px, l'éditeur Monaco est masqué après génération. L'utilisateur dispose uniquement des boutons \textit{Copier}, \textit{Télécharger ZIP} et \textit{Télécharger fichier}, placés directement sous le bouton \og Générer le code \fg{}, afin d'éviter le défilement vers une zone de résultats hors écran.
 
-L'historique des générations est persisté dans le \textbf{localStorage} du navigateur. Il conserve les 10 dernières générations avec les informations suivantes :
-
-\begin{itemize}
-    \item Nom du fichier uploadé
-    \item Date et heure de la génération
-    \item Langage utilisé (Python ou PHP)
-    \item Mode de génération (Algorithmique ou IA Groq)
-    \item Code généré et code du serveur Flask
-    \item Nombre de classes et statistiques
-\end{itemize}
-
-L'utilisateur peut recharger une génération passée en un clic depuis la section Historique.
-
-\subsection{Mode Sombre / Mode Clair}
-
-Le système de thèmes est implémenté via des \textbf{variables CSS} et l'attribut \texttt{data-theme} sur l'élément HTML racine. La préférence de l'utilisateur est persistée dans le localStorage :
-
-\begin{itemize}
-    \item \textbf{Mode sombre} (défaut) : fond \texttt{\#060b14}, texte \texttt{\#f8fafc}
-    \item \textbf{Mode clair} : fond \texttt{\#f1f5f9}, texte \texttt{\#0f172a}
-\end{itemize}
-
-\section{Déploiement}
+%=============================================================
+\section{Déploiement de l'Application}
+%=============================================================
 
 \subsection{Déploiement du Backend sur Render}
 
-Le backend Flask a été déployé sur la plateforme \textbf{Render}, un service cloud gratuit supportant nativement Python. La configuration de déploiement est la suivante :
+Le backend Flask est hébergé sur Render\fnRender, avec la clé \texttt{GROQ\_API\_KEY} configurée dans les variables d'environnement.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|l|}
@@ -289,9 +346,9 @@ Variable d'environnement & \texttt{GROQ\_API\_KEY} \\
 
 \subsection{Déploiement du Frontend sur Vercel}
 
-Le frontend React a été déployé sur \textbf{Vercel}, la plateforme de référence pour les applications React/Next.js. La configuration est la suivante :
+Le frontend React est déployé sur Vercel\fnVercel avec la variable \texttt{VITE\_API\_URL} pointant vers l'API Render.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|l|}
@@ -311,19 +368,19 @@ Répertoire de sortie & \texttt{dist/} \\
 \hline
 Variable d'environnement & \texttt{VITE\_API\_URL} \\
 \hline
-URL de production & \href{https://uml-to-code-peach.vercel.app}{uml-to-code-peach.vercel.app} \\
+URL de production & \reporturl{https://uml-to-code-peach.vercel.app} \\
 \hline
 \end{tabular}
 \caption{Configuration de déploiement du frontend sur Vercel}
 \end{table}
 
+%=============================================================
 \section{Tests et Résultats}
+%=============================================================
 
 \subsection{Tests fonctionnels}
 
-Des tests fonctionnels ont été réalisés sur les trois formats d'entrée supportés :
-
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|c|c|p{4cm}|}
@@ -336,8 +393,6 @@ Upload XMI simple & XMI & \textcolor{green}{\textbf{Réussi}} & Classes extraite
 Upload XMI avec héritage & XMI & \textcolor{green}{\textbf{Réussi}} & Héritage bien détecté \\
 \hline
 Upload image PNG & PNG & \textcolor{green}{\textbf{Réussi}} & Vision IA fonctionnelle \\
-\hline
-Upload image JPG & JPG & \textcolor{green}{\textbf{Réussi}} & Vision IA fonctionnelle \\
 \hline
 Upload PDF & PDF & \textcolor{green}{\textbf{Réussi}} & Conversion PDF$\rightarrow$image OK \\
 \hline
@@ -359,11 +414,9 @@ Responsive mobile & --- & \textcolor{green}{\textbf{Réussi}} & Menu hamburger f
 \caption{Résultats des tests fonctionnels}
 \end{table}
 
-\subsection{Performances}
+\subsection{Tests de performance}
 
-Les mesures de performance ont donné les résultats suivants :
-
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|c|c|}
@@ -385,22 +438,25 @@ Prise en main de l'interface & $<$ 5 min & $\approx$ 2--3 minutes \\
 
 \subsection{Captures d'écran de l'application}
 
-Les figures suivantes présentent les principales interfaces de l'application UML-to-Code déployée.
-
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{screenshots/hero.png}
     \caption{Page d'accueil — UML-to-Code (mode sombre)}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{screenshots/demo.png}
     \caption{Zone de génération — Upload et Monaco Editor}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{screenshots/history.png}
     \caption{Section Historique — 10 dernières générations}
 \end{figure}
+
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+
+Dans ce troisième chapitre, nous avons présenté la phase de réalisation du projet UML-to-Code. Nous avons décrit l'environnement de développement, les outils techniques utilisés, les détails d'implémentation du backend Flask et du frontend React, ainsi que le déploiement de l'application sur Vercel et Render. Les tests fonctionnels et de performance ont confirmé que l'application répond aux critères d'acceptation définis dans le cahier des charges, avec un taux de succès supérieur à 95\% et des temps de génération bien inférieurs à l'objectif de 15 secondes.

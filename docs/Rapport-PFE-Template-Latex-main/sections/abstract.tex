@@ -1,17 +1,15 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-
-% Définir manuellement le mark pour les en-têtes
 \markboth{Abstract}{Abstract}
 
-% Garder la numérotation romaine visible
-\thispagestyle{plain}
+This project presents the design and development of \textbf{UML-to-Code}, a full-stack web application that automatically transforms UML class diagrams into functional source code, leveraging the \textbf{Groq Llama 3.3-70b} generative Artificial Intelligence model\footnote{Groq documentation: \reporturl{https://console.groq.com/docs}}.
 
-This project focuses on the development of a web platform entitled \textbf{UML-to-Code}, designed to automate the transition between the design phase (UML) and the software development phase. The application allows developers to submit class diagrams in various formats (XMI, PNG/JPG, PDF) and instantly generate structured source code in Python or PHP, as well as a complete Flask server.
+The application accepts three input formats: \textbf{XMI} files exported from StarUML, \textbf{PNG/JPG images}, and \textbf{PDF documents}. It generates complete \textbf{Python} or \textbf{PHP} code with classes, attributes, methods and inheritance, as well as an operational \textbf{Flask server} with automatic CRUD routes.
 
-The major innovation of this solution lies in the integration of generative Artificial Intelligence (via Groq Llama 3.3-70b), enabling intelligent analysis of diagram images, thus complementing the traditional algorithmic approach based on XMI parsing. The results show a significant time saving in setting up the basic structures of IT projects.
-\\
-\\
+The web interface, built with \textbf{React.js} and Vite, integrates Monaco Editor, local history, themes, progress bar and ZIP export. Online deployment\footnote{\reporturl{https://uml-to-code-peach.vercel.app}}.
 
-\textbf{Keywords:} UML, Code Generation, Artificial Intelligence, React, Flask, Llama 3.3, Software Engineering.
-\newpage
+The project was carried out using the \textbf{incremental model} in 5 increments over three weeks, as part of the Final Project module of the 3\textsuperscript{rd} year Software Engineering program at INSTA Abéché, Chad.
+
+\noindent\textbf{Keywords:} UML, code generation, Artificial Intelligence, LLM, Groq, Flask, React.js, MDD, Python, PHP, StarUML, XMI.
+
+\clearpage

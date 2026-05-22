@@ -17,7 +17,7 @@ Le cycle de vie de développement d'une application représente la période de t
 
 Plusieurs modèles de cycle de vie existent, chacun adapté à des contextes spécifiques. Le tableau ci-dessous présente une comparaison des principaux modèles :
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|c|c|c|l|}
@@ -44,20 +44,20 @@ Le modèle de cycle de vie retenu pour ce projet est le \textbf{modèle incréme
 \begin{itemize}
     \item \textbf{Durée courte du projet} : trois semaines de développement nécessitent des livraisons rapides et concrètes à chaque étape
     \item \textbf{Projet réalisé en solo} : les cycles nécessitant une équipe (comme Scrum) ne sont pas adaptés à un développeur unique
-    \item \textbf{Incertitudes techniques} : l'intégration de l'IA générative (Groq) et des interfaces avancées (Monaco Editor) impose un ajustement progressif
+    \item \textbf{Incertitudes techniques} : l'intégration de l'IA générative (Groq\fnGroq) et des interfaces avancées (Monaco Editor) impose un ajustement progressif
 \end{itemize}
 
 Le modèle incrémental permet de construire le système par couches successives. Chaque incrément produit une version fonctionnelle et testée du logiciel, enrichie de nouvelles fonctionnalités. Contrairement au modèle en cascade, il permet de valider les choix techniques tôt et d'ajuster la trajectoire si nécessaire.
 
 \subsection{Les 5 incréments du projet}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
-\begin{tabular}{|l|l|p{6cm}|c|}
+\begin{tabular}{|l|l|P{5.2cm}|c|}
 \hline
-\rowcolor{gray!30}
-\textbf{Incrément} & \textbf{Période} & \textbf{Fonctionnalités ajoutées} & \textbf{Version} \\
+\rowcolor{blue!12}
+\textbf{Incrément} & \textbf{Période} & \textbf{Fonctionnalités ajoutées} & \textbf{Ver.} \\
 \hline
 0 — Préparation & 05--07 mai & Questions prof, étude XMI, recherche, CDC & v0.0 \\
 \hline
@@ -73,6 +73,8 @@ Le modèle incrémental permet de construire le système par couches successives
 \caption{Les 5 incréments du projet UML-to-Code}
 \end{table}
 
+\input{includes/cycle_vie}
+
 %=============================================================
 \section{Architecture Globale du Système}
 %=============================================================
@@ -82,12 +84,12 @@ Le modèle incrémental permet de construire le système par couches successives
 Le système UML-to-Code suit une \textbf{architecture client-serveur en 3 couches} :
 
 \begin{itemize}
-    \item \textbf{Couche Présentation} : Interface React.js avec design Glassmorphism, Monaco Editor, historique localStorage, thème sombre/clair et animations
-    \item \textbf{Couche Métier} : Serveur Flask Python assurant l'orchestration, le parsing XMI/image/PDF, l'appel à l'API Groq et la génération ZIP
-    \item \textbf{Couche IA} : API Groq (Llama 3.3-70b) assurant la génération intelligente du code Python, PHP et Flask
+    \item \textbf{Couche Présentation} : Interface React.js\fnReact avec Monaco Editor\fnMonaco, historique et thèmes
+    \item \textbf{Couche Métier} : Serveur Flask\fnFlask assurant parsing XMI/image/PDF, orchestration et ZIP
+    \item \textbf{Couche IA} : API Groq\fnGroq (Llama 3.3-70b) pour la génération intelligente du code
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.8}
 \begin{tabular}{c}
@@ -102,7 +104,7 @@ Le système UML-to-Code suit une \textbf{architecture client-serveur en 3 couche
 
 \subsection{Stack technologique}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|l|l|l|p{4.5cm}|}
@@ -128,7 +130,7 @@ Export & zipfile & Natif Python & Export projet ZIP \\
 \hline
 Stockage & localStorage & Natif Web & Historique local + thème \\
 \hline
-Déploiement & Vercel + Render & --- & Hébergement Frontend + Backend \\
+Déploiement & Vercel + Render\footnote{\reporturl{https://vercel.com} ; \reporturl{https://render.com}} & --- & Hébergement Frontend + Backend \\
 \hline
 Versioning & Git + GitHub & --- & Gestion du code source \\
 \hline
@@ -150,7 +152,7 @@ Le diagramme de cas d'utilisation décrit les utilisations requises d'un systèm
 
 Dans l'application UML-to-Code, nous avons identifié les cas d'utilisation suivants :
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{|c|l|p{7cm}|}
@@ -186,7 +188,7 @@ Dans l'application UML-to-Code, nous avons identifié les cas d'utilisation suiv
 
 \subsubsection{Diagramme de cas d'utilisation}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{UCD_UML_to_Code.jpg}
     \caption{Diagramme de cas d'utilisation — UML-to-Code}
@@ -212,7 +214,7 @@ Les classes principales du système sont :
     \item \textbf{ZipGenerator} : regroupe le code et le serveur Flask dans une archive ZIP
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{CD_UML_to_Code.jpg}
     \caption{Diagramme de classes — UML-to-Code}
@@ -228,7 +230,7 @@ Le diagramme de séquence permet de valider les cas d'utilisation et de comprend
 
 Le diagramme ci-dessous décrit le flux complet d'interaction lors d'une génération de code, depuis l'upload du fichier jusqu'à l'affichage du résultat dans le Monaco Editor :
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{SD_Generation_Code.jpg}
     \caption{Diagramme de séquence — Génération de code}
